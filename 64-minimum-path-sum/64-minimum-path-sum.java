@@ -1,25 +1,29 @@
 class Solution {
-    public int findPath(int[][] grid, int x, int y, int m, int n, Map<String, Integer> map)
+    public int solve(int[][] grid, int x, int y, int m, int n, int[][] dp)
     {
-        if(x == m-1 && y == n-1) return grid[x][y];
+        for(int i=1; i<m; i++)
+        {
+            for(int j=1; j<n; j++)
+            {
+                dp[i][j] = Math.min(dp[i-1][j], dp[i][j-1]) + grid[i][j];
+            }
+        }
         
-        if(x>=m || y>=n) return Integer.MAX_VALUE;
-        
-        String key = String.valueOf(x) + "," + String.valueOf(y);
-        if(map.containsKey(key)) return map.get(key);
-        
-        int result = grid[x][y] + Math.min(findPath(grid, x, y+1, m, n, map), findPath(grid, x+1, y, m, n, map));
-        
-        map.put(key, result);
-        
-        return result;
+        return dp[m-1][n-1];
     }
     public int minPathSum(int[][] grid) {
         int m = grid.length;
         int n = grid[0].length;
         
-        Map<String, Integer> map = new HashMap<>();
+        int[][] dp = new int[m][n];
+        dp[0][0] = grid[0][0];
         
-        return findPath(grid, 0, 0, m, n, map);
+        //First row filled
+        for(int i=1; i<n; i++) dp[0][i] = dp[0][i-1] + grid[0][i];
+        
+        //First Column filled
+        for(int i=1; i<m; i++) dp[i][0] = dp[i-1][0] + grid[i][0];
+        
+        return solve(grid, 0, 0, m, n, dp); 
     }
 }
