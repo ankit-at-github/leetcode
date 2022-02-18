@@ -15,7 +15,7 @@
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        //Using 2 Stacks
+        //Using 1 Stacks
         List<Integer> ans = new ArrayList<>();
         if(root == null) return ans;
         Stack<TreeNode> st1 = new Stack<>();
