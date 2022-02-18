@@ -1,23 +1,22 @@
 class Solution {
-    public int solve(int[][] arr, int x, int y, int m, int n, Map<String, Integer> map)
+    public int solve(int m, int n, int[][] dp)
     {
-        if(x >= m || y >= n) return 0;
-        if(x == m-1 && y == n-1) return 1;
-        
-        String key = String.valueOf(x) + "," + String.valueOf(y);
-        if(map.containsKey(key)) return map.get(key);
-        
-        int result = solve(arr, x+1, y, m, n, map) + solve(arr, x, y+1, m, n, map);
-        
-        map.put(key,result);
-        
-        return result;
+        for(int i=1; i<m; i++)
+        {
+            for(int j=1; j<n; j++)
+            {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
     }
     public int uniquePaths(int m, int n) {
-        int[][] arr = new int[m][n];
-        Map<String, Integer> map = new HashMap<>();
+        int[][] dp = new int[m][n];
         
-        return solve(arr, 0, 0, m, n, map);
+        for(int i=0; i<m; i++) dp[i][0] = 1;
+        for(int i=0; i<n; i++) dp[0][i] = 1;
+        
+        return solve(m, n, dp);
         
     }
 }
