@@ -21,20 +21,13 @@ class Solution {
         Stack<TreeNode> st1 = new Stack<>();
         st1.push(root);
         
-        Stack<Integer> st2 = new Stack<>();
-        
         while(!st1.isEmpty())
         {
             TreeNode curr = st1.pop();
-            st2.push(curr.val);
+            ans.add(0, curr.val);
             
             if(curr.left!=null) st1.push(curr.left);
             if(curr.right!=null) st1.push(curr.right);
-        }
-        
-        while(st2.size() > 0)
-        {
-            ans.add(st2.pop());
         }
         
         return ans;
