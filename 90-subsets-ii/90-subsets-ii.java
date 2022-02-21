@@ -4,24 +4,21 @@ class Solution {
         List<Integer> ans = new ArrayList<>();
         
         Arrays.sort(nums);
+        
         solve(nums, 0, ans, output);
         
         return output;
     }
     public void solve(int[] nums, int index, List<Integer> ans, List<List<Integer>> output)
     {
-        if(index >= nums.length)
+        output.add(new ArrayList(ans));
+        
+        for(int i=index; i<nums.length; i++)
         {
-            if(!output.contains(ans))
-                output.add(ans);
-            return;
+            if(i>index && nums[i]==nums[i-1]) continue;
+            ans.add(nums[i]);
+            solve(nums, i+1, ans, output);
+            ans.remove(ans.size()-1);
         }
-        
-        //exclude
-        solve(nums, index+1, new ArrayList(ans), output);
-        
-        //include
-        ans.add(nums[index]);
-        solve(nums, index+1, ans, output);
     }
 }
