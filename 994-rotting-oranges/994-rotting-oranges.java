@@ -24,7 +24,7 @@ class Solution {
         
         if(freshOranges == 0) return 0;
         
-        int time = 0;
+        int time = -1;
         while(!queue.isEmpty())
         {
             int size = queue.size();
@@ -73,6 +73,6 @@ class Solution {
                 }
             }
         }
-        return freshOranges == 0 ? time-1 : -1;
+        return freshOranges == 0 ? time : -1;
     }
 }
