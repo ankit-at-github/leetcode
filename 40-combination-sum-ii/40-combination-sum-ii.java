@@ -15,7 +15,8 @@ class Solution {
         
         for(int i=index; i<candidates.length; i++)
         {
-            if((i > index && candidates[i] == candidates[i-1]) || target < candidates[i]) continue;
+            if((i > index && candidates[i] == candidates[i-1])) continue;
+            if(target < candidates[i]) break;
             
             temp.add(candidates[i]);
             solve(candidates, i+1, temp, output, target-candidates[i]);
