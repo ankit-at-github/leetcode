@@ -1,0 +1,1 @@
+In-case of non-square matrix: main diagonal will be elements at i=j;
