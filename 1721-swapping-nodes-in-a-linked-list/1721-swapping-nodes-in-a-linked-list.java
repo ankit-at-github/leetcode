@@ -10,30 +10,33 @@
  */
 class Solution {
     public ListNode swapNodes(ListNode head, int k) {
-        int totalNode = 0;
-        List<Integer> l = new ArrayList<>();
-        while(head!=null)
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        while(k-1 > 0)
         {
-            totalNode++; 
-            l.add(head.val);
-            head = head.next;
+            fast = fast.next;
+            k--;
         }
         
-        int temp = l.get(k-1);
-        int value = l.get(totalNode-k);
-        l.set(k-1, value);
-        l.set(totalNode-k, temp);
+        ListNode left = fast;
         
-        ListNode current = new ListNode(l.get(0));
-        head = current;
-        ListNode dummy = head;
-        for(int i=1; i<l.size(); i++)
+        while(fast.next!=null)
         {
-            current = new ListNode(l.get(i));
-            dummy.next = current;
-            dummy = current;
+            slow = slow.next;
+            fast = fast.next;
         }
+        
+        swap(left, slow);
         
         return head;
     }
+    
+    public void swap(ListNode node1, ListNode node2)
+    {
+        int temp = node1.val;
+        node1.val = node2.val;
+        node2.val = temp;
+    }
+    
 }
