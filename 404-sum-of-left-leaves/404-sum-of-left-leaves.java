@@ -14,22 +14,29 @@
  * }
  */
 class Solution {
-    private int sum;
-    public void preorder(TreeNode root, boolean isLeft)
-    {
-        if(root==null) return;
-        
-        if(isLeft && root.left==null && root.right==null)
-            sum+=root.val;
-       
-        
-        preorder(root.left, true);
-        preorder(root.right, false);
-        
-    }
     public int sumOfLeftLeaves(TreeNode root) {
-        sum = 0;
-        preorder(root, false);
+        int sum = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while(!queue.isEmpty())
+        {
+            int size = queue.size();
+            for(int i=0; i<size; i++)
+            {
+                TreeNode curr = queue.poll();
+                if(curr.left!=null)
+                {
+                    if(curr.left.left == null && curr.left.right == null) sum+=curr.left.val;
+                    queue.add(curr.left);
+                }
+                if(curr.right!=null)
+                {
+                    queue.add(curr.right);
+                }
+            }
+        }
+        
         return sum;
     }
 }
