@@ -13,14 +13,17 @@ class Solution {
     }
     boolean checkSorted(String a, String b, Map<Character, Integer> m)
     {
-        for(int i=0; i<Math.min(a.length(), b.length()); i++)
+        for(int i=0; i<a.length(); i++)
         {
-            if(a.charAt(i) != b.charAt(i))
+            if(i == b.length()) return false; //this means second word is smaller than first one.
+            
+            if(a.charAt(i)!=b.charAt(i))
             {
-                return m.get(a.charAt(i)) < m.get(b.charAt(i));
+                if(m.get(a.charAt(i)) > m.get(b.charAt(i))) return false;
+                else break;
             }
+            
         }
-        
-        return a.length() <= b.length();
+        return true;
     }
 }
