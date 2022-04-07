@@ -5,15 +5,12 @@ class Solution {
         Map<Integer,Integer> map = new HashMap<>();
         for(int i=0; i<arr.length; i++)
         {
-            int newtarget = target - arr[i];
-            map.clear();
-            for(int j=i+1; j<arr.length; j++)
+            if(map.containsKey(target - arr[i]))
+                count = (count + map.get(target-arr[i]))%mod;
+            for(int j=0; j<i; j++)
             {
-                if(map.containsKey(newtarget - arr[j]))
-                {
-                    count = (count + map.get(newtarget-arr[j]))%mod;
-                }
-                map.put(arr[j], map.getOrDefault(arr[j], 0)+1);
+                int twoSum = arr[i]+arr[j];
+                map.put(twoSum, map.getOrDefault(twoSum, 0)+1);
             }
         }
         return count;
