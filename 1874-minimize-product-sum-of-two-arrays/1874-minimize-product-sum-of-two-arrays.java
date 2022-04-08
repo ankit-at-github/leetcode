@@ -1,14 +1,27 @@
 class Solution {
     public int minProductSum(int[] nums1, int[] nums2) {
-        Queue<Integer> maxHeap = new PriorityQueue<>((a,b) -> b-a);
-        for(int x : nums1) maxHeap.add(x);
-        Queue<Integer> minHeap = new PriorityQueue<>((a,b) -> a-b);
-        for(int x : nums2) minHeap.add(x);
+        int[] counter1 = new int[101];
+        int[] counter2 = new int[101];
         
-        int sum = 0;
-        while(maxHeap.size() > 0)
+        for(int i=0; i<nums1.length; i++)
         {
-            sum+= maxHeap.poll()*minHeap.poll();
+            counter1[nums1[i]]++;
+            counter2[nums2[i]]++;
+        }
+        
+        int p1 = 1, p2 = 100;
+        int sum = 0;
+        while(p1<=100 && p2>=1)
+        {
+            if(counter1[p1]!=0 && counter2[p2]!=0)
+            {
+                int times = Math.min(counter1[p1], counter2[p2]);
+                sum+= times*(p1*p2);
+                counter1[p1]-=times;
+                counter2[p2]-=times;
+            }
+            else if(counter1[p1] == 0) p1++;
+            else p2--;
         }
         
         return sum;
