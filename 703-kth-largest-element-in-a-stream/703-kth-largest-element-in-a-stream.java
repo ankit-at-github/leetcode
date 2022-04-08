@@ -5,31 +5,19 @@ class KthLargest {
         this.k = k;
         queue = new PriorityQueue<>((a,b) -> a-b);
         for(int x : nums) queue.add(x);
-        int size = queue.size();
-        int remove = size - k;
-        while(remove > 0)
+        
+        while(queue.size() > k)
         {
             queue.poll();
-            remove--;
         }
     }
     
     public int add(int val) {
-        if(k > queue.size())
-        {
-            queue.add(val);
-            return queue.peek();
-        }
-        else
-        {
-            if(val < queue.peek()) return queue.peek();
-            else
-            {
-                queue.poll();
-                queue.add(val);
-                return queue.peek();
-            }
-        }
+        queue.add(val);
+        
+        if(queue.size() > k) queue.poll();
+        
+        return queue.peek();
     }
 }
 
