@@ -1,38 +1,27 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        
-        //Getting frequence of each element
         Map<Integer, Integer> map = new HashMap<>();
-        for(int i=0; i<nums.length; i++)
+        for(int x : nums)
         {
-            if(map.containsKey(nums[i])) map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
-            else map.put(nums[i], 1);
+            if(map.containsKey(x)) map.put(x, map.get(x)+1);
+            else map.put(x, 1);
         }
         
-        //Storing it in Priority Queue (Heap) in reverse order to get elements with maximum
-        //frequency first
-        
-        PriorityQueue<Map.Entry<Integer, Integer>> pqMax = new PriorityQueue<>((a,b) -> b.getValue()-a.getValue());
-        
-        for(Map.Entry<Integer,Integer> entry : map.entrySet())
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> b[1]-a[1]);
+        for(Map.Entry<Integer, Integer> entry : map.entrySet())
         {
-            pqMax.add(entry);
+            pq.add(new int[]{entry.getKey(),entry.getValue()});
         }
         
-        List<Integer> ans = new ArrayList<>();
         
-        while(ans.size() < k)
-        {
-            Map.Entry<Integer,Integer> entry = pqMax.poll();
-            ans.add(entry.getKey());
-        }
         
-        int[] result = new int[ans.size()];
+        int[] ans = new int[k];
         int index = 0;
-        for(int x : ans) result[index++] = x;
-        
-        return result;
-        
-        
+        while(k!=0)
+        {
+            ans[index++] = pq.poll()[0];
+            k--;
+        }
+        return ans;
     }
 }
