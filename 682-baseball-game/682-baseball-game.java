@@ -1,6 +1,6 @@
 class Solution {
     public int calPoints(String[] ops) {
-        Stack<String> st = new Stack<>();
+        Stack<Integer> st = new Stack<>();
         for(String s : ops)
         {
             if(s.equals("C"))
@@ -9,26 +9,25 @@ class Solution {
             }
             else if(s.equals("D"))
             {
-                st.push(Integer.toString(Integer.parseInt(st.peek())*2));
+                st.push(st.peek()*2);
             }
             else if(s.equals("+"))
             {
-                String a = st.pop();
-                String b = st.pop();
-                st.push(b);
-                st.push(a);
-                st.push(Integer.toString(Integer.parseInt(a)+Integer.parseInt(b)));
+                int top = st.pop();
+                int newTop = top + st.peek();
+                st.push(top);
+                st.push(newTop);
             }
             else
             {
-                st.push(s);
+                st.push(Integer.parseInt(s));
             }
         }
         
         int sum = 0;
         while(!st.isEmpty())
         {
-            sum+=Integer.parseInt(st.pop());
+            sum+=st.pop();
         }
         
         return sum;
