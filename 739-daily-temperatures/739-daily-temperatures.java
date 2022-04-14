@@ -8,18 +8,10 @@ class Solution {
             {
                 st.pop();
             }
-            if(st.isEmpty())
-            {
-                ans[i] = 0;
-                st.push(i);
-            }
-            else
-            {
-                ans[i] = st.peek()-i;
-                st.push(i);
-            }
+            if(st.isEmpty()) ans[i] = 0;
+            else ans[i] = st.peek()-i;
+            st.push(i);
         }
-        
         return ans;
     }
 }
