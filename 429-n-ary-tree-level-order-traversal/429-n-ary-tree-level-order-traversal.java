@@ -31,7 +31,7 @@ class Solution {
             {
                 Node present = q.poll();
                 curr.add(present.val);
-                for(Node n : present.children) q.add(n);
+                q.addAll(present.children);
             }
             output.add(curr);
         }
