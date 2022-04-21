@@ -1,23 +1,30 @@
 class Solution {
     public void sortColors(int[] nums) {
-        int zeroes = 0;
-        int ones = 0;
-        int twoes = 0;
-        for(int x : nums)
+        //Solving this using 3 pointer approach. This approach can be used to solve any 3 distinct elements present in an array.
+        
+        int low = 0, mid = 0, high = nums.length-1;
+        
+        while(mid <= high)
         {
-            if(x == 0) zeroes++;
-            if(x == 1) ones++;
-            if(x == 2) twoes++;
-        }
-        for(int i=0; i<nums.length; i++)
-        {
-            if(zeroes-- > 0) nums[i] = 0;
-            else if(ones-- > 0) nums[i] = 1;
+            if(nums[mid] == 0)
+            {
+                swap(nums, low, mid);
+                low++;
+                mid++;
+            }
+            else if(nums[mid] == 1) mid++;
             else
             {
-                nums[i] = 2;
-                twoes--;
+                swap(nums, mid, high);
+                high--;
             }
         }
+        
+    }
+    public void swap(int[] nums, int a, int b)
+    {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 }
