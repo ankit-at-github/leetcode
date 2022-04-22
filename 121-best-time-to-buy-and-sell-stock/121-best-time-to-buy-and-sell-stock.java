@@ -1,13 +1,11 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b-a);
+        int min = prices[0];
         int maxi = 0;
-        int i = prices.length-1;
-        while(i>=0)
+        for(int i=0; i<prices.length; i++)
         {
-            pq.add(prices[i]);
-            maxi = Math.max(maxi, pq.peek() - prices[i]);
-            i--;
+            if(min > prices[i]) min = prices[i];
+            maxi = Math.max(maxi, prices[i]-min);
         }
         return maxi;
     }
