@@ -3,30 +3,27 @@
 
 class PeekingIterator implements Iterator<Integer> {
     List<Integer> arrayList;
-    int curr;
 	public PeekingIterator(Iterator<Integer> iterator) {
 	    // initialize any member here.
-        curr = -1;
-	    arrayList = new ArrayList<>();
+	    arrayList = new LinkedList<>();
         while(iterator.hasNext()) arrayList.add(iterator.next());
 	}
 	
     // Returns the next element in the iteration without advancing the iterator.
 	public Integer peek() {
-        return arrayList.get(curr+1);
+        return arrayList.get(0);
 	}
 	
 	// hasNext() and next() should behave the same as in the Iterator interface.
 	// Override them if needed.
 	@Override
 	public Integer next() {
-	    curr++;
-        return arrayList.get(curr);
+	    int num = arrayList.remove(0);
+        return num;
 	}
 	
 	@Override
 	public boolean hasNext() {
-	    if(curr < arrayList.size()-1) return true;
-        else return false;
+        return arrayList.size() > 0;
 	}
 }
