@@ -11,13 +11,12 @@ class Solution {
             graph[i] = new ArrayList<>();
         }
         
-        //Creating graph, building adjacency list
+        //undirected graph
         for(List<Integer> pair : pairs)
         {
             int source = pair.get(0);
             int destination = pair.get(1);
             
-            //undirected graph
             graph[source].add(destination);
             graph[destination].add(source);
         }
@@ -37,10 +36,7 @@ class Solution {
             Collections.sort(indices);
             Collections.sort(letters);
             
-            for(int j=0; j<indices.size(); j++)
-            {
-                answer[indices.get(j)] = letters.get(j);
-            }
+            for(int j=0; j<indices.size(); j++) answer[indices.get(j)] = letters.get(j);
             
         }
         
