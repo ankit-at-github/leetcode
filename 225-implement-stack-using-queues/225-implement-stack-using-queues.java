@@ -9,13 +9,9 @@ class MyStack {
     }
     
     public int pop() {
-        int value = 0;
-        for(int e : q)
-        {
-            value = e;
-        }
-        q.remove(value);
-        return value;
+        int r = top();
+        q.remove(r);
+        return r;
     }
     
     public int top() {
