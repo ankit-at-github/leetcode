@@ -1,37 +1,38 @@
 class Solution {
     public String removeDuplicates(String s, int k) {
-        Stack<String> st = new Stack<>();
-        StringBuilder sb = new StringBuilder();
+        Stack<Pair> st = new Stack<>();
         for(int i=0; i<s.length(); i++)
         {
-            if(st.isEmpty())
+            if(st.isEmpty() || s.charAt(i) != st.peek().c)
             {
-                sb.append(s.charAt(i));
-                st.push(sb.toString());
+                st.push(new Pair(s.charAt(i), 1));
             }
             else
             {
-                StringBuilder check = new StringBuilder(st.peek());
-                if(check.charAt(0) == s.charAt(i))
+                int count = st.pop().count;
+                if(count != k-1)
                 {
-                    st.pop();
-                    if(check.length() != k-1)
-                    {
-                        check.append(s.charAt(i));
-                        st.push(check.toString());
-                    }
-                }
-                else
-                {
-                    sb.append(s.charAt(i));
-                    st.push(sb.toString());
+                    st.push(new Pair(s.charAt(i), count+1));
                 }
             }
-            sb.delete(0, sb.length());
         }
-        StringBuilder ans = new StringBuilder();
-        while(!st.isEmpty()) ans.append(st.pop());
-        ans.reverse();
-        return ans.toString();
+        StringBuilder sb = new StringBuilder();
+        while(!st.isEmpty())
+        {
+            Pair p = st.pop();
+            for(int i=0; i<p.count; i++)
+            sb.append(p.c);
+        }
+        sb.reverse();
+        return sb.toString();
+    }
+    class Pair{
+        int count;
+        char c;
+        Pair(char _c, int _count)
+        {
+            c = _c;
+            count = _count;
+        }
     }
 }
