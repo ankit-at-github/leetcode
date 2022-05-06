@@ -9,11 +9,7 @@ class Solution {
             }
             else
             {
-                int count = st.pop().count;
-                if(count != k-1)
-                {
-                    st.push(new Pair(s.charAt(i), count+1));
-                }
+                if(++st.peek().count == k) st.pop();
             }
         }
         StringBuilder sb = new StringBuilder();
