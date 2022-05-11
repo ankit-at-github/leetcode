@@ -1,23 +1,19 @@
 class Solution {
     public int countVowelStrings(int n) {
-        int[][] dp = new int[n][5];
-        for(int i=0; i<n; i++) dp[i][0] = 1;
-        for(int i=0; i<5; i++) dp[0][i] = 1;
-        
-        return countdP(dp, n, 5);
+        int[][] dp = new int[n+1][6];
+        for(int i=1; i<6; i++) dp[1][i] = i;
+        return countdP(dp, n);
     }
-    public int countdP(int[][] dp, int row, int col)
+    public int countdP(int[][] dp, int n)
     {
-        for(int i=1; i<row; i++)
+        for(int i=2; i<n+1; i++)
         {
-            for(int j=1; j<col; j++)
+            dp[i][1] = 1;
+            for(int j=2; j<6; j++)
             {
                 dp[i][j] = dp[i][j-1] + dp[i-1][j];
             }
         }
-        
-        int count = 0;
-        for(int i=0; i<5; i++) count+=dp[row-1][i];
-        return count;
+        return dp[n][5];
     }
 }
