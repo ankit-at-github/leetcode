@@ -1,24 +1,23 @@
 class Solution {
     public int countVowelStrings(int n) {
-        List<String> ans = new ArrayList<>();
-        StringBuilder output = new StringBuilder();
-        String vowels = "aeiou";
-        solve(vowels, n, output, ans);
-        return ans.size();
+        int[][] dp = new int[n][5];
+        for(int i=0; i<n; i++) dp[i][0] = 1;
+        for(int i=0; i<5; i++) dp[0][i] = 1;
+        
+        return countdP(dp, n, 5);
     }
-    public void solve(String vowels, int n, StringBuilder output, List<String> ans)
+    public int countdP(int[][] dp, int row, int col)
     {
-        if(n == 0)
+        for(int i=1; i<row; i++)
         {
-            ans.add(output.toString());
-            return;
+            for(int j=1; j<col; j++)
+            {
+                dp[i][j] = dp[i][j-1] + dp[i-1][j];
+            }
         }
-        for(int i=0; i<vowels.length(); i++)
-        {
-            if(output.length() >= 1 && vowels.charAt(i) < output.charAt(output.length()-1)) continue;
-            output.append(vowels.charAt(i));
-            solve(vowels, n-1, output, ans);
-            output.deleteCharAt(output.length()-1);
-        }
+        
+        int count = 0;
+        for(int i=0; i<5; i++) count+=dp[row-1][i];
+        return count;
     }
 }
