@@ -14,13 +14,12 @@ class Solution {
     {
         if(output.size() == nums.length)
         {
-            if(!ans.contains(output))
             ans.add(new ArrayList(output));
             return;
         }
         for(int i=0; i<nums.length; i++)
         {
-            if(visited[i]) continue;
+            if(visited[i] || (i > 0 && nums[i] == nums[i-1] && !visited[i-1])) continue;
             visited[i] = true;
             output.add(nums[i]);
             solve(nums, visited);
