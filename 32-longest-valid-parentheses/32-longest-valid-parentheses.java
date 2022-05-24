@@ -6,15 +6,20 @@ class Solution {
         int maxi = 0;
         for(int i=0; i<s.length(); i++)
         {
-            if(s.charAt(i) == ')' && !st.isEmpty())
+            if(s.charAt(i) == ')')
             {
                 st.pop();
                 if(st.isEmpty())
+                {
                     st.push(i);
+                }
                 else
-                    maxi = Math.max(maxi, i-st.peek());
+                {
+                    maxi = Math.max(maxi, i - st.peek());
+                }
             }
-            else st.push(i);
+            else
+                st.push(i);
         }
         
         return maxi;
