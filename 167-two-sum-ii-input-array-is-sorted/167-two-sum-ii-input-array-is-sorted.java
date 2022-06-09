@@ -10,7 +10,7 @@ class Solution {
                 ans[1] = i+1;
                 return ans;
             }
-            else hmap.put(numbers[i], i);
+            hmap.put(numbers[i], i);
         }
         return ans;
     }
