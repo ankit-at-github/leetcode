@@ -3,7 +3,7 @@ class Solution {
         int row = 0;
         for(; row<matrix.length; row++)
         {
-            if(target >= matrix[row][0] && target <= matrix[row][matrix[0].length-1]) break;
+            if(target <= matrix[row][matrix[0].length-1]) break;
         }
         if(row >= matrix.length) return false;
         int low = 0, high = matrix[row].length-1;
