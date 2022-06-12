@@ -1,25 +1,23 @@
 class Solution {
     public int minSwaps(int[] data) {
-        int minimumCount = Integer.MAX_VALUE;
-        
         int ones = 0;
-        for(int x:data) if(x==1) ones++;
+        for(int x : data) if(x==1) ones++;
         
-        if(ones < 2) return 0;
-        
-        int start = 0;
-        int count = 0;
-        for(int i=0; i<data.length; i++)
+        int swaps = Integer.MAX_VALUE, zeroes = 0;
+        int start = 0, end = 0;
+        while(end<data.length)
         {
-            if(data[i] == 0) count++;
-            if(i-start+1 == ones)
+            if(data[end] == 0) zeroes++;
+            
+            if(end-start+1 == ones)
             {
-                minimumCount = Math.min(minimumCount, count);
-                if(data[start] == 0) count--;
+                swaps = Math.min(swaps, zeroes);
+                if(data[start] == 0) zeroes--;
                 start++;
             }
+            end++;
         }
-        
-        return minimumCount;
+        if(swaps == Integer.MAX_VALUE) return 0;
+        return swaps;
     }
 }
