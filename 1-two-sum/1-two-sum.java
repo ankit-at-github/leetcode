@@ -8,9 +8,10 @@ class Solution {
             {
                 ans[0] = hmap.get(nums[i]);
                 ans[1] = i;
+                return ans;
             }
             hmap.put(target-nums[i], i);
         }
-        return ans;
+        return null;
     }
 }
