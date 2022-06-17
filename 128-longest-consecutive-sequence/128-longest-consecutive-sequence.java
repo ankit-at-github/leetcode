@@ -10,9 +10,9 @@ class Solution {
             if(!set.contains(x-1))
             {
                 while(set.contains(x++)) count++;
-                maxiCount = Math.max(maxiCount, count);
-                count = 0;
             }
+            maxiCount = Math.max(maxiCount, count);
+            count = 0;
         }
         return maxiCount;
     }
