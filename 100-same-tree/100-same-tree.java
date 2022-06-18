@@ -14,18 +14,17 @@
  * }
  */
 class Solution {
-    public boolean isSame(TreeNode p, TreeNode q){
-        
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        return isSimilar(p,q);
+    }
+    public boolean isSimilar(TreeNode p, TreeNode q)
+    {
         if(p==null && q==null) return true;
         
-        if(p==null || q==null) return false;
-        else
-        {
-            return (p.val==q.val) && isSame(p.left, q.left) && isSame(p.right, q.right);
-        }
+        if((p==null && q!=null) || (p!=null && q==null)) return false;
         
-    }
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        return isSame(p,q);
+        if(p.val!=q.val) return false;
+        
+        return isSimilar(p.left, q.left) && isSimilar(p.right, q.right);
     }
 }
