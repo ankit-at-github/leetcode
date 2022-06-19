@@ -15,23 +15,19 @@
  */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        Map<Integer, Integer> map = new HashMap<>();
-        
-        getRight(root, map, 0);
-        
         List<Integer> right = new ArrayList<>();
         
-        for(int x : map.values()) right.add(x);
+        getRight(root, right, 0);
         
         return right;
     }
-    public void getRight(TreeNode root, Map<Integer, Integer> map, int level)
+    public void getRight(TreeNode root, List<Integer> right, int level)
     {
         if(root == null) return;
         
-        if(!map.containsKey(level)) map.put(level, root.val);
+        if(right.size() == level) right.add(root.val);
         
-        getRight(root.right, map, level+1);
-        getRight(root.left, map, level+1);
+        getRight(root.right, right, level+1);
+        getRight(root.left, right, level+1);
     }
 }
