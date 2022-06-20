@@ -10,44 +10,36 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        //doing it in constatnt time requires 2-3 steps.
-        
-        //1. getting to middle of the linked list using slow and fast pointer logic
-        
+        //Find middle
         ListNode slow = head;
         ListNode fast = head;
         
         while(fast!=null && fast.next!=null)
         {
-            slow = slow.next;
             fast = fast.next.next;
-        }
-        
-        //2. Reversing the 2nd half
-        fast = slow.next;
-        slow = reverse(slow, fast);
-        
-        //Final Check
-        
-        while(head!=null && slow!=null)
-        {
-            if(head.val!=slow.val) return false;
-            head = head.next;
             slow = slow.next;
         }
-        return true;
-    }
-    public ListNode reverse(ListNode slow, ListNode fast)
-    {
+        
+        //Reverse Mid
         ListNode prev = null;
-        while(fast!=null)
+        ListNode next = null;
+        while(slow!=null)
         {
+            next = slow.next;
             slow.next = prev;
             prev = slow;
-            slow = fast;
-            fast = fast.next;
+            slow = next;
         }
-        slow.next = prev;
-        return slow;
+        
+        //Check
+        while(prev!=null && head!=null)
+        {
+            if(head.val != prev.val) return false;
+            head = head.next;
+            prev = prev.next;
+        }
+        
+        return true;
     }
+    
 }
