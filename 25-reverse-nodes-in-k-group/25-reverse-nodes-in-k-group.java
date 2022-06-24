@@ -10,36 +10,36 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null || head.next == null || k==1) return head;
+        
         int count = 0;
         ListNode temp = head;
-        while(count < k && temp!=null)
+        while(temp!=null)
         {
             temp = temp.next;
             count++;
         }
         
-        if(count == k)
-        {
-            ListNode prev = null;
-            ListNode curr = head;
-            ListNode next = null;
-            int count2 = 0;
-            while(curr!=null && count2 < k)
-            {
-                next = curr.next;
-                curr.next = prev;
-                prev = curr;
-                curr = next;
-                count2++;
-            }
-            
-            head.next = reverseKGroup(next, k);
-            
-            return prev;
-            
-        }
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode prev= dummy;
+        ListNode curr = head;
+        ListNode next = head.next;
         
-        return head;
-        
+       while(count>=k)
+       {
+           for(int i=1; i<k; i++)
+           {
+               curr.next = next.next;
+               next.next = prev.next;
+               prev.next = next;
+               next = curr.next;
+           }
+           count-=k;
+           prev = curr;
+           curr = next;
+           if(next!=null) next = next.next;
+       }
+        return dummy.next;
     }
 }
