@@ -33,26 +33,27 @@ class Solution {
         
         while(!q.isEmpty())
         {
-            int firstIndex = 0;
+            int firstIndexIsMinIndex = 0;
             int lastIndex = 0;
             int size = q.size();
             for(int i=size; i>0; i--)
             {
                 Pair p = q.poll();
                 
-                //getting firstIndex of the level;
-                if(i==size) firstIndex = p.index;
+                //getting firstIndex of the level which will also be a minIndex of that level;
+                if(i==size) firstIndexIsMinIndex = p.index;
                 
                 //getting lastIndex of the level;
                 if(i==1) lastIndex = p.index;
                 
                 int j = p.index;
+                j = j-firstIndexIsMinIndex;
                 
                 if(p.node.left!=null) q.add(new Pair(p.node.left, 2*j+1));
                 if(p.node.right!=null) q.add(new Pair(p.node.right, 2*j+2));
             }
             
-            maxi = Math.max(maxi, lastIndex - firstIndex + 1);
+            maxi = Math.max(maxi, lastIndex - firstIndexIsMinIndex + 1);
         }
         
         return maxi;
