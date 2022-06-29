@@ -7,19 +7,14 @@ class Solution {
     }
     public void solve(int[] nums, int index, List<Integer> output, List<List<Integer>> ans)
     {
-        if(index >= nums.length)
+        ans.add(new ArrayList(output));
+        
+        for(int i=index; i<nums.length; i++)
         {
-            ans.add(new ArrayList(output));
-            return;
+            output.add(nums[i]);
+            solve(nums, i+1, output, ans);
+            output.remove(output.size()-1);
         }
-        
-        //include
-        output.add(nums[index]);
-        solve(nums, index+1, output, ans);
-        
-        output.remove(output.size()-1);
-        
-        //exclude
-        solve(nums, index+1, output, ans);
+    
     }
 }
