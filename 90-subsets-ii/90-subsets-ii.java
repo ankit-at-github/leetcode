@@ -8,11 +8,12 @@ class Solution {
     }
     public void solve(int[] nums, int index, List<Integer> output, List<List<Integer>> ans)
     {
-        if(!ans.contains(output))
         ans.add(new ArrayList(output));
         
         for(int i = index; i<nums.length; i++)
         {   
+            if(i!=index && nums[i]==nums[i-1]) continue;
+            
             output.add(nums[i]);
             solve(nums, i+1, output, ans);
             output.remove(output.size()-1);
