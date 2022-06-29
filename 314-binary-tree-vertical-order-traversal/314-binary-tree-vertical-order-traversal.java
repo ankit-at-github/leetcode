@@ -16,12 +16,10 @@
 class Pair{
     TreeNode node;
     int vertical;
-    int level;
-    Pair(TreeNode _node, int _vertical, int _level)
+    Pair(TreeNode _node, int _vertical)
     {
         node = _node;
         vertical = _vertical;
-        level = _level;
     }
 }
 class Solution {
@@ -32,7 +30,7 @@ class Solution {
         TreeMap<Integer, ArrayList<Integer>> res = new TreeMap<>();
         
         Queue<Pair> q = new LinkedList<>();
-        q.add(new Pair(root, 0, 0));
+        q.add(new Pair(root, 0));
         
         while(!q.isEmpty())
         {
@@ -44,8 +42,8 @@ class Solution {
                 
                 res.get(p.vertical).add(p.node.val);
                 
-                if(p.node.left!=null) q.add(new Pair(p.node.left, p.vertical-1, p.level+1));
-                if(p.node.right!=null) q.add(new Pair(p.node.right, p.vertical+1, p.level+1));
+                if(p.node.left!=null) q.add(new Pair(p.node.left, p.vertical-1));
+                if(p.node.right!=null) q.add(new Pair(p.node.right, p.vertical+1));
             }
         }
         
