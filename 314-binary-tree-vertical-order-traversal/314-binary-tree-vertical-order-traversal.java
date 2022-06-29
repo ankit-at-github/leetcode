@@ -29,7 +29,7 @@ class Solution {
         List<List<Integer>> ans = new ArrayList<>();
         if(root == null) return ans;
         
-        TreeMap<Integer, TreeMap<Integer, ArrayList<Integer>>> res = new TreeMap<>();
+        TreeMap<Integer, ArrayList<Integer>> res = new TreeMap<>();
         
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(root, 0, 0));
@@ -40,25 +40,17 @@ class Solution {
             {
                 Pair p = q.poll();
                 
-                if(!res.containsKey(p.vertical)) res.put(p.vertical, new TreeMap<>());
-                if(!res.get(p.vertical).containsKey(p.level)) res.get(p.vertical).put(p.level, new ArrayList<>());
+                if(!res.containsKey(p.vertical)) res.put(p.vertical, new ArrayList<>());
                 
-                res.get(p.vertical).get(p.level).add(p.node.val);
+                res.get(p.vertical).add(p.node.val);
                 
                 if(p.node.left!=null) q.add(new Pair(p.node.left, p.vertical-1, p.level+1));
                 if(p.node.right!=null) q.add(new Pair(p.node.right, p.vertical+1, p.level+1));
             }
         }
         
-        for(TreeMap<Integer, ArrayList<Integer>> vertical : res.values())
-        {
-            List<Integer> current = new ArrayList<>();
-            for(ArrayList<Integer> nodes : vertical.values())
-            {
-                for(int n : nodes) current.add(n);
-            }
-            ans.add(current);
-        }
+        for(ArrayList<Integer> nodes : res.values()) ans.add(nodes);
+        
         return ans;
     }
 }
