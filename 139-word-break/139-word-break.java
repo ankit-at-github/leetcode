@@ -1,26 +1,24 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = new HashSet<>();
-        for(String d : wordDict) set.add(d);
+        Set<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length()+1];
+        //empty string
+        dp[0] = true;
         
-        return findS(s, 0, set, new Boolean[s.length()]);
-    }
-    public boolean findS(String s, int index, Set<String> set, Boolean[] memo)
-    {
-        if(index == s.length()) return true;
-        
-        if(memo[index] != null) return memo[index];
-        
-        StringBuilder sb = new StringBuilder();
-        
-        for(int i=index; i<s.length(); i++)
+        for(int i=1; i<=s.length(); i++)
         {
-            sb.append(s.charAt(i));
-            if(set.contains(sb.toString()))
+            //checking substring
+            for(int j=0; j<i; j++)
             {
-                if(findS(s, i+1, set, memo)) return memo[index] = true;
+                String sub = s.substring(j, i);
+                if(set.contains(sub) && dp[j])
+                {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
-        return memo[index] = false;
+        
+        return dp[s.length()];
     }
 }
