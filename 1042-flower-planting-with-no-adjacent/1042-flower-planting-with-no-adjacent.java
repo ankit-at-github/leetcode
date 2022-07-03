@@ -10,17 +10,12 @@ class Solution {
         }
         
         int[] garden = new int[n];
-        boolean[] visited = new boolean[n+1];
-        for(int i=1; i<=n; i++)
-        {
-            if(!visited[i])
-            {
-                dfs(adj, garden, 1, n, visited);
-            }
-        }
+        
+        mColoring(adj, garden, 1, n);
+        
         return garden;
     }
-    public boolean dfs(List<List<Integer>> adj, int[] garden, int node, int n, boolean[] visited)
+    public boolean mColoring(List<List<Integer>> adj, int[] garden, int node, int n)
     {
         if(node > n) return true;
         
@@ -29,12 +24,10 @@ class Solution {
             if(isSafe(adj, garden, node, flower))
             {
                 garden[node-1] = flower;
-                visited[node] = true;
                 
-                if(dfs(adj, garden, node+1, n, visited)) return true;
+                if(mColoring(adj, garden, node+1, n)) return true;
                 
                 garden[node-1] = 0;
-                visited[node] = false;
             }
         }
         return false;
