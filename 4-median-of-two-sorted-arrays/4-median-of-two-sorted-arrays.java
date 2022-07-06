@@ -1,26 +1,38 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int N = nums1.length + nums2.length;
-        int[] temp = new int[N];
-        int k = N-1;
-        int p1 = nums1.length-1, p2 = nums2.length-1;
-        while(p1 >= 0 && p2 >= 0)
+        int N = (nums1.length + nums2.length);
+        int count = 0;
+        int p1=0, p2=0, med1=0, med2=0;
+        while(p1<nums1.length && p2<nums2.length)
         {
-            if(nums1[p1] >= nums2[p2])
-                temp[k--] = nums1[p1--];
-            else
-                temp[k--] = nums2[p2--];
+            med2 = med1;
+            
+            if(nums1[p1] < nums2[p2]) med1 = nums1[p1++];
+            else med1 = nums2[p2++];
+            
+            count++;
+            
+            if(count == (N/2)+1) break;
         }
-        while(p1>=0) temp[k--] = nums1[p1--];
-        while(p2>=0) temp[k--] = nums2[p2--];
+        while(p1<nums1.length && count!=(N/2)+1)
+        {
+            med2 = med1;
+            med1 = nums1[p1++];
+            count++;
+        }
+        while(p2<nums2.length && count!=(N/2)+1)
+        {
+            med2 = med1;
+            med1 = nums2[p2++];
+            count++;
+        }
         
         if(N%2==0)
         {
-            double median = (temp[(N/2)-1] + temp[N/2])/2.0;
+            double median = (med1+med2)/2.0;
             return median;
         }
         
-        return (double)temp[N/2];
-        
+        return (double)med1;
     }
 }
