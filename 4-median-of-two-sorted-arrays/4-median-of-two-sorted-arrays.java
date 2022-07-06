@@ -1,38 +1,33 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int N = (nums1.length + nums2.length);
-        int count = 0;
-        int p1=0, p2=0, med1=0, med2=0;
-        while(p1<nums1.length && p2<nums2.length)
-        {
-            med2 = med1;
-            
-            if(nums1[p1] < nums2[p2]) med1 = nums1[p1++];
-            else med1 = nums2[p2++];
-            
-            count++;
-            
-            if(count == (N/2)+1) break;
-        }
-        while(p1<nums1.length && count!=(N/2)+1)
-        {
-            med2 = med1;
-            med1 = nums1[p1++];
-            count++;
-        }
-        while(p2<nums2.length && count!=(N/2)+1)
-        {
-            med2 = med1;
-            med1 = nums2[p2++];
-            count++;
-        }
+        if(nums1.length > nums2.length) return findMedianSortedArrays(nums2, nums1);
         
-        if(N%2==0)
+        int n1 = nums1.length, n2 = nums2.length;
+        int low = 0, high = n1;
+        while(low <= high)
         {
-            double median = (med1+med2)/2.0;
-            return median;
+            int cut1 = low + (high-low)/2;
+            int cut2 = (n1 + n2 + 1) / 2 - cut1;
+            
+            int l1 = cut1 == 0 ? Integer.MIN_VALUE : nums1[cut1-1];
+            int l2 = cut2 == 0 ? Integer.MIN_VALUE : nums2[cut2-1];
+            
+            int r1 = cut1 == n1 ? Integer.MAX_VALUE : nums1[cut1];
+            int r2 = cut2 == n2 ? Integer.MAX_VALUE : nums2[cut2];
+            
+            //valid case found
+            if(l1 <= r2 && l2 <= r1)
+            {
+                //length is even
+                if((n1+n2) % 2 ==0) return (Math.max(l1, l2) + Math.min(r1,r2)) / 2.0;
+                else return Math.max(l1, l2);
+            }
+            else
+            {
+                if(l1 > r2) high = cut1-1;
+                else low = cut1+1;
+            }
         }
-        
-        return (double)med1;
+        return 0.0;
     }
 }
