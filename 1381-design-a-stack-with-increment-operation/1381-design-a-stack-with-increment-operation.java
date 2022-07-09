@@ -1,30 +1,27 @@
 class CustomStack {
-    Stack<Integer> st;
-    int maxSize;
+    int[] stack;
+    int size;
+    int index;
     public CustomStack(int maxSize) {
-        this.maxSize = maxSize;
-        st = new Stack<>();
+        size = maxSize;
+        stack = new int[maxSize];
+        index = 0;
     }
     
     public void push(int x) {
-        if(st.size() < maxSize) st.push(x);
+        if(index < size) stack[index++] = x;
     }
     
     public int pop() {
-        if(!st.isEmpty()) return st.pop();
-        else return -1;
+        if(index == 0) return -1;
+        return stack[--index]; //since, index would have been increased so first decerement then take exact value;
     }
     
     public void increment(int k, int val) {
-        Stack<Integer> temp = new Stack<>();
-        while(!st.isEmpty()) temp.push(st.pop());
-        int increment = Math.min(k, temp.size());
-        while(!temp.isEmpty())
-        {
-            if(k > 0) st.push(temp.pop()+val);
-            else st.push(temp.pop());
-            k--;
-        }
+        
+        if(stack.length == 0) return;
+        
+        for(int i=0; i<k && i<stack.length; i++) stack[i] = stack[i]+val;
     }
 }
 
