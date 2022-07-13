@@ -28,24 +28,28 @@ class Solution {
                 //Up
                 if(isSafe(grid, x-1, y, m, n))
                 {
+                    freshOranges--;
                     grid[x-1][y] = 2;
                     q.add(new int[]{x-1, y});
                 }
                 //left
                 if(isSafe(grid, x, y-1, m, n))
                 {
+                    freshOranges--;
                     grid[x][y-1] = 2;
                     q.add(new int[]{x, y-1});
                 }
                 //right
                 if(isSafe(grid, x, y+1, m, n))
                 {
+                    freshOranges--;
                     grid[x][y+1] = 2;
                     q.add(new int[]{x, y+1});
                 }
                 //down
                 if(isSafe(grid, x+1, y, m, n))
                 {
+                    freshOranges--;
                     grid[x+1][y] = 2;
                     q.add(new int[]{x+1, y});
                 }
@@ -54,15 +58,7 @@ class Solution {
             time++;
         }
         
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                if(grid[i][j] == 1) return -1;
-            }
-        }
-        
-        return time;
+        return freshOranges == 0 ? time:-1;
     }
     public boolean isSafe(int[][] grid, int x, int y, int m, int n)
     {
