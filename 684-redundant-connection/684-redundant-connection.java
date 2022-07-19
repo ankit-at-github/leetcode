@@ -11,7 +11,7 @@ class Solution {
             adj.get(edge[0]).add(edge[1]);
             adj.get(edge[1]).add(edge[0]);
             boolean[] visited = new boolean[n+1];
-            if(cycleDFS(edge[0], -1, visited, adj, ans))
+            if(cycleDFS(edge[0], -1, visited, adj))
             {
                 ans[0] = edge[0];
                 ans[1] = edge[1];
@@ -20,20 +20,15 @@ class Solution {
         }
         return new int[]{};
     }
-    public boolean cycleDFS(int node, int parent, boolean[] visited, List<List<Integer>> adj, int[] ans)
+    public boolean cycleDFS(int node, int parent, boolean[] visited, List<List<Integer>> adj)
     {
         visited[node] = true;
         for(int adjacentNode : adj.get(node))
         {
-            if(visited[adjacentNode] && adjacentNode!=parent)
-            {
-                ans[0] = adjacentNode;
-                ans[1] = node;
-                return true;
-            }
+            if(visited[adjacentNode] && adjacentNode!=parent) return true;
             if(!visited[adjacentNode])
             {
-                if(cycleDFS(adjacentNode, node, visited, adj, ans)) return true;
+                if(cycleDFS(adjacentNode, node, visited, adj)) return true;
             }
         }
         return false;
