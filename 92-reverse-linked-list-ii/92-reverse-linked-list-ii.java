@@ -10,43 +10,49 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if(head == null) return head;
-        else if(left==right) return head;
+        if(head == null || head.next == null) return head;
         
-        int count = 1;
-        ListNode prevLeft = null;
-        ListNode leftNode = head;
-        ListNode rightNode = head;
-        while(count!=right)
+        ListNode prevStart = null;
+        ListNode start = null;
+        ListNode end = null;
+        
+        ListNode temp = head;
+        while(temp!=null)
         {
-            if(count<left)
+            if(left > 0)
             {
-                prevLeft = leftNode;
-                leftNode = leftNode.next;
+                prevStart = start;
+                start = temp;
+                left--;
             }
-            rightNode = rightNode.next;
-            count++;
+            if(right > 0)
+            {
+                end = temp;
+                right--;
+            }
+            temp = temp.next;
         }
-        
-        //Reverse a linkedlist
-        ListNode prev = rightNode.next;
-        ListNode current = leftNode;
-        ListNode nxt = current.next;
-        while(nxt!=rightNode.next)
+        ListNode newHead = reverse(start, end);
+        if(prevStart!=null)
         {
-            current.next = prev;
-            prev = current;
-            current = nxt;
-            nxt = nxt.next;
-        }
-        current.next = prev;
-        prev = current;
-        
-        if(left==1) return prev;
-        else
-        {
-            prevLeft.next = prev;
+            prevStart.next = newHead;
             return head;
-        }  
+        }
+        
+        return newHead;
+    }
+    public ListNode reverse(ListNode start, ListNode end)
+    {
+        ListNode prev = end.next;
+        ListNode next = start;
+        while(start!=end)
+        {
+            next = start.next;
+            start.next = prev;
+            prev = start;
+            start = next;
+        }
+        start.next = prev;
+        return start;
     }
 }
