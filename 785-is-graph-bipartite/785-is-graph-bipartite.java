@@ -1,14 +1,6 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
-        List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0; i<n; i++) adj.add(new ArrayList());
-        
-        for(int i=0; i<n; i++)
-        {
-            for(int x : graph[i])
-                adj.get(i).add(x);
-        }
         
         int[] colors = new int[n];
         Arrays.fill(colors, -1);
@@ -26,7 +18,7 @@ class Solution {
                     for(int i=q.size(); i>0; i--)
                     {
                         int node = q.poll();
-                        for(int adjacentNode : adj.get(node))
+                        for(int adjacentNode : graph[node])
                         {
                             if(colors[adjacentNode] == -1)
                             {
