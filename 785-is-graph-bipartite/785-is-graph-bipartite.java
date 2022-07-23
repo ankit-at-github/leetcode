@@ -15,8 +15,6 @@ class Solution {
                 colors[v]=0;
                 while(!q.isEmpty())
                 {
-                    for(int i=q.size(); i>0; i--)
-                    {
                         int node = q.poll();
                         for(int adjacentNode : graph[node])
                         {
@@ -30,7 +28,6 @@ class Solution {
                                 if(colors[adjacentNode] == colors[node]) return false;
                             }
                         }
-                    }
                 }
             }
         }
