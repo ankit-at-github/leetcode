@@ -9,16 +9,16 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return getLCA(root, p, q);
+        return lca(root, p, q);
     }
-    public TreeNode getLCA(TreeNode root, TreeNode p, TreeNode q)
+    public TreeNode lca(TreeNode root, TreeNode p, TreeNode q)
     {
         if(root == null) return null;
         
-        if(root.val == p.val || root.val == q.val) return root;
+        if(root == p || root == q) return root;
         
-        TreeNode left = getLCA(root.left, p, q);
-        TreeNode right = getLCA(root.right, p, q);
+        TreeNode left = lca(root.left, p, q);
+        TreeNode right = lca(root.right, p, q);
         
         if(left == null) return right;
         if(right == null) return left;
