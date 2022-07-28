@@ -1,9 +1,16 @@
 class Solution {
     public int climbStairs(int n) {
-        if(n == 1) return 1;
-        int[] climb = new int[n+1];
-        climb[0] = 0; climb[1] = 1; climb[2] = 2;
-        for(int i=3; i<n+1; i++) climb[i] = climb[i-1] + climb[i-2];
-        return climb[n];
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+        dp[1] = 1;
+        return solve(n, dp);
+    }
+    public int solve(int n, int[] dp)
+    {
+        if(n<=1) return 1;
+        
+        if(dp[n]!=0) return dp[n];
+        
+        return (dp[n] = solve(n-1, dp) + solve(n-2, dp));
     }
 }
