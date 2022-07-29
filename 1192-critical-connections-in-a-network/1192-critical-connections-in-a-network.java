@@ -1,29 +1,67 @@
 class Solution {
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
-        List<Integer>[] graph = new ArrayList[n];
-        for (int i = 0; i < n; i++) graph[i] = new ArrayList<>();
+        List<List<Integer>> adj = new ArrayList<>();
+        for(int i=0; i<n; i++) adj.add(new ArrayList());
         
-        for(List<Integer> oneConnection :connections) {
-            graph[oneConnection.get(0)].add(oneConnection.get(1));
-            graph[oneConnection.get(1)].add(oneConnection.get(0));
+        for(List<Integer> connection : connections)
+        {
+            adj.get(connection.get(0)).add(connection.get(1));
+            adj.get(connection.get(1)).add(connection.get(0));
         }
-        int timer[] = new int[1];
-        List<List<Integer>> results = new ArrayList<>();
+        
         boolean[] visited = new boolean[n];
-        int []timeStampAtThatNode = new int[n]; 
-        criticalConnectionsUtil(graph, -1, 0, timer, visited, results, timeStampAtThatNode);
-        return results;
-    }
-    public void criticalConnectionsUtil(List<Integer>[] graph, int parent, int node, int timer[], boolean[] visited, List<List<Integer>> results, int []timeStampAtThatNode) {
-        visited[node] = true;
-        timeStampAtThatNode[node] = timer[0]++;
-        int currentTimeStamp = timeStampAtThatNode[node];
+        int[] parent = new int[n];
+        int[] discoveryTime = new int[n];
+        int[] lowestpossibleTime = new int[n];
         
-        for(int oneNeighbour : graph[node]) {
-            if(oneNeighbour == parent) continue;
-            if(!visited[oneNeighbour]) criticalConnectionsUtil(graph, node, oneNeighbour, timer, visited, results, timeStampAtThatNode);
-            timeStampAtThatNode[node] = Math.min(timeStampAtThatNode[node], timeStampAtThatNode[oneNeighbour]);
-            if(currentTimeStamp < timeStampAtThatNode[oneNeighbour]) results.add(Arrays.asList(node, oneNeighbour));
+        List<List<Integer>> result = new ArrayList<>();
+        
+        for(int i=0; i<n; i++)
+        {
+            parent[i] = -1;
+            discoveryTime[i] = -1;
+            lowestpossibleTime[i] = -1;
         }
+        
+        for(int i=0; i<n; i++)
+        {
+            if(!visited[i])
+            {
+                dfs(i, 0, discoveryTime, lowestpossibleTime, parent, visited, adj, result);
+            }
+        }
+        return result;
+    }
+    public void dfs(int node, int timer, int[] discoveryTime, int[] lowestpossibleTime, int[] parent, boolean[] visited, List<List<Integer>> adj, List<List<Integer>> result)
+    {
+        visited[node] = true;
+        discoveryTime[node] = timer;
+        lowestpossibleTime[node] = timer;
+        
+        for(int adjacentNode : adj.get(node))
+        {
+            if(adjacentNode == parent[node]) continue;
+            
+            if(!visited[adjacentNode])
+            {
+                parent[adjacentNode] = node;
+                dfs(adjacentNode, timer+1, discoveryTime, lowestpossibleTime, parent, visited, adj, result);
+                
+                //returning from dfs
+                //update the lowestTime of parent node to make sure whether child node had a back-edge.
+                lowestpossibleTime[node] = Math.min(lowestpossibleTime[node], lowestpossibleTime[adjacentNode]);
+                //checking if this edge is a bridge
+                if(lowestpossibleTime[adjacentNode] > discoveryTime[node])
+                {
+                    result.add(Arrays.asList(adjacentNode,node));
+                }
+            }
+            else
+            {
+                //adjacentNode is visisted and is a back-edge so update lowestpossibleTime
+                lowestpossibleTime[node] = Math.min(lowestpossibleTime[node], lowestpossibleTime[adjacentNode]);
+            }
+        }
+        
     }
 }
