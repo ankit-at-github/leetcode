@@ -59,7 +59,7 @@ class Solution {
             else
             {
                 //adjacentNode is visisted and is a back-edge so update lowestpossibleTime
-                lowestpossibleTime[node] = Math.min(lowestpossibleTime[node], lowestpossibleTime[adjacentNode]);
+                lowestpossibleTime[node] = Math.min(lowestpossibleTime[node], discoveryTime[adjacentNode]);
             }
         }
         
