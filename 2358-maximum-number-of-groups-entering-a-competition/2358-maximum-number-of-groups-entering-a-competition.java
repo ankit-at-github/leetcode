@@ -1,11 +1,24 @@
 class Solution {
     public int maximumGroups(int[] grades) {
-        int n = grades.length;
-        int total = 0, k = 0;
-        while(total + k + 1 <= n)
+        Arrays.sort(grades);
+        int previousSum = 0, currentSum = 0;
+        int previousCount = 0, currentCount = 0;
+        int ans = 0;
+        
+        for(int grade : grades)
         {
-            total+=++k;
+            currentSum+=grade;
+            currentCount++;
+            
+            if(currentSum > previousSum && currentCount > previousCount)
+            {
+                ans++;
+                previousSum = currentSum;
+                previousCount = currentCount;
+                currentSum = 0;
+                currentCount = 0;
+            }
         }
-        return k;
+        return ans;
     }
 }
