@@ -33,9 +33,7 @@ class Solution {
             }
             else if(dfsVisited[adjacentNode])
             {
-                //System.out.println(dist);
-                ans = Math.max(ans, dist - distance[adjacentNode] + 1);
-                
+                ans = Math.max(ans, dist - distance[adjacentNode] + 1);   
             }
         }
         dfsVisited[node] = false;
