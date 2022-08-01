@@ -1,45 +1,43 @@
 class Solution {
-    int maxi = -1;
+    int ans = -1;
     public int longestCycle(int[] edges) {
         int n = edges.length;
-        List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
         
-        for(int i=0; i<n; i++)
-        {
-            if(edges[i] == -1) continue;
-            adj.get(i).add(edges[i]);
-        }
-        
+        //to store distance from one node to another
+        int[] distance = new int[n];
         boolean[] visited = new boolean[n];
-        int[] depth = new int[n];
-        Arrays.fill(depth, -1);
+        boolean[] dfsVisited = new boolean[n];
         
         for(int i=0; i<n; i++)
         {
             if(!visited[i])
             {
-                cycleDFS(i, adj, visited, 1, depth);
+                cycleDFS(i, edges, visited, dfsVisited, distance, 0);
             }
         }
-        
-        return maxi;
+        return ans;
     }
-    public void cycleDFS(int node, List<List<Integer>> adj, boolean[] visited, int deep, int[] depth)
+    public void cycleDFS(int node, int[] edges, boolean[] visited, boolean[] dfsVisited, int[] distance, int dist)
     {
-        visited[node]= true;
-        depth[node] = deep;
-        for(int adjacentNode : adj.get(node))
+        visited[node] = true;
+        dfsVisited[node] = true;
+        distance[node] = dist;
+        
+        int adjacentNode = edges[node];
+        
+        if(adjacentNode != -1)
         {
             if(!visited[adjacentNode])
             {
-                cycleDFS(adjacentNode, adj, visited, deep+1, depth);
+                cycleDFS(adjacentNode, edges, visited, dfsVisited, distance, dist+1);
             }
-            else if(depth[adjacentNode]!=-1)
+            else if(dfsVisited[adjacentNode])
             {
-                maxi = Math.max(maxi, depth[node]-depth[adjacentNode]+1);
+                //System.out.println(dist);
+                ans = Math.max(ans, dist - distance[adjacentNode] + 1);
+                
             }
         }
-        depth[node] = -1;
+        dfsVisited[node] = false;
     }
 }
