@@ -1,10 +1,18 @@
 class Solution {
     public int findDuplicate(int[] nums) {
-        for(int i=0; i<nums.length; i++)
+        int tortoise = nums[0];
+        int hare = nums[0];
+        do{
+            tortoise = nums[tortoise];
+            hare = nums[nums[hare]];
+        }while(tortoise!=hare);
+        
+        tortoise = nums[0];
+        while(tortoise!=hare)
         {
-            if(nums[Math.abs(nums[i])] < 0) return Math.abs(nums[i]);
-            nums[Math.abs(nums[i])] = nums[Math.abs(nums[i])]*-1;
+            tortoise = nums[tortoise];
+            hare = nums[hare];
         }
-        return -1;
+        return hare;
     }
 }
