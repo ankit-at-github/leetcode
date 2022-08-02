@@ -1,11 +1,15 @@
 class Solution {
     public void setZeroes(int[][] matrix) {
-        boolean firstCol = false;
+        boolean isCol = false;
+        int m = matrix.length;
+        int n = matrix[0].length;
         
-        for(int i=0; i<matrix.length; i++)
+        for(int i=0; i<m; i++)
         {
-            if(matrix[i][0] == 0) firstCol = true;
-            for(int j=1; j<matrix[i].length; j++)
+            //checking the first cell of each row to mark first column
+            if(matrix[i][0] == 0) isCol = true;
+            
+            for(int j=1; j<n; j++)
             {
                 if(matrix[i][j] == 0)
                 {
@@ -14,26 +18,19 @@ class Solution {
                 }
             }
         }
-        
-        //checking first element of all rows and all cols from 1st row.
-        for(int i=1; i<matrix.length; i++)
+        for(int i=1; i<m; i++)
         {
-            for(int j=1; j<matrix[0].length; j++)
+            for(int j=1; j<n; j++)
             {
-                if(matrix[i][0] == 0 || matrix[0][j] == 0) matrix[i][j] = 0;
+                if(matrix[i][0] == 0 || matrix[0][j] == 0)
+                {
+                    matrix[i][j] = 0;
+                }
             }
         }
-        
-        //checking for firstCell
-        if(matrix[0][0] == 0)
-        {
-            for(int j=0; j<matrix[0].length; j++) matrix[0][j] = 0;
-        }
-        
-        //checking for first column
-        if(firstCol)
-        {
-            for(int i=0; i<matrix.length; i++) matrix[i][0] = 0;
-        }
+        //marking first row.
+        if(matrix[0][0] == 0) for(int j=0; j<n; j++) matrix[0][j] = 0;
+        //marking first column.
+        if(isCol) for(int i=0; i<m; i++) matrix[i][0] = 0;
     }
 }
