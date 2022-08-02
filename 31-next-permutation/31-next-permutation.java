@@ -1,43 +1,35 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        //1. Finding Pivot Index backward
-        int pivotIndex = -1;
-        for(int i=nums.length-1; i>=1; i--)
-        {
-            if(nums[i-1] < nums[i])
-            {
-                pivotIndex = i-1;
-                break;
-            }
-        }
-        
-        if(pivotIndex >= 0)
-        {
-            //2. Finding Successor
-            int swapIndex = nums.length-1;
-            while(nums[swapIndex] <= nums[pivotIndex]) swapIndex--;
-            
-            //3. Swap the Elements
-            swap(nums, pivotIndex, swapIndex);
-            
-            //4. Reverse the elements from pivotIndex+1
-            reverse(nums, pivotIndex+1);
-        }
+        int pivotIndex = getPivot(nums);
+        //nums is maximum element so return sorted nums
+        if(pivotIndex == -1) reverse(nums, 0, nums.length-1);
         else
-            reverse(nums, 0);
+        {
+            int swapIndex = nums.length-1;
+            
+            while(swapIndex >= 0 && nums[swapIndex] <= nums[pivotIndex]) swapIndex--;
+            
+            swap(nums, swapIndex, pivotIndex);
+            reverse(nums, pivotIndex+1, nums.length-1);
+        }
     }
-    void swap(int[] nums, int a, int b)
+    public int getPivot(int[] nums)
     {
-        int temp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = temp;
+        int j = nums.length-1;
+        while(j > 0 && nums[j-1] >= nums[j]) j--;
+        return j-1;
     }
-    void reverse(int[] nums, int start)
+    public void reverse(int[] nums, int start, int end)
     {
-        int end = nums.length-1;
         while(start < end)
         {
             swap(nums, start++, end--);
         }
+    }
+    public void swap(int[] nums, int a, int b)
+    {
+        int temp = nums[a];
+        nums[a] = nums[b];
+        nums[b] = temp;
     }
 }
