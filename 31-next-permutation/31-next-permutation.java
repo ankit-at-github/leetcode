@@ -21,7 +21,7 @@ class Solution {
     }
     public void reverse(int[] nums, int start, int end)
     {
-        while(start < end)
+        while(start <= end)
         {
             swap(nums, start++, end--);
         }
