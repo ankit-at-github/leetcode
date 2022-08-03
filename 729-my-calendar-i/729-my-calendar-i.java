@@ -14,9 +14,9 @@ class MyCalendar {
         {
             int startTime = c.get(0);
             int endTime = c.get(1);
-            //System.out.println(startTime +" "+ start);
-            //System.out.println(endTime +" "+ end);
+            
             if(end > startTime && start < endTime) return false;
+            
         }
         calendar.add(Arrays.asList(start, end));
         return true;
