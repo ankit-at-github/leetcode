@@ -6,7 +6,11 @@ class Solution {
         int[] parent = new int[n+1];
         int[] rank = new int[n+1];
         
-        for(int i=1; i<n+1; i++) parent[i] = i;
+        for(int i=1; i<n+1; i++)
+        {
+            parent[i] = i;
+            rank[i] = 0;
+        }
         
         for(int i=0; i<n; i++)
         {
@@ -19,11 +23,14 @@ class Solution {
             }
         }
         //Number of Provinces is equal to number of distinct parents
-        Set<Integer> provinces = new HashSet<>();
+        int provinces = 0;
         
-        for(int i=1; i<=n; i++) provinces.add(find(i, parent));
+        for(int i=1; i<=n; i++)
+        {
+            if(i == parent[i]) provinces++;
+        }
         
-        return provinces.size();
+        return provinces;
     }
     public int find(int node, int[] parent)
     {
