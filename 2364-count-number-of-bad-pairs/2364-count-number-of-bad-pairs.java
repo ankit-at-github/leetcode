@@ -1,7 +1,7 @@
 class Solution {
     public long countBadPairs(int[] nums) {
-        Long n = (long)nums.length;
-        Long totalPairs = n*(n-1)/2;
+        long n = (long)nums.length;
+        long totalPairs = n*(n-1)/2;
         Map<Integer, Integer> map = new HashMap<>();
         long goodPairs = 0;
         for(int i=0; i<n; i++)
