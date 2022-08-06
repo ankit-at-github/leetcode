@@ -1,22 +1,14 @@
 class Solution {
     public int numPairsDivisibleBy60(int[] time) {
-        int[] rem = new int[60];
-        
-        int songs = 0;
-        for(int n : time)
+        int count = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int t : time)
         {
-            int x = n % 60;
-            if(x==0)
-            {
-                songs+=rem[0];
-            }
-            else
-            {
-                songs+=rem[60-x];
-            }
-            rem[x]++;
+            int rem = t % 60;
+            if(map.containsKey(60 - rem)) count+=map.get(60 - rem);
+            if(rem == 0) map.put(60, map.getOrDefault(60, 0)+1);
+            map.put(rem, map.getOrDefault(rem, 0)+1);
         }
-        
-        return songs;
+        return count;
     }
 }
