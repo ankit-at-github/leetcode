@@ -1,18 +1,14 @@
 class Solution {
     public int triangularSum(int[] nums) {
-        Queue<Integer> q = new LinkedList<>();
-        for(int x : nums) q.add(x);
-        
-        while(q.size() > 1)
+        int run = nums.length;
+        while(run > 1)
         {
-            for(int i=1; i<=q.size()-1; i++)
+            for(int i=0; i<run-1; i++)
             {
-                int a = q.poll();
-                int sum = a + q.peek();
-                q.add(sum%10);
+                nums[i] = (nums[i]+nums[i+1])%10;
             }
-            q.poll();
+            run-=1;
         }
-        return q.poll();
+        return nums[0];
     }
 }
