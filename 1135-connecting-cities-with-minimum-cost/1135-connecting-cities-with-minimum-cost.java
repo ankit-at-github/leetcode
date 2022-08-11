@@ -22,8 +22,8 @@ class Solution {
                 weight+=w;
                 mst[u] = true;
                 mst[v] = true;
+                union(u, v, rank, parent);
             }
-            union(u, v, rank, parent);
         }
         return weight;
     }
