@@ -11,11 +11,7 @@ class Solution {
         
         if(adj.get(source).isEmpty()) return false;
         
-        for(int adjacentNode : adj.get(source))
-        {
-            if(!dfs(adj, adjacentNode, destination, -1, visited)) return false;
-        }
-        return true;
+        return dfs(adj, source, destination, -1, visited);
     }
     public boolean dfs(List<List<Integer>> adj, int node, int destination, int parent, boolean[] visited)
     {
