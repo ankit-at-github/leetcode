@@ -1,34 +1,27 @@
 class Solution {
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
-        int n = graph.length-1;
-        
-        List<List<Integer>> adj = new ArrayList<>();
-        
-        for(int i=0; i<=n; i++) adj.add(new ArrayList<>());
-        
-        for(int i=0; i<=n; i++)
-        {
-            for(int v : graph[i])
-            adj.get(i).add(v);
-        }
-        
         List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> current = new ArrayList<>();
         
-        current.add(0);
+        if(graph.length == 0) return ans;
         
-        dfs(0, adj, current, ans, n);
+        Queue<List<Integer>> q = new LinkedList<>();
+        q.add(Arrays.asList(0));
         
-        return ans;
-    }
-    public void dfs(int node, List<List<Integer>> adj, List<Integer> current, List<List<Integer>> ans, int n)
-    {
-        for(int adjacentNode : adj.get(node))
+        while(!q.isEmpty())
         {
-            current.add(adjacentNode);
-            dfs(adjacentNode, adj, current, ans, n);
-            current.remove(current.size()-1);
+            List<Integer> current = new ArrayList<>(q.poll());
+            
+            int node = current.get(current.size()-1);
+            
+            if(node == graph.length-1) ans.add(new ArrayList(current));
+            
+            for(int adjacentNode : graph[node])
+            {
+                current.add(adjacentNode);
+                q.add(new ArrayList(current));
+                current.remove(current.size()-1);
+            }
         }
-        if(node == n) ans.add(new ArrayList(current));
+        return ans;
     }
 }
