@@ -18,15 +18,11 @@ class Solution {
             mst[currentNode] = true;
             for(int nextNode = 0; nextNode < points.length; nextNode++)
             {
-                if(!mst[nextNode])
+                int dist = distance(points[currentNode][0], points[nextNode][0], points[currentNode][1], points[nextNode][1]);
+                if(cost[nextNode] > dist && !mst[nextNode])
                 {
-                    int dist = distance(points[currentNode][0], points[nextNode][0], 
-                                        points[currentNode][1], points[nextNode][1]);
-                    if(cost[nextNode] > dist)
-                    {
-                        cost[nextNode] = dist;
-                        pq.add(new int[]{nextNode, dist});
-                    }
+                    cost[nextNode] = dist;
+                    pq.add(new int[]{nextNode, dist});
                 }
             }
         }
