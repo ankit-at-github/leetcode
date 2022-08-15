@@ -1,18 +1,16 @@
 class Solution {
     public int[] xorQueries(int[] arr, int[][] queries) {
-        int q = queries.length;
-        int[] ans = new int[q];
+        int[] xor = new int[arr.length];
+        xor[0] = arr[0];
         
-        for(int i=0; i<q; i++)
+        for(int i=1; i<arr.length; i++) xor[i] = xor[i-1] ^ arr[i];
+        
+        int[] ans = new int[queries.length];
+        for(int i=0; i<queries.length; i++)
         {
-            ans[i] = findXOR(arr, queries[i][0], queries[i][1]);
+            if(queries[i][0] != 0) ans[i] = xor[queries[i][1]] ^ xor[queries[i][0]-1];
+            else ans[i] = xor[queries[i][1]];
         }
         return ans;
-    }
-    public int findXOR(int[] arr, int start, int end)
-    {
-        int xor = 0;
-        while(start <= end) xor^=arr[start++];
-        return xor;
     }
 }
