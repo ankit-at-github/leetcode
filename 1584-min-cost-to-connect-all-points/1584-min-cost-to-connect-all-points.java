@@ -4,12 +4,12 @@ class Solution {
         pq.add(new int[]{0, 0});
         
         boolean[] mst = new boolean[points.length];
+        
         int[] cost = new int[points.length];
         Arrays.fill(cost, Integer.MAX_VALUE);
         
         cost[0] = 0;
         
-        int total = 0;
         while(!pq.isEmpty())
         {
             int currentNode = pq.peek()[0];
@@ -26,7 +26,7 @@ class Solution {
                 }
             }
         }
-        
+        int total = 0;
         for(int x : cost) total+=x;
         return total;
     }
