@@ -1,40 +1,64 @@
 class Solution {
     public int minCostConnectPoints(int[][] points) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1]-b[1]);
-        pq.add(new int[]{0, 0});
+        int n = points.length;
+        //find all pair
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2]-b[2]);
         
-        boolean[] mst = new boolean[points.length];
+        for(int i=0; i<n; i++)
+        {
+            for(int j=i+1; j<n; j++)
+            {
+                int dist = distance(points[i][0], points[j][0], points[i][1], points[j][1]);
+                pq.add(new int[]{i , j, dist});
+            }
+        }
+        int[] parent = new int[n];
+        int[] rank = new int[n];
         
-        int[] cost = new int[points.length];
-        Arrays.fill(cost, Integer.MAX_VALUE);
+        for(int i=0; i<n; i++) parent[i] = i;
         
-        cost[0] = 0;
+        int cost = 0;
         
         while(!pq.isEmpty())
         {
-            int currentNode = pq.peek()[0];
-            int weight = pq.poll()[1];
+            int u = pq.peek()[0];
+            int v = pq.peek()[1];
+            int w = pq.poll()[2];
             
-            mst[currentNode] = true;
-            for(int nextNode = 0; nextNode < points.length; nextNode++)
+            if(findParent(u, parent) != findParent(v, parent))
             {
-                if(!mst[nextNode])
-                {
-                    int dist = distance(points[currentNode][0], points[nextNode][0], points[currentNode][1], points[nextNode][1]);
-                    if(cost[nextNode] > dist)
-                    {
-                        cost[nextNode] = dist;
-                        pq.add(new int[]{nextNode, dist});
-                    }
-                }
+                cost+=w;
             }
+            union(u, v, rank, parent);
         }
-        int total = 0;
-        for(int x : cost) total+=x;
-        return total;
+        return cost;
     }
     public int distance(int x1, int x2, int y1, int y2)
     {
         return (Math.abs(x1-x2) + Math.abs(y1-y2));
+    }
+    public int findParent(int node, int[] parent)
+    {
+        if(node == parent[node]) return node;
+        return parent[node] = findParent(parent[node], parent);
+    }
+    public void union(int u, int v, int[] rank, int[] parent)
+    {
+        int rootU = findParent(u, parent);
+        int rootV = findParent(v, parent);
+        
+        if(rank[rootU] > rank[rootV])
+        {
+            parent[rootV] = rootU;
+        }
+        else if(rank[rootU] < rank[rootV])
+        {
+            parent[rootU] = rootV;
+        }
+        else
+        {
+            parent[rootU] = rootV;
+            rank[rootV]++;
+        }
     }
 }
