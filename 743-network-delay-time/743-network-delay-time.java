@@ -1,53 +1,43 @@
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        //Creating a graph using adjacency list for storing edge and weights (pair)
         List<List<int[]>> adj = new ArrayList<>();
-        for(int i=0; i<=n; i++)
-            adj.add(new ArrayList<int[]>());
+        for(int i=0; i<=n; i++) adj.add(new ArrayList<int[]>());
         
-        //Inserting edges and Weights
-        for(int i=0; i<times.length; i++)
+        for(int[] time : times)
         {
-            int source = times[i][0];
-            int destination = times[i][1];
-            int weight = times[i][2];
-            adj.get(source).add(new int[]{destination, weight});
+            int u = time[0];
+            int v = time[1];
+            int w = time[2];
+            adj.get(u).add(new int[]{v, w});
         }
         
-        int[] visitTime = new int[n+1];
-        for(int i=0; i<=n; i++) visitTime[i] = Integer.MAX_VALUE;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1]-b[1]);
+        pq.add(new int[]{k, 0});
         
-        return bfs(k, adj, visitTime);
-    }
-    public int bfs(int k, List<List<int[]>> adj, int[] visitTime)
-    {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(k);
-        visitTime[k] = 0;
-        while(!q.isEmpty())
+        int[] signalReceive = new int[n+1];
+        Arrays.fill(signalReceive, Integer.MAX_VALUE);
+        signalReceive[k] = 0;
+        
+        while(!pq.isEmpty())
         {
-            int size = q.size();
-            for(int i=0; i<size; i++)
+            int node = pq.peek()[0];
+            int time = pq.poll()[1];
+            for(int[] adjacent : adj.get(node))
             {
-                int currentNode = q.poll();
-                List<int[]> weightedEdges = adj.get(currentNode);
-                for(int[] p : weightedEdges)
+                int adjacentNode = adjacent[0];
+                int currentTime = adjacent[1];
+                
+                if(time + currentTime < signalReceive[adjacentNode])
                 {
-                    int reachTime = visitTime[currentNode] + p[1];
-                    if(reachTime < visitTime[p[0]])
-                    {
-                        visitTime[p[0]] = reachTime;
-                        q.add(p[0]);
-                    }
+                    signalReceive[adjacentNode] = time + currentTime;
+                    pq.add(new int[]{adjacentNode, signalReceive[adjacentNode]});
                 }
             }
         }
+        
         int maxi = Integer.MIN_VALUE;
-        for(int i=1; i<visitTime.length; i++)
-        {
-            if(visitTime[i] == Integer.MAX_VALUE) return -1;
-            maxi = Math.max(maxi, visitTime[i]);
-        }
-        return maxi;
+        for(int i=1; i<=n; i++) maxi = Math.max(maxi, signalReceive[i]);
+        
+        return maxi==Integer.MAX_VALUE?-1:maxi;
     }
 }
