@@ -12,10 +12,10 @@ class Solution {
         }
         
         previous[src] = 0;
-        current[src] = 0;
         
         for(int i=0; i<=k ;i++)
         {
+            current[src] = 0;
             for(int[] flight : flights)
             {
                 int previous_flight = flight[0];
