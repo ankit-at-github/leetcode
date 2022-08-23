@@ -1,51 +1,52 @@
 class Solution {
-    int directions[][] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-
     public int minimumEffortPath(int[][] heights) {
-        int row = heights.length;
-        int col = heights[0].length;
-        int[][] differenceMatrix = new int[row][col];
-        for (int[] eachRow : differenceMatrix)
-            Arrays.fill(eachRow, Integer.MAX_VALUE);
-        differenceMatrix[0][0] = 0;
-        PriorityQueue<Cell> queue = new PriorityQueue<Cell>((a, b) -> (a.difference.compareTo(b.difference)));
-        boolean[][] visited = new boolean[row][col];
-        queue.add(new Cell(0, 0, differenceMatrix[0][0]));
-
-        while (!queue.isEmpty()) {
-            Cell curr = queue.poll();
-            visited[curr.x][curr.y] = true;
-            if (curr.x == row - 1 && curr.y == col - 1)
-                return curr.difference;
-            for (int[] direction : directions) {
-                int adjacentX = curr.x + direction[0];
-                int adjacentY = curr.y + direction[1];
-                if (isValidCell(adjacentX, adjacentY, row, col) && !visited[adjacentX][adjacentY]) {
-                    int currentDifference = Math.abs(heights[adjacentX][adjacentY] - heights[curr.x][curr.y]);
-                    int maxDifference = Math.max(currentDifference, differenceMatrix[curr.x][curr.y]);
-                    if (differenceMatrix[adjacentX][adjacentY] > maxDifference) {
-                        differenceMatrix[adjacentX][adjacentY] = maxDifference;
-                        queue.add(new Cell(adjacentX, adjacentY, maxDifference));
-                    }
-                }
+        int m = heights.length;
+        int n = heights[0].length;
+        
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2]-b[2]);
+        pq.add(new int[]{0, 0, 0});
+        
+        boolean[][] visited = new boolean[m][n];
+        while(!pq.isEmpty())
+        {
+            int x = pq.peek()[0];
+            int y = pq.peek()[1];
+            int diff = pq.poll()[2];
+            
+            if(x == m-1 && y == n-1) return diff;
+            
+            visited[x][y] = true;
+            
+            //UP
+            if(valid(x-1, y, m, n, visited))
+            {
+                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x-1][y]));
+                pq.add(new int[]{x-1, y, maxdiff});
+            }
+            //DOWN
+            if(valid(x+1, y, m, n, visited))
+            {
+                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x+1][y]));
+                pq.add(new int[]{x+1, y, maxdiff});
+            }
+            //LEFT
+            if(valid(x, y-1, m, n, visited))
+            {
+                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x][y-1]));
+                pq.add(new int[]{x, y-1, maxdiff});
+            }
+            //RIGHT
+            if(valid(x, y+1, m, n, visited))
+            {
+                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x][y+1]));
+                pq.add(new int[]{x, y+1, maxdiff});
             }
         }
-        return differenceMatrix[row - 1][col - 1];
+        return -1;
     }
-
-    boolean isValidCell(int x, int y, int row, int col) {
-        return x >= 0 && x <= row - 1 && y >= 0 && y <= col - 1;
-    }
-}
-
-class Cell {
-    int x;
-    int y;
-    Integer difference;
-
-    Cell(int x, int y, Integer difference) {
-        this.x = x;
-        this.y = y;
-        this.difference = difference;
+    public boolean valid(int x, int y, int m, int n, boolean[][] visited)
+    {
+        if(x < 0 || y < 0 || x >= m || y >= n || visited[x][y]) return false;
+        return true;
     }
 }
