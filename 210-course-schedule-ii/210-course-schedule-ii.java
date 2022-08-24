@@ -21,8 +21,6 @@ class Solution {
         ArrayList<Integer> order = new ArrayList<>();
         while(!q.isEmpty())
         {
-            for(int i=q.size(); i>0; i--)
-            {
                 int node = q.poll();
                 order.add(node);
                 numCourses--;
@@ -31,7 +29,6 @@ class Solution {
                     indegree[adjacentNodes]--;
                     if(indegree[adjacentNodes] == 0) q.add(adjacentNodes);
                 }
-            }
         }
         
         int[] result = {};
