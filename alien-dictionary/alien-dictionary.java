@@ -38,9 +38,6 @@ class Solution {
             }
         }
         
-        System.out.println(graph);
-        System.out.println(indegree);
-        
         Queue<Character> q = new LinkedList<>();
         
         for(Map.Entry<Character, Integer> entry : indegree.entrySet())
