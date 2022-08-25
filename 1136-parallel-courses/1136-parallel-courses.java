@@ -1,41 +1,38 @@
 class Solution {
     public int minimumSemesters(int n, int[][] relations) {
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        List<List<Integer>> adj = new ArrayList<>();
         for(int i=0; i<=n; i++) adj.add(new ArrayList<>());
         
-        //in-degree array
         int[] indegree = new int[n+1];
-        
         for(int[] relation : relations)
         {
-            int u = relation[0];
-            int v = relation[1];
-            adj.get(u).add(v);
-            indegree[v]++;
+            adj.get(relation[0]).add(relation[1]);
+            indegree[relation[1]]++;
         }
         
         Queue<Integer> q = new LinkedList<>();
-        for(int i=1; i<=n; i++)
-        {
-            if(indegree[i] == 0) q.add(i);
-        }
+        for(int i=1; i<=n; i++) if(indegree[i]==0) q.add(i);
         
         int semester = 0;
+        n-=q.size();
         while(!q.isEmpty())
         {
-            for(int i=q.size(); i>=1; i--)
+            for(int i=q.size(); i>0; i--)
             {
                 int course = q.poll();
-                //A course is taken.
-                n--;
-                for(int adjacentCourse : adj.get(course))
+                for(int adjacent : adj.get(course))
                 {
-                    indegree[adjacentCourse]--;
-                    if(indegree[adjacentCourse] == 0) q.add(adjacentCourse);
+                    indegree[adjacent]--;
+                    if(indegree[adjacent] == 0)
+                    {
+                        q.add(adjacent);
+                        n--;
+                    }
                 }
             }
             semester++;
         }
-        return (n == 0 ? semester : -1);
+        return n==0?semester:-1;
+        //return semester;
     }
 }
