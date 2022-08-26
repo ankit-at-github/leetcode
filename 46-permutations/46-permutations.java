@@ -6,7 +6,7 @@ class Solution {
     }
     public void solve(int[] nums, int index, List<List<Integer>> ans)
     {
-        if(index == nums.length)
+        if(index == nums.length-1)
         {
             List<Integer> output = new ArrayList<>();
             for(int x : nums) output.add(x);
