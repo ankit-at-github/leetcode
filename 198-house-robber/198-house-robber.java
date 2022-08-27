@@ -1,26 +1,21 @@
 class Solution {
-    int maxi = Integer.MIN_VALUE;
     public int rob(int[] nums) {
         int n = nums.length;
-        int[] memo = new int[n];
-        Arrays.fill(memo, -1);
         
-        return solve(0, nums, memo);
-    }
-    public int solve(int index, int[] nums, int[] memo)
-    {
-        //no house to examine
-        if(index >= nums.length)
+        //no house
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+        
+        int[] dp = new int[n+1];
+        
+        //one house
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        
+        for(int i=2; i<n; i++)
         {
-            return 0;
+            dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);
         }
-        
-        if(memo[index] != -1) return memo[index];
-        
-        int ans = Math.max(nums[index] + solve(index+2, nums, memo), solve(index+1, nums, memo));
-        
-        memo[index] = ans;
-        
-        return ans;
+        return dp[n-1];
     }
 }
