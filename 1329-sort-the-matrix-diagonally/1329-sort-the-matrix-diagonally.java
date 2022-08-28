@@ -2,7 +2,7 @@ class Solution {
     public int[][] diagonalSort(int[][] mat) {
         int r = mat.length;
         int c = mat[0].length;
-        TreeMap<Integer, PriorityQueue<Integer>> map = new TreeMap<>();
+        Map<Integer, PriorityQueue<Integer>> map = new HashMap<>();
         for(int i=0; i<r; i++)
         {
             for(int j=0; j<c; j++)
