@@ -11,11 +11,13 @@ class Solution {
             if(freq[i] > 0)
             {
                 if(freq[i]%2 !=0) mid = Math.max(mid, i);
+                
+                if(i==0 && sb.length()==0) break;
+                
                 int pair = freq[i]/2;
                 
                 while(pair-- > 0)
                 {
-                    if(i==0 && sb.length()==0) continue;
                     sb.append(i);
                 }
             }
