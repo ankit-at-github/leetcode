@@ -26,9 +26,7 @@ class Solution {
         return ans;
     }
     public double dfs(String source, String destination, HashSet<String> visited, Map<String, Map<String, Double>> adj)
-    {   
-        //System.out.println(source);
-        //System.out.println(val);
+    { 
         if(!adj.containsKey(source)) return -1.0;
         
         if(adj.get(source).containsKey(destination)) return adj.get(source).get(destination);
