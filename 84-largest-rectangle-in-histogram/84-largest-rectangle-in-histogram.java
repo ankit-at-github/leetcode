@@ -1,45 +1,30 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
         int n = heights.length;
-        Stack<Pair> ns = new Stack<>();
         
-        int[] left = new int[n];
-        int[] right = new int[n];
-        
+        int[] leftSmallest = new int[n];
+        int[] rightSmallest = new int[n];
+        Stack<Integer> st = new Stack<>();
+        //getting leftSmallest
         for(int i=0; i<n; i++)
         {
-            while(!ns.isEmpty() && ns.peek().height >= heights[i]) ns.pop();
-            if(ns.isEmpty()) left[i] = -1;
-            else left[i] = ns.peek().index;
-            ns.push(new Pair(heights[i], i));
+            while(!st.isEmpty() && heights[st.peek()] >= heights[i]) st.pop();
+            if(st.isEmpty()) leftSmallest[i] = -1;
+            else leftSmallest[i] = st.peek();
+            st.add(i);
         }
-        
-        ns.clear();
-        
+        st.clear();
+        //getting rightSmallest
         for(int i=n-1; i>=0; i--)
         {
-            while(!ns.isEmpty() && ns.peek().height >= heights[i]) ns.pop();
-            if(ns.isEmpty()) right[i] = n;
-            else right[i] = ns.peek().index;
-            ns.push(new Pair(heights[i], i));
+            while(!st.isEmpty() && heights[st.peek()] >= heights[i]) st.pop();
+            if(st.isEmpty()) rightSmallest[i] = n;
+            else rightSmallest[i] = st.peek();
+            st.add(i);
         }
-        
         int maxi = Integer.MIN_VALUE;
-        for(int i=0; i<n; i++)
-        {
-            int width = (right[i]-left[i]-1);
-            maxi = Math.max(maxi, width*heights[i]);
-        }
-        
+        //getting area
+        for(int i=0; i<n; i++) maxi = Math.max(maxi, (rightSmallest[i]-leftSmallest[i]-1)*heights[i]);
         return maxi;
-    }
-}
-class Pair{
-    int height;
-    int index;
-    Pair(int h, int i)
-    {
-        height = h;
-        index = i;
     }
 }
