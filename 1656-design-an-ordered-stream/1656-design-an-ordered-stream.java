@@ -6,14 +6,13 @@ class OrderedStream {
     }
     
     public List<String> insert(int idKey, String value) {
-        l[idKey-1] = value;
         List<String> ans = new ArrayList<>();
+        l[idKey-1] = value;
         while(l[id]!= null)
         {
             ans.add(l[id]);
             id++;
         }
-        
         return ans;
     }
 }
