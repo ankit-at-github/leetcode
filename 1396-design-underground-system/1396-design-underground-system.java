@@ -13,6 +13,8 @@ class UndergroundSystem {
     public void checkOut(int id, String stationName, int t) {
         Pair<String, Integer> p = in.get(id);
         
+        in.remove(id);
+        
         String routName = p.getKey() + "_" + stationName;
         int timeTaken = t - p.getValue();
         
