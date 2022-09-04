@@ -12,14 +12,12 @@ class BrowserHistory {
     }
     
     public String back(int steps) {
-        int b = Math.min(present, steps);
-        present-=b;
+        present = Math.max(present-steps, 0);
         return browser[present];
     }
     
     public String forward(int steps) {
-        int f = Math.min(right-present, steps);
-        present+=f;
+        present = Math.min(present+steps, right);
         return browser[present];
     }
 }
