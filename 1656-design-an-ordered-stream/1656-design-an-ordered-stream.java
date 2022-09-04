@@ -1,16 +1,16 @@
 class OrderedStream {
-    String[] l;
+    String[] s;
     int id = 0;
     public OrderedStream(int n) {
-        l = new String[n+1];
+        s = new String[n+1];
     }
     
     public List<String> insert(int idKey, String value) {
+        s[idKey-1] = value;
         List<String> ans = new ArrayList<>();
-        l[idKey-1] = value;
-        while(l[id]!= null)
+        while(s[id] != null)
         {
-            ans.add(l[id]);
+            ans.add(s[id]);
             id++;
         }
         return ans;
