@@ -1,34 +1,26 @@
 class BrowserHistory {
 
-    Map<Integer, String> visitt = new HashMap<>();
-    int index = 0;
+    String[] browser = new String[5000];
+    int present = 0, right = 0;
     public BrowserHistory(String homepage) {
-        visitt.put(0, homepage);
+        browser[present] = homepage;
     }
     
     public void visit(String url) {
-        index++;
-        visitt.put(index, url);
-        int i = index+1;
-        while(visitt.containsKey(i)) visitt.remove(i++);
+        browser[++present] = url;
+        right = present;
     }
     
     public String back(int steps) {
-        while(index > 0 && steps > 0)
-        {
-            steps--;
-            index--;
-        }
-        return visitt.get(index);
+        int b = Math.min(present, steps);
+        present-=b;
+        return browser[present];
     }
     
     public String forward(int steps) {
-        while(index < visitt.size()-1 && steps > 0)
-        {
-            steps--;
-            index++;
-        }
-        return visitt.get(index);
+        int f = Math.min(right-present, steps);
+        present+=f;
+        return browser[present];
     }
 }
 
