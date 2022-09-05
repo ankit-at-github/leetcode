@@ -1,16 +1,12 @@
 class Solution {
     public String decodeString(String s) {
         Stack<String> st = new Stack<>();
-        StringBuilder sb = new StringBuilder();
         for(int i=s.length()-1; i>=0; i--)
         {
             if(s.charAt(i) == '[')
             {
                 StringBuilder temp = new StringBuilder();
-                while(!st.peek().equals("]"))
-                {
-                    temp.append(st.pop());
-                }
+                while(!st.peek().equals("]")) temp.append(st.pop());
                 st.pop();
                 st.push(temp.toString());
             }
@@ -30,10 +26,7 @@ class Solution {
                 st.push(temp.toString());
                 i++;
             }
-            else
-            {
-                st.push(Character.toString(s.charAt(i)));
-            }
+            else st.push(Character.toString(s.charAt(i)));
         }
         StringBuilder ans = new StringBuilder();
         while(!st.isEmpty()) ans.append(st.pop());
