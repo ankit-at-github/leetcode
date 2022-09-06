@@ -13,10 +13,7 @@ class Leaderboard {
         for(Map.Entry<Integer, Integer> entry : board.entrySet()) pq.add(entry.getValue());
         
         int sum = 0;
-        while(K-- > 0 && !pq.isEmpty())
-        {
-            sum+=pq.poll();
-        }
+        while(K-- > 0 && !pq.isEmpty()) sum+=pq.poll();
         return sum;
     }
     
