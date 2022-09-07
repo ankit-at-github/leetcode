@@ -1,19 +1,19 @@
 class Solution {
     public int reverse(int x) {
+        long ans = 0;
         boolean negative = false;
-        if(x < 0) negative = true;
-        x = Math.abs(x);
-        
-        long num = 0;
-        
+        if(x < 0)
+        {
+            x*=-1;
+            negative = true;
+        }
         while(x > 0)
         {
-            int digit = x%10;
-            num = num*10 + digit;
+            ans = ans*10+x%10;
             x/=10;
         }
-        if(negative) num*=-1;
-        if(num > Integer.MAX_VALUE || num < Integer.MIN_VALUE) return 0;
-        return (int)num;
+        if(negative) ans = ans*-1;
+        if(ans < Integer.MIN_VALUE || ans > Integer.MAX_VALUE) return 0;
+        return (int)ans;
     }
 }
