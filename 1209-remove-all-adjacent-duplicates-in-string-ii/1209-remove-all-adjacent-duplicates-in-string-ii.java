@@ -3,9 +3,10 @@ class Solution {
         Stack<Pair> st = new Stack<>();
         for(int i=0; i<s.length(); i++)
         {
+            //either stack is empty or new character found
             if(st.isEmpty() || s.charAt(i) != st.peek().c)
             {
-                st.push(new Pair(s.charAt(i), 1));
+                st.add(new Pair(s.charAt(i), 1));
             }
             else
             {
@@ -16,19 +17,17 @@ class Solution {
         while(!st.isEmpty())
         {
             Pair p = st.pop();
-            for(int i=0; i<p.count; i++)
-            sb.append(p.c);
+            for(int i=0; i<p.count; i++) sb.append(p.c);
         }
-        sb.reverse();
-        return sb.toString();
+        return sb.reverse().toString();
     }
-    class Pair{
-        int count;
-        char c;
-        Pair(char _c, int _count)
-        {
-            c = _c;
-            count = _count;
-        }
+}
+class Pair{
+    char c;
+    int count;
+    Pair(char _c, int _count)
+    {
+        c = _c;
+        count = _count;
     }
 }
