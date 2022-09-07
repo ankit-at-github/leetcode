@@ -10,13 +10,13 @@ class Solution {
                 if(board[i][j] == word.charAt(0))
                 {
                     visited = new boolean[m][n];
-                    if(dfs(m, n, i, j, word, 0, board, visited)) return true;
+                    if(dfs(i, j, m, n, 0, word, board, visited)) return true;
                 }
             }
         }
         return false;
     }
-    public boolean dfs(int m, int n, int x, int y, String word, int index, char[][] board, boolean[][] visited)
+    public boolean dfs(int x, int y, int m, int n, int index, String word, char[][] board, boolean[][] visited)
     {
         if(index == word.length()) return true;
         
@@ -24,14 +24,13 @@ class Solution {
         
         visited[x][y] = true;
         
-        boolean result = 
-            dfs(m, n, x, y+1, word, index+1, board, visited) || 
-            dfs(m, n, x+1, y, word, index+1, board, visited) || 
-            dfs(m, n, x, y-1, word, index+1, board, visited) || 
-            dfs(m, n, x-1, y, word, index+1, board, visited);
+        if(dfs(x, y+1, m, n, index+1, word, board, visited) || 
+           dfs(x+1, y, m, n, index+1, word, board, visited) || 
+           dfs(x, y-1, m, n, index+1, word, board, visited) || 
+           dfs(x-1, y, m, n, index+1, word, board, visited)) return true;
         
         visited[x][y] = false;
         
-        return result;
+        return false;
     }
 }
