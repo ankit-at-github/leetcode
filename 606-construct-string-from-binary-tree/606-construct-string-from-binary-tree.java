@@ -15,16 +15,30 @@
  */
 class Solution {
     public String tree2str(TreeNode root) {
-        return preOrder(root);
+        StringBuilder sb = new StringBuilder();
+        preorder(root, sb);
+        return sb.toString();
     }
-    public String preOrder(TreeNode root)
+    public void preorder(TreeNode root, StringBuilder sb)
     {
-        if(root == null) return "";
+        if(root == null) return;
         
-        if(root.left == null && root.right == null) return root.val+"";
+        if(root.left == null && root.right == null)
+        {
+            sb.append(root.val);
+            return;
+        }
         
-        if(root.right == null) return root.val+"("+preOrder(root.left)+")";
+        sb.append(root.val);
+        sb.append('(');
+        preorder(root.left, sb);
+        sb.append(')');
         
-        return root.val+"("+preOrder(root.left)+")("+preOrder(root.right)+")";
+        if(root.right!=null)
+        {
+            sb.append('(');
+            preorder(root.right, sb);
+            sb.append(')');
+        }
     }
 }
