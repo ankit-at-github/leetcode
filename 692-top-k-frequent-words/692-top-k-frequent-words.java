@@ -17,7 +17,6 @@ class Solution {
                 ans.add(pq.poll());
                 k--;
             }
-            if(k == 0) break;
         }
         return ans;
     }
