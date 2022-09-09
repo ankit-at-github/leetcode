@@ -19,13 +19,10 @@ class Solution {
         {
             for(int j=i+1; j<n; j++)
             {
-                if(Math.abs(time[i]-time[j]) <= 60 && name[i].equals(name[j]))
+                if(Math.abs(time[i]-time[j]) <= 60 && name[i].equals(name[j]) && !city[i].equals(city[j]))
                 {
-                    if(!city[i].equals(city[j]))
-                    {
-                        st.add(i);
-                        st.add(j);
-                    }
+                    st.add(i);
+                    st.add(j);
                 }
             }
         }
