@@ -15,9 +15,8 @@ class Solution {
         //Node dummy = head;
         if(head == null) return head;
         flat(head);
-        Node temp = dummy.next;
         dummy.next.prev = null;
-        return temp;
+        return dummy.next;
     }
     public Node flat(Node head)
     {
