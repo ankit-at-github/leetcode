@@ -22,39 +22,18 @@ class Solution {
             st2.add(l2.val);
             l2 = l2.next;
         }
-        int carry = 0;
-        ListNode dummy = new ListNode(-1);
-        ListNode head = dummy;
+        ListNode list = new ListNode(0);
+        int sum = 0;
         while(!st1.isEmpty() || !st2.isEmpty())
         {
-            int a = st1.isEmpty()?0:st1.pop();
-            int b = st2.isEmpty()?0:st2.pop();
-            int total = a+b+carry;
-            if(total > 9) carry = 1;
-            else carry = 0;
-            ListNode current = new ListNode(total%10);
-            dummy.next = current;
-            dummy = current;
+            if(!st1.isEmpty()) sum+=st1.pop();
+            if(!st2.isEmpty()) sum+=st2.pop();
+            list.val = sum%10;
+            ListNode head = new ListNode(sum/10);
+            head.next = list;
+            list = head;
+            sum/=10;
         }
-        if(carry == 1)
-        {
-            dummy.next = new ListNode(1);
-        }
-        return reverse(head.next);
-    }
-    public ListNode reverse(ListNode head)
-    {
-        ListNode prev = null;
-        ListNode current = head.next;
-        while(current!=null)
-        {
-            head.next = prev;
-            prev = head;
-            head = current;
-            current = current.next;
-        }
-        head.next = prev;
-        prev = head;
-        return prev;
+        return list.val==0?list.next:list;
     }
 }
