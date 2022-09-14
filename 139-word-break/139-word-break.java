@@ -1,24 +1,23 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> set = new HashSet<>(wordDict);
-        boolean[] dp = new boolean[s.length()+1];
-        //empty string
-        dp[0] = true;
+        Set<String> st = new HashSet<>(wordDict);
+        return solve(s, 0, st, new Boolean[s.length()]);
+    }
+    public boolean solve(String s, int index, Set<String> st, Boolean[] memo)
+    {
+        if(index == s.length()) return true;
         
-        for(int i=1; i<=s.length(); i++)
+        if(memo[index]!=null) return memo[index];
+        
+        StringBuilder sb = new StringBuilder();
+        for(int i = index; i<s.length(); i++)
         {
-            //checking substring
-            for(int j=0; j<i; j++)
+            sb.append(s.charAt(i));
+            if(st.contains(sb.toString()))
             {
-                String sub = s.substring(j, i);
-                if(set.contains(sub) && dp[j])
-                {
-                    dp[i] = true;
-                    break;
-                }
+                if(solve(s, i+1, st, memo)) return memo[i] = true;
             }
         }
-        
-        return dp[s.length()];
+        return memo[index] = false;
     }
 }
