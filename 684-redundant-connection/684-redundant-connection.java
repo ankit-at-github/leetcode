@@ -1,46 +1,41 @@
 class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         int n = edges.length;
-        List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0; i<=n; i++) adj.add(new ArrayList<>());
-        
-        int[] ans = new int[2];
+        int[] rank = new int[n+1];
+        int[] parent = new int[n+1];
+        for(int i=0; i<=n; i++) parent[i] = i;
         
         for(int[] edge : edges)
         {
-            adj.get(edge[0]).add(edge[1]);
-            adj.get(edge[1]).add(edge[0]);
-            
-            boolean[] visited = new boolean[n+1];
-            if(cycleBFS(edge[0], visited, adj))
-            {
-                ans[0] = edge[0];
-                ans[1] = edge[1];
-                return ans;
-            }
+            if(!union(edge[0], edge[1], rank, parent)) return edge;
         }
         return new int[]{};
     }
-    public boolean cycleBFS(int node, boolean[] visited, List<List<Integer>> adj)
+    public int findParent(int node, int[] parent)
     {
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{node, -1});
-        visited[node] = true;
+        if(node == parent[node]) return node;
+        return parent[node] = findParent(parent[node], parent);
+    }
+    public boolean union(int u, int v, int[] rank, int[] parent)
+    {
+        int rootU = findParent(u, parent);
+        int rootV = findParent(v, parent);
         
-        while(!q.isEmpty())
+        if(rootU == rootV) return false;
+        
+        if(rank[rootU] < rank[rootV])
         {
-            int current = q.peek()[0];
-            int parent = q.poll()[1];
-            for(int adjacentNode : adj.get(current))
-            {
-                if(visited[adjacentNode] && adjacentNode != parent) return true;
-                if(!visited[adjacentNode])
-                {
-                    visited[adjacentNode] = true;
-                    q.add(new int[]{adjacentNode, current});
-                }
-            }
+            parent[rootU] = rootV;
         }
-        return false;
+        else if(rank[rootU] > rank[rootV])
+        {
+            parent[rootV] = rootU;
+        }
+        else
+        {
+            parent[rootU] = rootV;
+            rank[rootV]++;
+        }
+        return true;
     }
 }
