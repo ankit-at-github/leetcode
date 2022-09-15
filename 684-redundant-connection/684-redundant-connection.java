@@ -8,11 +8,11 @@ class Solution {
         
         for(int[] edge : edges)
         {
-            //undirected graph
             adj.get(edge[0]).add(edge[1]);
             adj.get(edge[1]).add(edge[0]);
+            
             boolean[] visited = new boolean[n+1];
-            if(cycleDFS(edge[0], -1, visited, adj))
+            if(cycleBFS(edge[0], visited, adj))
             {
                 ans[0] = edge[0];
                 ans[1] = edge[1];
@@ -21,17 +21,24 @@ class Solution {
         }
         return new int[]{};
     }
-    public boolean cycleDFS(int node, int parent, boolean[] visited, List<List<Integer>> adj)
+    public boolean cycleBFS(int node, boolean[] visited, List<List<Integer>> adj)
     {
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{node, -1});
         visited[node] = true;
-        for(int adjacentNode : adj.get(node))
+        
+        while(!q.isEmpty())
         {
-            //checking cycle condition:
-            //if the adjacent node is not parent and already visited then cycle.
-            if(visited[adjacentNode] && adjacentNode != parent) return true;
-            if(!visited[adjacentNode])
+            int current = q.peek()[0];
+            int parent = q.poll()[1];
+            for(int adjacentNode : adj.get(current))
             {
-                if(cycleDFS(adjacentNode, node, visited, adj)) return true;
+                if(visited[adjacentNode] && adjacentNode != parent) return true;
+                if(!visited[adjacentNode])
+                {
+                    visited[adjacentNode] = true;
+                    q.add(new int[]{adjacentNode, current});
+                }
             }
         }
         return false;
