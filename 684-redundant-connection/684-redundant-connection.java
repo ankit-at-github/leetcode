@@ -2,12 +2,13 @@ class Solution {
     public int[] findRedundantConnection(int[][] edges) {
         int n = edges.length;
         List<List<Integer>> adj = new ArrayList<>();
-        for(int i=0; i<=n; i++) adj.add(new ArrayList());
+        for(int i=0; i<=n; i++) adj.add(new ArrayList<>());
         
         int[] ans = new int[2];
         
         for(int[] edge : edges)
         {
+            //undirected graph
             adj.get(edge[0]).add(edge[1]);
             adj.get(edge[1]).add(edge[0]);
             boolean[] visited = new boolean[n+1];
@@ -25,7 +26,9 @@ class Solution {
         visited[node] = true;
         for(int adjacentNode : adj.get(node))
         {
-            if(visited[adjacentNode] && adjacentNode!=parent) return true;
+            //checking cycle condition:
+            //if the adjacent node is not parent and already visited then cycle.
+            if(visited[adjacentNode] && adjacentNode != parent) return true;
             if(!visited[adjacentNode])
             {
                 if(cycleDFS(adjacentNode, node, visited, adj)) return true;
