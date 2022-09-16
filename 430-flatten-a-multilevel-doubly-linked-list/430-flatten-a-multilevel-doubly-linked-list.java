@@ -9,33 +9,32 @@ class Node {
 */
 
 class Solution {
-    Node head1 = new Node(-1);
-    Node dummy = head1;
     public Node flatten(Node head) {
-        //Node dummy = head;
         if(head == null) return head;
-        flat(head);
-        dummy.next.prev = null;
-        return dummy.next;
-    }
-    public Node flat(Node head)
-    {
-        if(head == null) return null;
         
-        //Node prev = head1;
-        Node current = new Node(head.val);
-        head1.next = current;
-        current.prev = head1;
-        head1 = current;
-        
-        if(head.child!=null)
+        Node p = head;
+        while(p!=null)
         {
-            Node temp = head.next;
-            head.next = flat(head.child);
-            head.child = null;
-            head.next = temp;
+            if(p.child!=null)
+            {
+                Node right = p.next;
+                p.next = flatten(p.child);
+                p.next.prev = p;
+                p.child = null;
+                
+                //take p to last value to connect it with right part
+                
+                while(p.next!=null) p = p.next;
+                
+                if(right!=null)
+                {
+                    p.next = right;
+                    p.next.prev = p;
+                    p = p.next;
+                }
+            }
+            p = p.next;
         }
-        head.next = flat(head.next);
         return head;
     }
 }
