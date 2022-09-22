@@ -1,7 +1,7 @@
 class LRUCache {
     Node head = new Node(0,0);
     Node tail = new Node(0,0);
-    Map<Integer, Node> hmap = new HashMap<>();
+    Map<Integer, Node> map = new HashMap<>();
     int capacity;
     public LRUCache(int capacity) {
         this.capacity = capacity;
@@ -10,31 +10,32 @@ class LRUCache {
     }
     
     public int get(int key) {
-        if(hmap.containsKey(key))
+        if(!map.containsKey(key)) return -1;
+        else
         {
-            //Now, this key won't be LRU this key will become MFU so remove it and insert it
-            Node node = hmap.get(key);
-            remove(node);
-            insert(node);
-            return node.value;
+            Node current = map.get(key);
+            remove(current);
+            insert(current);
+            return current.val;
         }
-        else return -1;
     }
     
     public void put(int key, int value) {
-        if(hmap.containsKey(key))
+        if(map.containsKey(key))
         {
-            remove(hmap.get(key));
+            remove(map.get(key));
         }
-        if(hmap.size() == capacity)
+        if(capacity == map.size())
         {
+            //LRU
             remove(tail.prev);
         }
         insert(new Node(key, value));
     }
     public void insert(Node current)
     {
-        hmap.put(current.key, current);
+        map.put(current.key, current);
+        
         current.next = head.next;
         current.next.prev = current;
         head.next = current;
@@ -42,21 +43,21 @@ class LRUCache {
     }
     public void remove(Node current)
     {
-        hmap.remove(current.key);
+        map.remove(current.key);
+        
         current.prev.next = current.next;
         current.next.prev = current.prev;
     }
 }
 class Node{
     Node prev, next;
-    int key, value;
+    int key, val;
     Node(int k, int v)
     {
         key = k;
-        value = v;
+        val = v;
     }
 }
-
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);
