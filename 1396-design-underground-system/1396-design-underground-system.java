@@ -13,13 +13,12 @@ class UndergroundSystem {
     public void checkOut(int id, String stationName, int t) {
         Pair<String, Integer> p = checkin.get(id);
         
-        checkin.remove(id);
-        
         String routeName = p.getKey() + "_" + stationName;
-        int timeTaken = t - p.getValue();
+        int duration = t - p.getValue();
         
         Pair<Double, Integer> route = routeMap.getOrDefault(routeName, new Pair(0.0, 0));
-        routeMap.put(routeName, new Pair(route.getKey() + timeTaken, route.getValue()+1));
+        routeMap.put(routeName, new Pair(duration + route.getKey(), route.getValue()+1));
+        
     }
     
     public double getAverageTime(String startStation, String endStation) {
