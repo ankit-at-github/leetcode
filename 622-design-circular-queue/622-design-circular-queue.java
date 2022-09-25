@@ -32,13 +32,11 @@ class MyCircularQueue {
     
     public int Front() {
         if(isEmpty()) return -1;
-        front = front % k;
         return q[front];
     }
     
     public int Rear() {
         if(isEmpty()) return -1;
-        rear = rear % k;
         return q[rear];
     }
     
