@@ -1,50 +1,54 @@
 class MyCircularQueue {
     int[] q;
-    int head;
-    int tail;
+    int front, rear, k, n;
     public MyCircularQueue(int k) {
         q = new int[k];
-        head = 0;
-        tail = 0;
+        front = 0;
+        rear = -1;
+        this.k = k;
+        n = 0;
     }
     
     public boolean enQueue(int value) {
-        if(tail == q.length && head == 0) return false;
+        if(isFull()) return false;
         
-        q[tail++] = value;
+        rear = (rear + 1) % k;
+        q[rear] = value;
+        
+        n++;
         
         return true;
     }
     
     public boolean deQueue() {
         if(isEmpty()) return false;
-        while(head < tail-1)
-        {
-            q[head] = q[head+1];
-            head++;
-        }
-        head = 0;
-        tail--;
+        
+        front = (front + 1) % k;
+        
+        n--;
+        
         return true;
     }
     
     public int Front() {
-        if(head == tail) return -1;
-        return q[head];
+        if(isEmpty()) return -1;
+        front = front % k;
+        return q[front];
     }
     
     public int Rear() {
-        if(head == tail) return -1;
-        return q[tail-1];
+        if(isEmpty()) return -1;
+        rear = rear % k;
+        return q[rear];
     }
     
     public boolean isEmpty() {
-        if(head == tail) return true;
+        if(n == 0) return true;
         return false;
     }
     
     public boolean isFull() {
-        if(tail == q.length) return true;
+        if(n == k) return true;
         return false;
     }
 }
