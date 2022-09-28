@@ -10,23 +10,26 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode slow = head;
-        ListNode fast = head;
-        while(n > 0)
+        ListNode temp = head;
+        int length = 0;
+        while(temp!=null)
         {
-            fast = fast.next;
-            n--;
+            length++;
+            temp = temp.next;
         }
+        if(length - n == 0) return head.next;
         
-        //this means you want to delete the first node
-        if(fast == null) return head.next;
+        recursion(head, length - n);
         
-        while(fast.next!=null)
-        {
-            slow = slow.next;
-            fast = fast.next;
-        }
-        slow.next = slow.next.next;
         return head;
+    }
+    public void recursion(ListNode head, int remove)
+    {
+        if(head == null) return;
+        
+        recursion(head.next, remove-1);
+        
+        if(remove == 1) head.next = head.next.next;
+        
     }
 }
