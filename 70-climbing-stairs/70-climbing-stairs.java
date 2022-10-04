@@ -1,12 +1,17 @@
 class Solution {
     public int climbStairs(int n) {
-        int prev2 = 1, prev1 = 1;
-        for(int i=2; i<=n; i++)
-        {
-            int current = prev1+prev2;
-            prev2 = prev1;
-            prev1 = current;
-        }
-        return prev1;
+        //you either take one step or two step
+        //Recursion
+        //only one step to reach the top so only one way.
+        int[] dp = new int[n+1];
+        return climb(n, dp);
+    }
+    public int climb(int n, int[] dp)
+    {
+        if(n<=1) return 1;
+        
+        if(dp[n] != 0) return dp[n];
+        
+        return dp[n] = climb(n-1, dp) + climb(n-2, dp);
     }
 }
