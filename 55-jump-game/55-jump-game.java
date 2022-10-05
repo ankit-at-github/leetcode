@@ -4,7 +4,7 @@ class Solution {
     }
     public boolean jump(int index, int[] nums, Boolean[] dp)
     {
-        if(index == nums.length-1) return dp[index] = true;
+        if(index == nums.length-1) return true;
         
         if(dp[index] != null) return dp[index];
         
