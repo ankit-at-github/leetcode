@@ -1,6 +1,6 @@
 class Solution {
     public boolean canJump(int[] nums) {
-        return jump(0, nums, new Boolean[nums.length+1]);
+        return jump(0, nums, new Boolean[nums.length]);
     }
     public boolean jump(int index, int[] nums, Boolean[] dp)
     {
@@ -10,9 +10,15 @@ class Solution {
         
         for(int i=1; i<=nums[index]; i++)
         {
-            if(jump(index+i, nums, dp)) return dp[i] = true;
+            if(jump(index+i, nums, dp))
+            {
+                dp[index] = true;
+                return dp[index];
+            }
         }
         
-        return dp[index] = false;
+        dp[index] = false;
+        
+        return dp[index];
     }
 }
