@@ -12,13 +12,9 @@ class Solution {
         {
             if(jump(index+i, nums, dp))
             {
-                dp[index] = true;
-                return dp[index];
+                return dp[index] = true;
             }
         }
-        
-        dp[index] = false;
-        
-        return dp[index];
+        return dp[index] = false;
     }
 }
