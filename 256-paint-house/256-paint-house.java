@@ -5,7 +5,7 @@ class Solution {
         int[][] dp = new int[n][4];
         for(int i=0; i<n; i++)
         {
-            for(int j=0; j<4; j++) dp[i][j] = -1;
+            for(int j=0; j<=3; j++) dp[i][j] = -1;
         }
         return min(dp, n-1, 3, costs);
     }
