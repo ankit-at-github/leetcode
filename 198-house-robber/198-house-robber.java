@@ -2,18 +2,21 @@ class Solution {
     public int rob(int[] nums) {
         //Botttom - UP
         int n = nums.length;
-        int[] dp = new int[n];
-        dp[0] = nums[0];
+        int prev1 = nums[0];
+        int prev2 = 0;
         
         for(int i=1; i<n; i++)
         {
             int pick = nums[i];
-            if(i > 1) pick+=dp[i-2];
+            if(i > 1) pick+=prev2;
             
-            int notpick = dp[i-1];
+            int notpick = prev1;
             
-            dp[i] = Math.max(pick, notpick);
+            int current = Math.max(pick, notpick);
+            
+            prev2 = prev1;
+            prev1 = current;
         }
-        return dp[n-1];
+        return prev1;
     }
 }
