@@ -1,13 +1,17 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for(int x : nums) map.put(x, map.getOrDefault(x, 0)+1);
-        int[] ans = new int[2];
-        int index = 0;
-        for(Map.Entry<Integer, Integer> entry : map.entrySet())
+        int aXORb = 0;
+        for(int num : nums) aXORb^=num;
+        
+        //getting rightmost set bit
+        int rightsetbit = aXORb & -aXORb;
+        
+        int a = 0;
+        for(int num : nums)
         {
-            if(entry.getValue() == 1) ans[index++] = entry.getKey();
+            if((num & rightsetbit) != 0) a^=num;
         }
-        return ans;
+        
+        return new int[]{a, aXORb^a};
     }
 }
