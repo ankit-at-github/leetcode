@@ -5,24 +5,27 @@ class Solution {
         
         if(s%2 != 0) return false;
         
-        int target = s/2;
-        
-        Boolean[][] memo = new Boolean[nums.length][target+1];
-        
-        return subset(nums.length-1, nums, target, memo);
+        return subset(nums, s/2);
     }
-    public boolean subset(int index, int[] nums, int target, Boolean[][] memo)
+    public boolean subset(int[] nums, int k)
     {
-        if(target == 0) return true;
+        int n = nums.length;
+        boolean[][] dp = new boolean[n][k+1];
         
-        if(index == 0) return nums[0] == target;
+        for(int index=0; index<n; index++) dp[index][0] = true;
         
-        if(memo[index][target] != null) return memo[index][target];
-        
-        boolean notTake = subset(index-1, nums, target, memo);
-        boolean take = false;
-        if(nums[index] <= target) take = subset(index-1, nums, target-nums[index], memo);
-        
-        return memo[index][target] = (notTake||take);
+        for(int index=1; index<n; index++)
+        {
+            for(int target=1; target<k+1; target++)
+            {
+                boolean notTake = dp[index-1][target];
+                boolean take = false;
+                
+                if(nums[index] <= target) take = dp[index-1][target-nums[index]];
+                
+                dp[index][target] = (notTake||take);;
+            }
+        }
+        return dp[n-1][k];
     }
 }
