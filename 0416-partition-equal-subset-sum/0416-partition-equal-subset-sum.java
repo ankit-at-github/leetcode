@@ -10,22 +10,27 @@ class Solution {
     public boolean subset(int[] nums, int k)
     {
         int n = nums.length;
-        boolean[][] dp = new boolean[n][k+1];
+        boolean[] prev = new boolean[k+1];
         
-        for(int index=0; index<n; index++) dp[index][0] = true;
+        prev[0] = true;
+        
+        if(nums[0] <= k) prev[nums[0]] = true;
         
         for(int index=1; index<n; index++)
         {
+            boolean[] curr = new boolean[k+1];
+            curr[0] = true;
             for(int target=1; target<k+1; target++)
             {
-                boolean notTake = dp[index-1][target];
+                boolean notTake = prev[target];
+                
                 boolean take = false;
+                if(nums[index] <= target) take = prev[target-nums[index]];
                 
-                if(nums[index] <= target) take = dp[index-1][target-nums[index]];
-                
-                dp[index][target] = (notTake||take);;
+                curr[target] = (notTake||take);;
             }
+            prev = curr;
         }
-        return dp[n-1][k];
+        return prev[k];
     }
 }
