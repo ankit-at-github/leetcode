@@ -3,7 +3,7 @@ class Solution {
         int n = coins.length;
         int[][] dp = new int[n][amount+1];
         
-        for(int index=0; index<n; index++) dp[index][0] = 1;
+        //for(int index=0; index<n; index++) dp[index][0] = 1;
         
         for(int money=0; money<amount+1; money++)
         {
