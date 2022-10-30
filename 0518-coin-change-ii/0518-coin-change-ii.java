@@ -11,9 +11,7 @@ class Solution {
         return counts(n-1, coins, amount, memo);
     }
     public int counts(int index, int[] coins, int amount, int[][] memo)
-    {
-        if(amount == 0) return 1;
-        
+    {   
         if(index == 0)
         {
             if(amount % coins[0] == 0) return 1;
