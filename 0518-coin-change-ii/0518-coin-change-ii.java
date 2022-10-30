@@ -1,30 +1,28 @@
 class Solution {
     public int change(int amount, int[] coins) {
         int n = coins.length;
-        int[][] memo = new int[n][amount+1];
+        int[][] dp = new int[n][amount+1];
         
-        for(int index=0; index<n; index++)
+        for(int index=0; index<n; index++) dp[index][0] = 1;
+        
+        for(int money=0; money<amount+1; money++)
         {
-            for(int money=0; money<amount+1; money++) memo[index][money] = -1;
+            if(money % coins[0] == 0) dp[0][money] = 1;
+            else dp[0][money] = 0;
         }
         
-        return counts(n-1, coins, amount, memo);
-    }
-    public int counts(int index, int[] coins, int amount, int[][] memo)
-    {   
-        if(index == 0)
+        for(int index=1; index<n; index++)
         {
-            if(amount % coins[0] == 0) return 1;
-            return 0;
+            for(int money=0; money<amount+1; money++)
+            {
+                int notTake = dp[index-1][money];
+                
+                int take = 0;
+                if(coins[index] <= money) take = dp[index][money-coins[index]];
+                
+                dp[index][money] = notTake+take;
+            }
         }
-        
-        if(memo[index][amount] != -1) return memo[index][amount];
-        
-        int notTake = counts(index-1, coins, amount, memo);
-        
-        int take = 0;
-        if(coins[index] <= amount) take = counts(index, coins, amount-coins[index], memo);
-        
-        return memo[index][amount] = notTake+take;
+        return dp[n-1][amount];
     }
 }
