@@ -10,12 +10,19 @@
  */
 class Solution {
     public int getDecimalValue(ListNode head) {
-        int sum = 0;
+        List<Integer> l = new ArrayList<>();
         while(head!=null)
         {
-            sum*=2;
-            sum+=head.val;
+            l.add(head.val);
             head = head.next;
+        }
+        
+        int count = l.size()-1;
+        int sum = 0;
+        for(int x : l)
+        {
+            sum+= x*Math.pow(2, count);
+            count--;
         }
         return sum;
     }
