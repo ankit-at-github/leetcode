@@ -9,7 +9,7 @@ class Solution {
             
             if(map.containsKey(60-rem)) count+=map.get(60-rem);
             if(rem == 0) map.put(60, map.getOrDefault(60, 0)+1);
-            map.put(rem, map.getOrDefault(rem, 0)+1);
+            else map.put(rem, map.getOrDefault(rem, 0)+1);
         }
         return count;
     }
