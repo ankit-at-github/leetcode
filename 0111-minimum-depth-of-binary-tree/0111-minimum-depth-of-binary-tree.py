@@ -8,20 +8,25 @@ class Solution:
     def minDepth(self, root: Optional[TreeNode]) -> int:
         if not root:return 0
         
-        mini = float('inf')
+#         mini = float('inf')
         def helper(node, depth):
-            nonlocal mini
             if not node.left and not node.right:
-                mini = min(mini, depth)
+                # mini = min(mini, depth)
+                
+                return depth
                 
             if node.left:
-                helper(node.left, depth+1)
+                mini_left = helper(node.left, depth+1)
+            else:
+                mini_left = float('inf')
                 
             if node.right:
-                helper(node.right, depth+1)
+                mini_right = helper(node.right, depth+1)
+            else:
+                mini_right = float('inf')
                 
-            return 
-        helper(root, 1)
+            return min(mini_left, mini_right)
+        mini = helper(root, 1)
         return mini
         
         
