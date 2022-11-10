@@ -3,31 +3,26 @@ class Solution {
         int total = 0;
         for(int x : nums) total+=x;
         
-        int s2 = total-target;
-        if(s2 < 0 || s2%2!=0) return 0;
+        int tar = total+target;
         
-        int n = nums.length;
-        int k = s2/2;
-        int[][] dp = new int[n][k+1];
+        if(tar%2 != 0) return 0;
         
-        if(nums[0] == 0) dp[0][0] = 2;
-        else dp[0][0] = 1;
-        
-        if(nums[0]!=0 && nums[0] <= k) dp[0][nums[0]] = 1;
-        
-        for(int index=1; index<n; index++)
+        return ways(nums.length-1, nums, tar/2);
+    }
+    public int ways(int index, int[] nums, int target)
+    {
+        if(index == 0)
         {
-            for(int tar=0; tar<k+1; tar++)
-            {
-                int notTake = dp[index-1][tar];
-                
-                int take = 0;
-                if(nums[index] <= tar) take = dp[index-1][tar-nums[index]];
-                
-                dp[index][tar] = notTake+take;
-            }
+            if(target == 0 && nums[0] == 0) return 2;
+            if(target == 0 || nums[0] == target) return 1;
+            return 0;
         }
         
-        return dp[n-1][k];
+        int notTake = ways(index-1, nums, target);
+        
+        int take = 0;
+        if(nums[index] <= target) take = ways(index-1, nums, target-nums[index]);
+        
+        return notTake+take;
     }
 }
