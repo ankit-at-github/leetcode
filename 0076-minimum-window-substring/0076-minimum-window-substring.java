@@ -16,7 +16,7 @@ class Solution {
             {
                 if(end-start < minWindow)
                 {
-                    minWindow = end-start+1;
+                    minWindow = end-start;
                     minStart = start;
                 }
                 
@@ -27,6 +27,6 @@ class Solution {
                 start++;
             }
         }
-        return minWindow == Integer.MAX_VALUE?"":s.substring(minStart, minStart+minWindow-1);
+        return minWindow == Integer.MAX_VALUE?"":s.substring(minStart, minStart+minWindow);
     }
 }
