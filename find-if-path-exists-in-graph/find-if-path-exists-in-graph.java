@@ -1,7 +1,7 @@
 class Solution {
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-        if(edges.length == 0 || source == destination) return true;
-        
+        if(n == 0 || source == destination) return true;
+        //creating graph
         List<List<Integer>> adj = new ArrayList<>();
         for(int i=0; i<n; i++) adj.add(new ArrayList<>());
         
@@ -10,23 +10,27 @@ class Solution {
             adj.get(edge[0]).add(edge[1]);
             adj.get(edge[1]).add(edge[0]);
         }
-        boolean[] visited = new boolean[n];
-        return bfs(source, destination, adj, visited);
+        
+        return PathExist(n, source, destination, adj);
+        
     }
-    public boolean bfs(int source, int destination, List<List<Integer>> adj, boolean[] visited)
+    public boolean PathExist(int n, int s, int d, List<List<Integer>> adj)
     {
         Queue<Integer> q = new LinkedList<>();
-        q.add(source);
-        visited[source] = true;
+        q.add(s);
+        
+        boolean[] visited = new boolean[n];
+        visited[s] = true;
         
         while(!q.isEmpty())
         {
-            int node = q.poll();
-            for(int adjacentNode : adj.get(node))
+            int current = q.poll();
+            for(int adjacentNode : adj.get(current))
             {
+                if(adjacentNode == d) return true;
+                
                 if(!visited[adjacentNode])
                 {
-                    if(adjacentNode == destination) return true;
                     visited[adjacentNode] = true;
                     q.add(adjacentNode);
                 }
