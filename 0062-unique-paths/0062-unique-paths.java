@@ -12,10 +12,11 @@ class Solution {
                     int right = 0, down = 0;
                     if(i > 0) down = dp[i-1][j];
                     if(j > 0) right = dp[i][j-1];
-                    dp[i][j] = right+down;
+                    
+                    dp[i][j] = down+right;
                 }
             }
-        }
+        }   
         return dp[m-1][n-1];
     }
 }
