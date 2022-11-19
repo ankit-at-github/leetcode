@@ -3,25 +3,23 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
         
-        int[][] dp = new int[m][n];
+        int[][] memo = new int[m][n];
+        for(int i=0; i<m; i++) Arrays.fill(memo[i], -1);
         
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                if(i == 0 && j == 0) dp[i][j] = grid[i][j];
-                else
-                {
-                    int right = 100000000, down = 100000000;
-                    
-                    if(j > 0) right = grid[i][j] + dp[i][j-1];
-                    if(i > 0) down = grid[i][j] + dp[i-1][j];
-                    
-                    dp[i][j] = Math.min(right, down);
-                }
-            }
-        }
+        return minSum(m-1, n-1, grid, memo);
+    }
+    public int minSum(int m, int n, int[][] grid, int[][] memo)
+    {
+        if(m < 0 || n < 0) return 1000000;
         
-        return dp[m-1][n-1];
+        //base case
+        if(m == 0 && n == 0) return grid[m][n];
+        
+        if(memo[m][n] != -1) return memo[m][n];
+        
+        int up = grid[m][n] + minSum(m-1, n, grid, memo);
+        int left = grid[m][n] + minSum(m, n-1, grid, memo);
+        
+        return memo[m][n] = Math.min(up, left);
     }
 }
