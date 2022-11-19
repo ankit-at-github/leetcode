@@ -1,17 +1,15 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        int aXORb = 0;
-        for(int num : nums) aXORb^=num;
+        int aXORb=0;
+        for(int n : nums) aXORb^=n;
         
-        //getting rightmost set bit
-        int rightsetbit = aXORb & -aXORb;
+        int rightSetBit = aXORb & -aXORb;
         
         int a = 0;
         for(int num : nums)
         {
-            if((num & rightsetbit) != 0) a^=num;
+            if((num&rightSetBit) != 0) a^=num;
         }
-        
         return new int[]{a, aXORb^a};
     }
 }
