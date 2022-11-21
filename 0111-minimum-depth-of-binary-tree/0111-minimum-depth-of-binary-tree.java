@@ -21,8 +21,6 @@ class Solution {
     {
         if(root == null) return 0;
         
-        if(root.left == null && root.right == null) return 1;
-        
         if(root.left == null) return 1 + minHeight(root.right);
         if(root.right == null) return 1 + minHeight(root.left);
         
