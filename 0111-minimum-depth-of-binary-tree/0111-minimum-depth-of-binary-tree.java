@@ -15,16 +15,18 @@
  */
 class Solution {
     public int minDepth(TreeNode root) {
-        return minD(root);
+        return minHeight(root);
     }
-    public int minD(TreeNode root)
-    {   
-        if(root==null) return 0;
+    public int minHeight(TreeNode root)
+    {
+        if(root == null) return 0;
         
-        if(root.left == null) return 1 + minD(root.right);
-        if(root.right == null) return 1 + minD(root.left);
+        if(root.left == null && root.right == null) return 1;
         
-        return 1+Math.min(minD(root.left),minD(root.right));
+        if(root.left == null) return 1 + minHeight(root.right);
+        if(root.right == null) return 1 + minHeight(root.left);
+        
+        return 1 + Math.min(minHeight(root.left), minHeight(root.right));
         
     }
 }
