@@ -1,7 +1,6 @@
 class Solution {
     public boolean wordPattern(String pattern, String s) {
         Map<Character, String> map = new HashMap<>();
-        Set<String> st = new HashSet<>();
         String[] word = s.split(" ");
         
         if(word.length != pattern.length()) return false;
@@ -14,9 +13,8 @@ class Solution {
             }
             else
             {
-                if(st.contains(word[i])) return false;
+                if(map.containsValue(word[i])) return false;
                 map.put(pattern.charAt(i), word[i]);
-                st.add(word[i]);
             }
         }
         return true;
