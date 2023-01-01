@@ -4,18 +4,24 @@ class Solution {
         
         for(String s : strs)
         {
-            char[] charArray = s.toCharArray();
-            Arrays.sort(charArray);
+            int[] freq = new int[26];
+            for(char c : s.toCharArray()) freq[c-'a']++;
             
-            String sb = new String(charArray);
+            StringBuilder sb = new StringBuilder();
             
-            if(!map.containsKey(sb))
+            for(int i=0; i<26; i++)
             {
-                map.put(sb, new ArrayList<String>());
+                sb.append('#');
+                sb.append(freq[i]);
             }
             
-            map.get(sb).add(s);
+            String key = sb.toString();
+            
+            if(!map.containsKey(key)) map.put(key, new ArrayList<String>());
+            
+            map.get(key).add(s);
         }
+        
         List<List<String>> ans = new ArrayList<>();
         
         for(List<String> l : map.values()) ans.add(l);
