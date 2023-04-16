@@ -1,14 +1,19 @@
 class Solution {
     public boolean isPalindrome(String s) {
-        s = s.trim();
-        s = s.toLowerCase();
+        s = s.trim().toLowerCase();
+        
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<s.length(); i++)
+        for(char c : s.toCharArray()) if(Character.isLetterOrDigit(c)) sb.append(c);
+        
+        int left = 0, right = sb.length()-1;
+        
+        while(left < right)
         {
-            if(Character.isLetterOrDigit(s.charAt(i))) sb.append(s.charAt(i));
+            if(sb.charAt(left) != sb.charAt(right)) return false;
+            left++;
+            right--;
         }
-        String reverse = sb.toString();
-        sb.reverse();
-        return reverse.equals(sb.toString());
+        
+        return true;
     }
 }
