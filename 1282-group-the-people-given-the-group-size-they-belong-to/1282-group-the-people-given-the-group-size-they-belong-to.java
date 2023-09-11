@@ -10,9 +10,9 @@ class Solution {
             if(!map.containsKey(group)) map.put(group, new ArrayList<Integer>());
             map.get(group).add(i);
         }
+        List<Integer> current = new ArrayList<>();
         for(int group : groups)
         {
-            List<Integer> current = new ArrayList<>();
             for(int n : map.get(group))
             {
                 current.add(n);
