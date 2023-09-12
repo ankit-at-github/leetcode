@@ -1,24 +1,23 @@
 class Solution {
     public int minDeletions(String s) {
-        int[] freq = new int[26];
-        for(int i=0; i<s.length(); i++) freq[s.charAt(i)-'a']++;
+        int[] map = new int[26];
+        for(char c : s.toCharArray()) map[c-'a']++;
         
-        Arrays.sort(freq);
+        Arrays.sort(map);
         
-        //The expectation of next frequency would be less than the previous frequency seen.
-        //Re-adjust the frequency if current frequency is less than expected frequency.
-        int exp = freq[25]-1;
         int deleteCount = 0;
+        int expectation = map[25]-1;
+        //The expected count for previous string would be less than the previous count seen, taking 1 count less
+        //than the last count of character, if last count is 0 then expected count becomes negative update it 
+        //while traversing the map
         for(int i=24; i>=0; i--)
         {
-            //before this all elements are zero so break;
-            if(freq[i] == 0) break;
+            if(map[i] == 0) break;
             
-            if(freq[i] > exp) deleteCount+= freq[i] - exp;
-            else exp = freq[i];
+            if(map[i] > expectation) deleteCount+=map[i]-expectation;
+            else expectation = map[i];
             
-            if(exp > 0) exp--; //Lowest expectation can be zero, not negative.
-            
+            if(expectation > 0) expectation--;
         }
         return deleteCount;
     }
