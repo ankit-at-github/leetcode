@@ -3,50 +3,48 @@ class Solution {
         int m = heights.length;
         int n = heights[0].length;
         
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2]-b[2]);
-        pq.add(new int[]{0, 0, 0});
-        
         boolean[][] visited = new boolean[m][n];
+        int effort = 0;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[2]-b[2]);
+        pq.add(new int[]{0,0,0});
         while(!pq.isEmpty())
         {
-            int x = pq.peek()[0];
-            int y = pq.peek()[1];
-            int diff = pq.poll()[2];
+            int[] values = pq.poll();
+            int x = values[0];
+            int y = values[1];
+            int dist = values[2];
             
-            if(x == m-1 && y == n-1) return diff;
+            effort = Math.max(effort, dist);
+            
+            if(x==m-1 && y==n-1) return effort;
             
             visited[x][y] = true;
-            
-            //UP
-            if(valid(x-1, y, m, n, visited))
+            //Left
+            if(validPath(x, y-1, m, n, visited))
             {
-                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x-1][y]));
-                pq.add(new int[]{x-1, y, maxdiff});
+                pq.add(new int[]{x,y-1,Math.abs(heights[x][y] - heights[x][y-1])});
             }
-            //DOWN
-            if(valid(x+1, y, m, n, visited))
+            //Right
+             if(validPath(x, y+1, m, n, visited))
             {
-                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x+1][y]));
-                pq.add(new int[]{x+1, y, maxdiff});
+                pq.add(new int[]{x,y+1,Math.abs(heights[x][y] - heights[x][y+1])});
             }
-            //LEFT
-            if(valid(x, y-1, m, n, visited))
+            //Top
+             if(validPath(x-1, y, m, n, visited))
             {
-                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x][y-1]));
-                pq.add(new int[]{x, y-1, maxdiff});
+                pq.add(new int[]{x-1,y,Math.abs(heights[x][y] - heights[x-1][y])});
             }
-            //RIGHT
-            if(valid(x, y+1, m, n, visited))
+            //Down
+             if(validPath(x+1, y, m, n, visited))
             {
-                int maxdiff = Math.max(diff, Math.abs(heights[x][y] - heights[x][y+1]));
-                pq.add(new int[]{x, y+1, maxdiff});
+                pq.add(new int[]{x+1,y,Math.abs(heights[x][y] - heights[x+1][y])});
             }
         }
-        return -1;
+        return effort;
     }
-    public boolean valid(int x, int y, int m, int n, boolean[][] visited)
+    public boolean validPath(int x, int y, int m, int n, boolean[][] visited)
     {
-        if(x < 0 || y < 0 || x >= m || y >= n || visited[x][y]) return false;
+        if(x < 0 || y < 0 || x >= m || y >= n || visited[x][y] == true) return false;
         return true;
     }
 }
