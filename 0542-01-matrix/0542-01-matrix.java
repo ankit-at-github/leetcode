@@ -16,6 +16,9 @@ class Solution {
                 }
             }
         }
+        //Travelling in all direction
+        int[] delRow = {-1, 0, 1, 0};
+        int[] delCol = {0, +1, 0, -1};
         while(!q.isEmpty())
         {
             int[] values = q.poll();
@@ -24,37 +27,18 @@ class Solution {
             int d = values[2];
             
             ans[x][y] = d;
-    
-            if(validPath(x-1, y, m, n, visited))
+            
+            for(int i=0; i<4; i++)
             {
-                visited[x-1][y] = true;
-                if(mat[x-1][y] == 1) q.add(new int[]{x-1, y, d+1});
-                else q.add(new int[]{x-1, y, d});
-            }
-            if(validPath(x+1, y, m, n, visited))
-            {
-                visited[x+1][y] = true;
-                if(mat[x+1][y] == 1) q.add(new int[]{x+1, y, d+1});
-                else q.add(new int[]{x+1, y, d});
-            }
-            if(validPath(x, y-1, m, n, visited))
-            {
-                visited[x][y-1] = true;
-                if(mat[x][y-1] == 1) q.add(new int[]{x, y-1, d+1});
-                else q.add(new int[]{x, y-1, d});
-            }
-            if(validPath(x, y+1, m, n, visited))
-            {
-                visited[x][y+1] = true;
-                if(mat[x][y+1] == 1) q.add(new int[]{x, y+1, d+1});
-                else q.add(new int[]{x, y+1, d});
+                int nRow = x + delRow[i];
+                int nCol = y + delCol[i];
+                
+                if(nRow < 0 || nCol < 0 || nRow >= m || nCol >= n || visited[nRow][nCol] == true) continue;
+                
+                visited[nRow][nCol] = true;
+                q.add(new int[]{nRow, nCol, d+1});
             }
         }
         return ans;
-    }
-    public boolean validPath(int x, int y, int m, int n, boolean[][] visited)
-    {
-        if(x < 0 || y < 0 || x >= m || y >= n || visited[x][y] == true) return false;
-        return true;
     }
 }
