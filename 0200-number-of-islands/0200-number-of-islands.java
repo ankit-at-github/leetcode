@@ -18,12 +18,13 @@ class Solution {
     }
     public void dfs(int x, int y, int m, int n, char[][] grid)
     {
-        //edge case
         if(x < 0 || y < 0 || x >= m || y >= n || grid[x][y] == '0') return;
+        
         grid[x][y] = '0';
-        dfs(x, y+1, m, n, grid);
+        
+        dfs(x-1, y, m, n, grid);
         dfs(x+1, y, m, n, grid);
         dfs(x, y-1, m, n, grid);
-        dfs(x-1, y, m, n, grid);
+        dfs(x, y+1, m, n, grid);
     }
 }
