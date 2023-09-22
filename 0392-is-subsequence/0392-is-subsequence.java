@@ -1,12 +1,12 @@
 class Solution {
     public boolean isSubsequence(String s, String t) {
-        Stack<Character> st = new Stack<>();
-        for(char c : s.toCharArray()) st.add(c);
-        for(int i=t.length()-1; i>=0; i--)
+        if(s.length()==0) return true;
+        int left = 0;
+        for(int i=0; i<t.length(); i++)
         {
-            if(!st.isEmpty() && t.charAt(i) == st.peek()) st.pop();
+            if(left < s.length() && s.charAt(left) == t.charAt(i)) left++;
         }
-        if(!st.isEmpty()) return false;
+        if(left!=s.length()) return false;
         return true;
     }
 }
