@@ -1,9 +1,9 @@
 class Solution {
     public char findTheDifference(String s, String t) {
-        //difference sum
-        int sum1 = 0, sum2=0;
-        for(int i=0; i<s.length(); i++) sum1+=s.charAt(i);
-        for(int i=0; i<t.length(); i++) sum2+=t.charAt(i);
-        return (char)(sum2-sum1);
+        //xor
+        char ch = 0;
+        for(int i=0; i<s.length(); i++) ch^=s.charAt(i);
+        for(int i=0; i<t.length(); i++) ch^=t.charAt(i);
+        return ch;
     }
 }
