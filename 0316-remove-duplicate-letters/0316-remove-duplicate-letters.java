@@ -1,28 +1,25 @@
 class Solution {
     public String removeDuplicateLetters(String s) {
-        int[] freq = new int[26];
-        for(char ch : s.toCharArray()) freq[ch-'a']++;
+        //Storing last Index of each character
+        int[] lastIndex = new int[26];
+        for(int i=0; i<s.length(); i++) lastIndex[s.charAt(i) - 'a'] = i;
         
-        Stack<Character> st = new Stack<>();
         boolean[] visited = new boolean[26];
-        
+        Stack<Character> st = new Stack<>();
         for(int i=0; i<s.length(); i++)
         {
-            freq[s.charAt(i)-'a']--;
+            if(visited[s.charAt(i) - 'a']) continue;
             
-            if(!visited[s.charAt(i)-'a'])
+            while(!st.isEmpty() && st.peek() > s.charAt(i) && lastIndex[st.peek() - 'a'] > i)
             {
-                while(!st.isEmpty() && s.charAt(i) < st.peek() && freq[st.peek()-'a'] > 0)
-                {
-                    visited[st.pop()-'a'] = false;
-                }
-                st.push(s.charAt(i));
-                visited[s.charAt(i)-'a'] = true;
+                visited[st.pop() - 'a'] = false;
             }
+            st.push(s.charAt(i));
+            visited[s.charAt(i) - 'a'] = true;
         }
-        
-        StringBuilder ans = new StringBuilder();
-        while(!st.isEmpty()) ans.append(st.pop());
-        return ans.reverse().toString();
+        StringBuilder sb = new StringBuilder();
+        while(!st.isEmpty()) sb.append(st.pop());
+        sb.reverse();
+        return sb.toString();
     }
 }
