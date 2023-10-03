@@ -5,14 +5,7 @@ class Solution {
         boolean[] dfsVisited = new boolean[v];
         for(int i=0; i<v; i++)
         {
-            if(!visited[i])
-            {
-                if(dfs(i, visited, dfsVisited, graph))
-                {
-                    //ans.add(i);
-                }
-                
-            }
+            if(!visited[i]) dfs(i, visited, dfsVisited, graph);
         }
         List<Integer> ans = new ArrayList<>();
         for(int i=0; i<dfsVisited.length; i++) if(!dfsVisited[i]) ans.add(i);
