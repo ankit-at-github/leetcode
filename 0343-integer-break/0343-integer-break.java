@@ -6,7 +6,7 @@ class Solution {
     }
     public int helper(int n, int[] memo)
     {
-        if(n == 0) return 1;
+        if(n == 1) return 1;
         
         if(memo[n] != 0) return memo[n];
         
