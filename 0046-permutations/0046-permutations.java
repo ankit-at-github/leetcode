@@ -13,7 +13,7 @@ class Solution {
         }
         for(int i=0; i<nums.length; i++)
         {
-            if(!current.isEmpty() && current.contains(nums[i])) continue;
+            if(current.contains(nums[i])) continue;
             current.add(nums[i]);
             solve(nums, current, ans);
             current.remove(current.size()-1);
