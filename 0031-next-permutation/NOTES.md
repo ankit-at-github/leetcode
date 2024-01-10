@@ -1,1 +1,1 @@
-​
+i>=0 is not required as while finding pivot index you are already making sure that there is one number greater than number at pivot index.
