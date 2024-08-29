@@ -1,38 +1,33 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        //1. Find Pivot
-        int pivot = findPivot(nums);
-        //This means numbers is in decreasing order
-        if(pivot == -1)
-            reverse(nums, 0, nums.length-1);
-        else
-        {
-            //2. Find swap index
-            int i = nums.length-1;
-            while(nums[pivot] >= nums[i]) i--;
-            
-            swap(nums, pivot, i);
-            
-            reverse(nums, pivot+1, nums.length-1);
+        int pivotIndex = -1;
+        int n = nums.length;
+        for(int i=n-2; i>=0; i--){
+            if(nums[i] < nums[i+1]){
+                pivotIndex = i;
+                break;
+            }
+        }
+        if(pivotIndex == -1){
+            reverse(nums, 0, n-1);
+        }
+        else{
+            int swapIndex = n-1;
+            while(nums[swapIndex] <= nums[pivotIndex]) swapIndex--;
+            swap(nums, pivotIndex, swapIndex);
+            reverse(nums, pivotIndex+1, n-1);
         }
     }
-    int findPivot(int[] nums)
-    {
-        int i = nums.length-1;
-        while(i > 0 && nums[i] <= nums[i-1]) i--;
-        return i-1;
+    public void swap(int[] nums, int pivotIndex, int swapIndex){
+        int temp = nums[pivotIndex];
+        nums[pivotIndex] = nums[swapIndex];
+        nums[swapIndex] = temp;
     }
-    void swap(int[] nums, int a, int b)
-    {
-        int temp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = temp;
-    }
-    void reverse(int[] nums, int start, int end)
-    {
-        while(start < end)
-        {
-            swap(nums, start++, end--);
+    public void reverse(int[] nums, int start, int end){
+        while(start < end){
+            swap(nums, start, end);
+            start++;
+            end--;
         }
     }
 }
