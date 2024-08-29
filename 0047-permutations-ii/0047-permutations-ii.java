@@ -1,30 +1,21 @@
 class Solution {
     public List<List<Integer>> permuteUnique(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        List<Integer> output = new ArrayList<>();
-        
         Arrays.sort(nums);
-        
+        List<List<Integer>> ansList = new ArrayList<>();
         boolean[] visited = new boolean[nums.length];
-        
-        solve(nums, visited, output, ans);
-        
-        return ans;
+        solve(nums, new ArrayList<Integer>(), ansList, visited);
+        return ansList;
     }
-    public void solve(int[] nums, boolean[] visited, List<Integer> output, List<List<Integer>> ans)
-    {
-        if(output.size() == nums.length) ans.add(new ArrayList(output));
-        
-        for(int i=0; i<nums.length; i++)
-        {
-            if(visited[i]) continue;
-            
-            if(i > 0 && nums[i] == nums[i-1] && !visited[i-1]) continue;
-            
-            output.add(nums[i]);
+    public void solve(int[] nums, List<Integer> intermediateList, List<List<Integer>> ans, boolean[] visited){
+        if(intermediateList.size() == nums.length){
+            ans.add(new ArrayList(intermediateList));
+        }
+        for(int i=0; i<nums.length; i++){
+            if(visited[i] || (i > 0 && nums[i] == nums[i-1] && !visited[i-1])) continue;
             visited[i] = true;
-            solve(nums, visited, output, ans);
-            output.remove(output.size()-1);
+            intermediateList.add(nums[i]);
+            solve(nums, intermediateList, ans, visited);
+            intermediateList.remove(intermediateList.size()-1);
             visited[i] = false;
         }
     }
