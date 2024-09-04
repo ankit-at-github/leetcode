@@ -14,9 +14,11 @@ class Solution {
         result.add(Arrays.asList(start, end));
         int length = result.size();
         int[][] ans = new int[length][2];
-        for(int i=0; i<length; i++){
-                ans[i][0] = result.get(i).get(0);
-                ans[i][1] = result.get(i).get(1);
+        int index = 0;
+        for(List<Integer> interval : result){
+                ans[index][0] = interval.get(0);
+                ans[index][1] = interval.get(1);
+            index++;
         }
         return ans;
     }
