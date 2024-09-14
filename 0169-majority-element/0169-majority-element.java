@@ -9,11 +9,6 @@ class Solution {
             if(nums[i] == majorityElement) count++;
             else count--;
         }
-        count = 0;
-        for(int n : nums){
-            if(n == majorityElement) count++;
-        }
-        if(count > nums.length/2) return majorityElement;
-        else return -1;
+        return majorityElement;
     }
 }
