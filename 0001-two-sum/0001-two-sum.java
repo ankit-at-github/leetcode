@@ -6,6 +6,7 @@ class Solution {
             if(hashMap.containsKey(nums[i])){
                 ans[0] = hashMap.get(nums[i]);
                 ans[1] = i;
+                return ans;
             }
             hashMap.put(target - nums[i], i);
         }
