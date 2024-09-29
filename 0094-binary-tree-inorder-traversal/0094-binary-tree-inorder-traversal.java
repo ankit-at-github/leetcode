@@ -20,15 +20,13 @@ class Solution {
         Stack<TreeNode> st = new Stack<>();
         TreeNode current = root;
         while(current!=null || !st.isEmpty()){
-            if(current != null){
+            while(current != null){
                 st.push(current);
                 current = current.left;
             }
-            else{
-                current = st.pop();
-                ans.add(current.val);
-                current = current.right;
-            }
+            current = st.pop();
+            ans.add(current.val);
+            current = current.right;
         }
         return ans;
     }
