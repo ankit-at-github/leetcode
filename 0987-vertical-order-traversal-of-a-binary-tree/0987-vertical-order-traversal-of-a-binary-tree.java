@@ -38,8 +38,8 @@ class Solution {
                 int axis = t.axis;
                 int level = t.level;
                 
-                if(!tmap.containsKey(axis)) tmap.put(axis, new TreeMap<Integer, PriorityQueue<Integer>>());
-                if(!tmap.get(axis).containsKey(level)) tmap.get(axis).put(level, new PriorityQueue<Integer>());
+                if(!tmap.containsKey(axis)) tmap.put(axis, new TreeMap());
+                if(!tmap.get(axis).containsKey(level)) tmap.get(axis).put(level, new PriorityQueue());
                 
                 tmap.get(axis).get(level).add(current.val);
                 
