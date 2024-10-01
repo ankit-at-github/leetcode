@@ -9,18 +9,18 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return lca(root, p, q);
+        return LCA(root, p, q);
     }
-    public TreeNode lca(TreeNode root, TreeNode p, TreeNode q)
-    {   
-        if(root == null || root == p || root == q) return root;
+    public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q){
+        if(root == null) return root;
         
-        TreeNode left = lca(root.left, p, q);
-        TreeNode right = lca(root.right, p, q);
+        if(root.val == p.val || root.val == q.val) return root;
+        
+        TreeNode left = LCA(root.left, p, q);
+        TreeNode right = LCA(root.right, p, q);
         
         if(left == null) return right;
-        if(right == null) return left;
-        
-        return root;
+        else if(right == null) return left;
+        else return root;
     }
 }
