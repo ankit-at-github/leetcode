@@ -20,15 +20,8 @@ class Solution {
     public boolean targetSum(TreeNode root, int target){
         if(root == null) return false;
         
-        if(root.left == null && root.right == null){
-            if((target - root.val) == 0) return true;
-            return false;
-        }
+        if(root.left == null && root.right == null && target - root.val == 0) return true;
         
-        boolean left = targetSum(root.left, target-root.val);
-        boolean right = targetSum(root.right, target-root.val);
-        
-        if(left || right) return true;
-        return false;
+        return targetSum(root.left, target-root.val) || targetSum(root.right, target-root.val);
     }
 }
