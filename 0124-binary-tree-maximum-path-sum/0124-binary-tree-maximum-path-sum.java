@@ -23,12 +23,12 @@ class Solution {
     public int mps(TreeNode root, int[] ans){
         if(root == null) return 0;
         
-        int left = mps(root.left, ans);
-        int right = mps(root.right, ans);
+        int left = Math.max(0, mps(root.left, ans));
+        int right = Math.max(0, mps(root.right, ans));
         
         //If splitting on a node, calculating path sum
         ans[0] = Math.max(ans[0], root.val + left + right);
         
-        return Math.max(root.val + Math.max(left, right), 0);
+        return root.val + Math.max(left, right);
     }
 }
