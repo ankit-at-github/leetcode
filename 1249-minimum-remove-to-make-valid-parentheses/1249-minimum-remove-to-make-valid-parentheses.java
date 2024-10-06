@@ -8,7 +8,7 @@ class Solution {
                 counter++;
             }
             else if(s.charAt(i) == ')'){
-                if(counter == 0 || st.isEmpty()) st.push(i);
+                if(counter == 0) st.push(i);
                 else{
                     st.pop();
                     counter--;
