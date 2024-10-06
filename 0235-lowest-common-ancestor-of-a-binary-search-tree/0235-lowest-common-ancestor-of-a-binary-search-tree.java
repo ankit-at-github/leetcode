@@ -13,13 +13,8 @@ class Solution {
         return LCA(root, p, q);
     }
     public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q){
-        if(root == null || root.val == p.val || root.val == q.val) return root;
-        
-        TreeNode left = LCA(root.left, p, q);
-        TreeNode right = LCA(root.right, p, q);
-        
-        if(left == null) return right;
-        else if(right == null) return left;
+        if(p.val < root.val && q.val < root.val) return LCA(root.left, p, q);
+        else if(p.val > root.val && q.val > root.val) return LCA(root.right, p, q);
         else return root;
     }
 }
