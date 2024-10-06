@@ -1,34 +1,30 @@
 class Solution {
     public boolean exist(char[][] board, String word) {
-        for(int i=0; i<board.length; i++)
-        {
-            for(int j=0; j<board[0].length; j++)
-            {
-                if(board[i][j] == word.charAt(0))
-                {
-                    boolean[][] visited = new boolean[board.length][board[0].length];
-                    if(dfs(i, j, board, visited, 0, word)) return true;
+        int m = board.length;
+        int n = board[0].length;
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(board[i][j] == word.charAt(0)){
+                    if(wordSearch(board, i, j, m, n, 0, word)) return true;
                 }
             }
         }
         return false;
     }
-    public boolean dfs(int x, int y, char[][] board, boolean[][] visited, int index, String word)
-    {
-        if(index >= word.length()) return true;
+    public boolean wordSearch(char[][] board, int x, int y, int m, int n, int index, String word){
+        if(x < 0 || y < 0 || x >=m || y>= n || board[x][y] != word.charAt(index)) return false;
         
-        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || visited[x][y] ||
-           board[x][y] != word.charAt(index)) return false;
+        if(index == word.length()-1) return true;
         
-        visited[x][y] = true;
+        board[x][y] = '#';
         
-        if(dfs(x, y+1, board, visited, index+1, word) ||
-           dfs(x+1, y, board, visited, index+1, word) ||
-           dfs(x-1, y, board, visited, index+1, word) ||
-           dfs(x, y-1, board, visited, index+1, word)) return true;
+        boolean right = wordSearch(board, x, y+1, m, n, index+1, word);
+        boolean down = wordSearch(board, x+1, y, m, n, index+1, word);
+        boolean left = wordSearch(board, x, y-1, m, n, index+1, word);
+        boolean up = wordSearch(board, x-1, y, m, n, index+1, word);
         
-        visited[x][y] = false;
+        board[x][y] = word.charAt(index);
         
-        return false;
+        return (right||down||left||up);
     }
 }
