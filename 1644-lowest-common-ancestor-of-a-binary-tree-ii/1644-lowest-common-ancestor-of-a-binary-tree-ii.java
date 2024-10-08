@@ -10,8 +10,9 @@
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         TreeNode lca =  LCA(root, p, q);
-        if(search(lca, p.val) && search(lca, q.val)) return lca;
-        else return null;
+        if(lca == p) return LCA(p, q, q) == q ? lca : null;
+        else if(lca == q) return LCA(q, p, p) == p ? lca : null;
+        else return lca;
     }
     public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q){
         if(root == null || root.val == p.val || root.val == q.val) return root;
@@ -22,12 +23,5 @@ class Solution {
         if(left == null) return right;
         else if(right == null) return left;
         else return root;
-    }
-    public boolean search(TreeNode root, int key){
-        if(root == null) return false;
-        if(root.val == key) return true;
-        boolean left = search(root.left, key);
-        boolean right = search(root.right, key);
-        return (left || right);
     }
 }
