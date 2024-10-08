@@ -10,17 +10,12 @@ class Node {
 
 class Solution {
     public Node lowestCommonAncestor(Node p, Node q) {
-        if(p == null || q == null) return null;
-        Node root = p;
-        while(root.parent != null) root = root.parent;
-        return LCA(root, p, q);
-    }
-    public Node LCA(Node root, Node p, Node q){
-        if(root == null || root.val == p.val || root.val == q.val) return root;
-        Node left = LCA(root.left, p, q);
-        Node right = LCA(root.right, p, q);
-        if(left == null) return right;
-        else if(right == null) return left;
-        else return root;
+        Node p1 = p;
+        Node p2 = q;
+        while(p1!=p2){
+            p1 = p1 == null ? q : p1.parent;
+            p2 = p2 == null ? p : p2.parent;
+        }
+        return p1;
     }
 }
