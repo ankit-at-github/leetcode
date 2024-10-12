@@ -15,8 +15,9 @@ class Solution {
             }
         }
         StringBuilder canonicalPath = new StringBuilder();
-        for(String dir : st){
-            canonicalPath.append("/").append(dir);
+        while(!st.isEmpty()){
+            canonicalPath.insert(0, st.pop());
+            canonicalPath.insert(0, "/");
         }
         return canonicalPath.length() > 0 ? canonicalPath.toString() : "/";
     }
