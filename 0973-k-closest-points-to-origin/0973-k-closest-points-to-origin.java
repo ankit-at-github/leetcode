@@ -25,7 +25,7 @@ class Solution {
         return ans;
     }
     public int getEdistance(int x1, int y1){
-        int val = (x1-0)*(x1-0) + (y1-0)*(y1-0);
+        int val = x1*x1 + y1*y1;
         return val;
     }
 }
