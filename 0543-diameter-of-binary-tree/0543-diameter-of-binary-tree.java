@@ -15,20 +15,24 @@
  */
 class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
-        //diameter may or may not pass from root
-        int[] diameter = new int[1];
-        maxDiameter(root, diameter);
-        return diameter[0];
+        int[] d = new int[1];
+        diameter(root, d);
+        return d[0];
     }
-    public int maxDiameter(TreeNode root, int[] diameter)
-    {
+    public void diameter(TreeNode root, int[] d){
+        if(root == null) return;
+        
+        int left = getHeight(root.left);
+        int right = getHeight(root.right);
+        
+        d[0] = Math.max(d[0], left+right);
+        
+        diameter(root.left, d);
+        diameter(root.right, d);
+        
+    }
+    public int getHeight(TreeNode root){
         if(root == null) return 0;
-        
-        int left = maxDiameter(root.left, diameter);
-        int right = maxDiameter(root.right, diameter);
-        
-        diameter[0] = Math.max(diameter[0], left+right);
-        
-        return 1+Math.max(left, right);
+        return 1 + Math.max(getHeight(root.left), getHeight(root.right));
     }
 }
