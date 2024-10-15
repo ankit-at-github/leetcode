@@ -21,8 +21,11 @@ class Solution {
     }
     public void sum(TreeNode root, int low, int high, int[] ans){
         if(root == null) return;
-        sum(root.left, low, high, ans);
         if(root.val >= low && root.val <= high) ans[0]+=root.val;
-        sum(root.right, low, high, ans);
+        
+        if(low < root.val)
+            sum(root.left, low, high, ans);
+        if(root.val < high)
+            sum(root.right, low, high, ans);
     }
 }
