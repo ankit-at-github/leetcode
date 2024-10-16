@@ -7,7 +7,6 @@ class Solution {
         
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{0, 0});
-        int mini = Integer.MAX_VALUE;
         int level = 0;
         while(!q.isEmpty()){
             for(int i=q.size(); i>0; i--){
@@ -20,7 +19,7 @@ class Solution {
                 grid[x][y] = 1;
                 
                 if(x == m-1 && y == n-1){
-                    mini = Math.min(mini, level);
+                    return level+1;
                 }
                 
                 //8 directional
@@ -35,6 +34,6 @@ class Solution {
             }
             level++;
         }
-        return mini==Integer.MAX_VALUE ? -1 : mini+1 ;
+        return -1 ;
     }
 }
