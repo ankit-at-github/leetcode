@@ -5,7 +5,6 @@ class Solution {
         
         if(grid[0][0] == 1 || grid[m-1][n-1] == 1) return -1;
         
-        boolean[][] visited = new boolean[m][n];
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{0, 0, 0});
         int mini = Integer.MAX_VALUE;
@@ -16,9 +15,9 @@ class Solution {
                 int y = arr[1];
                 int len = arr[2];
                 
-                if(x < 0 || y < 0 || x >= m || y >= n || visited[x][y] || grid[x][y] == 1) continue;
+                if(x < 0 || y < 0 || x >= m || y >= n || grid[x][y] == 1) continue;
                 
-                visited[x][y] = true;
+                grid[x][y] = 1;
                 
                 if(x == m-1 && y == n-1){
                     mini = Math.min(mini, len);
