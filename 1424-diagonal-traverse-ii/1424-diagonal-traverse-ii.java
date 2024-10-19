@@ -1,19 +1,29 @@
 class Solution {
     public int[] findDiagonalOrder(List<List<Integer>> nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        int total = 0;
-        for(int row = 0; row < nums.size(); row++){
-            total+=nums.get(row).size();
-            for(int col = 0; col < nums.get(row).size(); col++){
-                if(res.size() <= row+col) res.add(row+col, new ArrayList());
-                res.get(row+col).add(0, nums.get(row).get(col));
+        Queue<int[]> q = new LinkedList<>();
+        q.add(new int[]{0,0});
+        List<Integer> ans = new ArrayList<>();
+        while(!q.isEmpty()){
+            int[] index = q.poll();
+            int x = index[0];
+            int y = index[1];
+            ans.add(nums.get(x).get(y));
+            
+            //checking if next row exist in current column
+            if(y == 0 && x + 1 < nums.size()){
+                q.add(new int[]{x+1, y});
             }
+            //checking if next element exist in current row (Right Side)
+            if(y+1 < nums.get(x).size()){
+                q.add(new int[]{x, y+1});
+            }
+            
         }
-        int[] ans = new int[total];
-        int index = 0;
-        for(List<Integer> l : res){
-            for(int n : l) ans[index++] = n;
+        int[] result = new int[ans.size()];
+        int i = 0;
+        for(int num : ans){
+            result[i++] = num;
         }
-        return ans;
+        return result;
     }
 }
