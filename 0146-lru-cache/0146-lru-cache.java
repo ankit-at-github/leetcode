@@ -1,10 +1,13 @@
 class LRUCache {
-    Map<Integer, Node> map = new HashMap<>();
-    Node head = new Node(0,0);
-    Node tail = new Node(0,0);
-    int capacity;
+    Map<Integer, Node> map;
+    Node head;
+    Node tail;
+    int total;
     public LRUCache(int capacity) {
-        this.capacity = capacity;
+        total = capacity;
+        map = new HashMap<>();
+        head = new Node(-1, -1);
+        tail = new Node(-1, -1);
         head.next = tail;
         tail.prev = head;
     }
@@ -13,50 +16,45 @@ class LRUCache {
         if(!map.containsKey(key)) return -1;
         
         Node current = map.get(key);
-        
         remove(current);
         insert(current);
-        
         return current.val;
     }
     
     public void put(int key, int value) {
-        if(map.containsKey(key))
-        {
+        if(map.containsKey(key)){
             remove(map.get(key));
         }
-        if(capacity == map.size())
-        {
+        
+        if(map.size() == total){
             remove(tail.prev);
         }
+        
         insert(new Node(key, value));
     }
     
-    public void insert(Node current)
-    {
-        map.put(current.key, current);
-        
-        current.next = head.next;
-        current.next.prev = current;
-        head.next = current;
-        current.prev = head;
-    }
-    public void remove(Node current)
-    {
+    public void remove(Node current){
         map.remove(current.key);
-        
         current.prev.next = current.next;
         current.next.prev = current.prev;
     }
+    
+    public void insert(Node current){
+        map.put(current.key, current);
+        head.next.prev = current;
+        current.prev = head;
+        current.next = head.next;
+        head.next = current;
+    }
 }
-class Node
-{
-    int key, val;
-    Node prev, next;
-    Node(int k, int v)
-    {
-        key = k;
-        val = v;
+class Node{
+    int key;
+    int val;
+    Node prev;
+    Node next;
+    Node(int _key, int _val){
+        key = _key;
+        val = _val;
     }
 }
 
