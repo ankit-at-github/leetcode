@@ -4,14 +4,15 @@ class Solution {
         for(int n : nums){
             freq.put(n, freq.getOrDefault(n, 0) + 1);
         }
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> b[1] - a[1]);
-        for(Map.Entry<Integer, Integer> m : freq.entrySet()){
-            pq.add(new int[]{m.getKey(), m.getValue()});
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> freq.get(a) - freq.get(b));
+        for(int n : freq.keySet()){
+            pq.add(n);
+            if(pq.size() > k) pq.poll();
         }
         int[] ans = new int[k];
         int index = 0;
-        while(k-- > 0){
-            ans[index++] = pq.poll()[0];
+        for(int i = k - 1; i >= 0; --i) {
+            ans[i] = pq.poll();
         }
         return ans;
     }
