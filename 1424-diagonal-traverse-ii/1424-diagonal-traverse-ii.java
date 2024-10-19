@@ -11,10 +11,8 @@ class Solution {
         }
         int[] ans = new int[total];
         int index = 0;
-        for(int i=0; i<res.size(); i++){
-            for(int j=0; j<res.get(i).size(); j++){
-                ans[index++] = res.get(i).get(j);
-            }
+        for(List<Integer> l : res){
+            for(int n : l) ans[index++] = n;
         }
         return ans;
     }
