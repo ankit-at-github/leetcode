@@ -5,7 +5,7 @@ class Solution {
         for(int row = 0; row < nums.size(); row++){
             total+=nums.get(row).size();
             for(int col = 0; col < nums.get(row).size(); col++){
-                if(res.size() < row+col+1) res.add(row+col, new ArrayList());
+                if(res.size() <= row+col) res.add(row+col, new ArrayList());
                 res.get(row+col).add(0, nums.get(row).get(col));
             }
         }
