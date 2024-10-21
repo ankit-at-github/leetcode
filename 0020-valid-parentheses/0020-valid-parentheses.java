@@ -6,7 +6,8 @@ class Solution {
             else if(s.charAt(i) == '[') st.push(']');
             else if(s.charAt(i) == '{') st.push('}');
             else{
-                if(st.isEmpty() || st.pop() != s.charAt(i)) return false;
+                if(st.isEmpty() || s.charAt(i) != st.peek()) return false;
+                st.pop();
             }
         }
         return st.isEmpty();
