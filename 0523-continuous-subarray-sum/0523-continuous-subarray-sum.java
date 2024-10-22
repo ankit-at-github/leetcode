@@ -1,16 +1,15 @@
 class Solution {
     public boolean checkSubarraySum(int[] nums, int k) {
-        // initialize the hash map with index 0 for sum 0
-        Map<Integer, Integer> hashMap = new HashMap<>(Map.of(0, 0));
-        int sum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            // if the remainder sum % k occurs for the first time
-            if (!hashMap.containsKey(sum % k))
-                hashMap.put(sum % k, i + 1);
-            // if the subarray size is at least two
-            else if (hashMap.get(sum % k) < i)
-                return true;
+        Map<Integer, Integer> remainder = new HashMap<>();
+        remainder.put(0, -1);
+        int total = 0;
+        for(int i=0; i<nums.length; i++){
+            total+=nums[i];
+            int r = total % k;
+            if(!remainder.containsKey(r)){
+                remainder.put(r, i);
+            }
+            else if(i - remainder.get(r) > 1) return true;
         }
         return false;
     }
