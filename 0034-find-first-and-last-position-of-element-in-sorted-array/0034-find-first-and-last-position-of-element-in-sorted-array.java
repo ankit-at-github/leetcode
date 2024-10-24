@@ -1,42 +1,22 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int[] ans = new int[2];
-        ans[0] = leftmost(nums, target);
-        ans[1] = rightmost(nums, target);
-        return ans;
+        int leftMost = binarySearch(nums, target, true);
+        int rightMost = binarySearch(nums, target, false);
+        return new int[]{leftMost, rightMost};
     }
-    public int leftmost(int[] nums, int target)
-    {
-        int start = 0, end = nums.length-1;
-        int leftmost = -1;
-        while(start <= end)
-        {
-            int mid = start+(end-start)/2;
-            if(nums[mid] == target)
-            {
-                leftmost = mid;
-                end = mid-1;
+    public int binarySearch(int[] nums, int target, boolean leftBiased){
+        int left = 0, right = nums.length-1;
+        int index = -1;
+        while(left <= right){
+            int mid = left + (right - left) / 2;
+            if(target > nums[mid]) left = mid+1;
+            else if(target < nums[mid]) right = mid-1;
+            else{
+                index = mid;
+                if(leftBiased) right = mid-1;
+                else left = mid+1;
             }
-            if(nums[mid] < target) start = mid+1;
-            if(nums[mid] > target) end = mid-1;
         }
-        return leftmost;
-    }
-    public int rightmost(int[] nums, int target)
-    {
-        int start = 0, end = nums.length-1;
-        int rightmost = -1;
-        while(start <= end)
-        {
-            int mid = start+(end-start)/2;
-            if(nums[mid] == target)
-            {
-                rightmost = mid;
-                start = mid+1;
-            }
-            if(nums[mid] < target) start = mid+1;
-            if(nums[mid] > target) end = mid-1;
-        }
-        return rightmost;
+        return index;
     }
 }
