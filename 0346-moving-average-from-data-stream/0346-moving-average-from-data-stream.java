@@ -1,11 +1,9 @@
 class MovingAverage {
     int[] nums;
-    int window, left;
-    double sum;
+    int window, left = 0;
+    double sum = 0;
     public MovingAverage(int size) {
         nums = new int[size];
-        left = 0;
-        sum = 0;
         window = size;
     }
     
