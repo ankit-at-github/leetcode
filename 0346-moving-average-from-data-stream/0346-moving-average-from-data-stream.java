@@ -16,8 +16,7 @@ class MovingAverage {
             nums[left%window] = val;
             left++;
         }
-        if(left < window) return sum/left;
-        return sum/window;
+        return sum/Math.min(left, window);
     }
 }
 
