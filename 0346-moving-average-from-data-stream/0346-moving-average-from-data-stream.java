@@ -1,9 +1,9 @@
 class MovingAverage {
-    List<Integer> nums;
+    int[] nums;
     int window, left;
     double sum;
     public MovingAverage(int size) {
-        nums = new ArrayList<>();
+        nums = new int[size];
         left = 0;
         sum = 0;
         window = size;
@@ -11,12 +11,13 @@ class MovingAverage {
     
     public double next(int val) {
         sum+=val;
-        nums.add(val);
-        if(nums.size() > window){
-            sum-=nums.get(left);
+        if(nums.length == window){
+            sum-=nums[left%window];
+            nums[left%window] = val;
             left++;
         }
-        return sum/(nums.size()-left);
+        if(left < window) return sum/left;
+        return sum/window;
     }
 }
 
