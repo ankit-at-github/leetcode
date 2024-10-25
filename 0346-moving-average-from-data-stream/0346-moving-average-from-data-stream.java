@@ -1,7 +1,7 @@
 class MovingAverage {
     int[] nums;
     int window, left = 0;
-    double sum = 0;
+    int sum = 0;
     public MovingAverage(int size) {
         nums = new int[size];
         window = size;
@@ -14,7 +14,7 @@ class MovingAverage {
             nums[left%window] = val;
             left++;
         }
-        return sum/Math.min(left, window);
+        return 1.0*sum/Math.min(left, window);
     }
 }
 
