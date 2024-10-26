@@ -1,18 +1,25 @@
 class Solution {
 
-    TreeMap<Integer, Integer> map = new TreeMap<>();
+    int[] nums;
     Random rand = new Random();
-    int sum = 0;
+    int total = 0;
     public Solution(int[] w) {
+        this.nums = new int[w.length];
+        int runningTotal = 0;
         for(int i=0; i<w.length; i++){
-            sum+=w[i];
-            map.put(sum, i);
+            runningTotal+=w[i];
+            nums[i] = runningTotal;
         }
+        this.total = runningTotal;
     }
     
     public int pickIndex() {
-        int key = map.higherKey(rand.nextInt(sum));
-        return map.get(key);
+        int n = rand.nextInt(total);
+        //this n will either exist in array or it wont, we need to return close index to n
+        for(int i=0; i<nums.length; i++){
+            if(n < nums[i]) return i;
+        }
+        return -1;
     }
 }
 
