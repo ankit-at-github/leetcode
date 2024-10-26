@@ -14,12 +14,15 @@ class Solution {
     }
     
     public int pickIndex() {
-        int n = rand.nextInt(total);
+        int n = rand.nextInt(total) + 1;
         //this n will either exist in array or it wont, we need to return close index to n
-        for(int i=0; i<nums.length; i++){
-            if(n < nums[i]) return i;
+        int left = 0, right = nums.length-1;
+        while(left < right){
+            int mid = left + (right - left) / 2;
+            if(n > nums[mid]) left = mid+1;
+            else right = mid;
         }
-        return -1;
+        return left;
     }
 }
 
