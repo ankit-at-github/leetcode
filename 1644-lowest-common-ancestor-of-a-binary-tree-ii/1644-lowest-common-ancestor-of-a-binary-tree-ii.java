@@ -9,9 +9,15 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        TreeNode lca =  LCA(root, p, q);
-        if(lca == p) return LCA(p, q, q) == q ? lca : null;
-        else if(lca == q) return LCA(q, p, p) == p ? lca : null;
+        TreeNode lca = LCA(root, p, q);
+        if(lca == p){
+            //looking for q only
+            return LCA(p, q, q) == q ? lca : null;
+        }
+        else if(lca == q){
+            //looking for p only
+            return LCA(q, p, p) == p ? lca : null;
+        }
         else return lca;
     }
     public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q){
