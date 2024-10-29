@@ -26,10 +26,8 @@ class Solution {
         Node newHead = map.get(head);
         dummy = newHead;
         while(head != null){
-            if(map.containsKey(head.next))
-                dummy.next = map.get(head.next);
-            if(map.containsKey(head.random))
-                dummy.random = map.get(head.random);
+            dummy.next = map.get(head.next);
+            dummy.random = map.get(head.random);
             dummy = dummy.next;
             head = head.next;
         }
