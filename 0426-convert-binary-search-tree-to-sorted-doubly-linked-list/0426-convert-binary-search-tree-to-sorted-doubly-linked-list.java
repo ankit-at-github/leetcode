@@ -24,23 +24,26 @@ class Solution {
     Node last = null;
     public Node treeToDoublyList(Node root) {
         if(root == null) return null;
-        inorder(root);
-        last.right = first;
+        
+        helper(root);
+        
         first.left = last;
+        last.right = first;
         return first;
     }
-    public void inorder(Node root){
+    public void helper(Node root){
         if(root != null){
-            inorder(root.left);
+            helper(root.left);
+            
             if(last != null){
-                root.left = last;
                 last.right = root;
+                root.left = last;
             }
             else{
                 first = root;
             }
             last = root;
-            inorder(root.right);
+            helper(root.right);
         }
     }
 }
