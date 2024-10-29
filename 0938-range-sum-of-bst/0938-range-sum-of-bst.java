@@ -25,7 +25,9 @@ class Solution {
         
         if(root.val >= low && root.val <= high) total[0]+=root.val;
         
-        getRangeSum(root.left, low, high, total);
-        getRangeSum(root.right, low, high, total);
+        if(root.val >= low)
+            getRangeSum(root.left, low, high, total);
+        if(root.val <= high)
+            getRangeSum(root.right, low, high, total);
     }
 }
