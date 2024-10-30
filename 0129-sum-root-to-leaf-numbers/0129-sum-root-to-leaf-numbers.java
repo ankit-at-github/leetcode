@@ -15,26 +15,32 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        List<String> ans = new ArrayList<>();
-        preorder(root, ans, new StringBuilder());
-        int sum = 0;
-        for(String n : ans) sum+=Integer.parseInt(n);
-        return sum;
-    }
-    public void preorder(TreeNode root, List<String> ans, StringBuilder num)
-    {
-        if(root == null) return;
-        
-        if(root.left == null && root.right == null)
-        {
-            num.append(Integer.toString(root.val));
-            ans.add(num.toString());
-            num.deleteCharAt(num.length()-1);
+        int total = 0;
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(root, 0));
+        while(!q.isEmpty()){
+            for(int i=q.size(); i>0; i--){
+                Pair p = q.poll();
+                TreeNode currentNode = p.node;
+                int prevSum = p.sum;
+                int currentSum = prevSum * 10 + currentNode.val;
+                
+                if(currentNode.left == null && currentNode.right == null){
+                    total+=currentSum;
+                }
+                
+                if(currentNode.left != null) q.add(new Pair(currentNode.left, currentSum));
+                if(currentNode.right != null) q.add(new Pair(currentNode.right, currentSum));
+            }
         }
-        
-        num.append(Integer.toString(root.val));
-        preorder(root.left, ans, num);
-        preorder(root.right, ans, num);
-        num.deleteCharAt(num.length()-1);
+        return total;
+    }
+}
+class Pair{
+    TreeNode node;
+    int sum;
+    Pair(TreeNode _node, int _sum){
+        node = _node;
+        sum = _sum;
     }
 }
