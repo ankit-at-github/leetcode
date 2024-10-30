@@ -1,7 +1,7 @@
 class SparseVector {
-    Map<Integer, Integer> map;
+    Map<Integer, Integer> map = new HashMap<>();
+    int total = 0;
     SparseVector(int[] nums) {
-        map = new HashMap<>();
         for(int i=0; i<nums.length; i++){
             if(nums[i] != 0) map.put(i, nums[i]);
         }
@@ -9,10 +9,9 @@ class SparseVector {
     
 	// Return the dotProduct of two sparse vectors
     public int dotProduct(SparseVector vec) {
-        int total = 0;
         for(int key : map.keySet()){
-            if(null != vec.map.get(key))
-            total+=map.get(key) * vec.map.get(key);
+            if(vec.map.containsKey(key))
+                total+=map.get(key) * vec.map.get(key);
         }
         return total;
     }
