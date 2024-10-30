@@ -1,20 +1,17 @@
 class Solution {
     public void nextPermutation(int[] nums) {
-        //1. Pivot Index
-        //2. Swap Index
-        //3. Swap Values
-        //4. Reverse rest numbers from pivotIndex till n-1.
-        int pivotIndex = nums.length-1;
-        while(pivotIndex > 0 && nums[pivotIndex] <= nums[pivotIndex-1]){
-            pivotIndex--;
+        int pivotIndex = -1;
+        for(int i=nums.length-2; i>=0; i--){
+            if(nums[i] < nums[i+1]){
+                pivotIndex = i;
+                break;
+            }
         }
-        pivotIndex--;
+        
         if(pivotIndex == -1) reverse(nums, 0, nums.length-1);
         else{
             int swapIndex = nums.length-1;
-            while(swapIndex >= 0 && nums[swapIndex] <= nums[pivotIndex]){
-                swapIndex--;
-            }
+            while(nums[swapIndex] <= nums[pivotIndex]) swapIndex--;
             swap(nums, swapIndex, pivotIndex);
             reverse(nums, pivotIndex+1, nums.length-1);
         }
