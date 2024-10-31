@@ -25,34 +25,31 @@ class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
         
+        TreeMap<Integer, List<Integer>> tmap = new TreeMap<>();
         if(root == null) return ans;
-        
-        Map<Integer, List<Integer>> tmap = new HashMap<>();
-        int minAxis = 0, maxAxis = 0;
         
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(0, root));
         
         while(!q.isEmpty()){
             for(int i=q.size(); i>0; i--){
-                
                 Pair p = q.poll();
-                int axis = p.axis;
                 TreeNode node = p.node;
+                int axis = p.axis;
                 
-                if(!tmap.containsKey(axis)) tmap.put(axis, new ArrayList<>());
+                if(!tmap.containsKey(axis)) tmap.put(axis, new ArrayList());
+                
                 tmap.get(axis).add(node.val);
                 
-                minAxis = Math.min(minAxis, axis);
-                maxAxis = Math.max(maxAxis, axis);
-                
-                if(node.left!=null) q.add(new Pair(axis-1, node.left));
-                if(node.right!=null) q.add(new Pair(axis+1, node.right));
+                if(node.left != null) q.add(new Pair(axis-1, node.left));
+                if(node.right != null) q.add(new Pair(axis+1, node.right));
             }
         }
-        for(int i=minAxis; i<=maxAxis; i++){
-            ans.add(tmap.get(i));
+        
+        for(List<Integer> l : tmap.values()){
+            ans.add(l);
         }
-        return ans;
+        
+       return ans;
     }
 }
