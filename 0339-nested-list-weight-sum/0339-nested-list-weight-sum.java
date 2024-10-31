@@ -27,20 +27,19 @@
  * }
  */
 class Solution {
+    int total = 0;
     public int depthSum(List<NestedInteger> nestedList) {
-        Queue<List<NestedInteger>> q = new LinkedList<>();
-        q.add(nestedList);
+        return dfs(nestedList, 1);
+    }
+    public int dfs(List<NestedInteger> nestedList, int depth){
         int total = 0;
-        int level = 1;
-        while(!q.isEmpty()){
-            for(int i=q.size(); i>0; i--){
-                List<NestedInteger> nl = q.poll();
-                for(NestedInteger ni : nl){
-                    if(ni.isInteger()) total = total + ni.getInteger()*level;
-                    else q.add(ni.getList());
-                }
+        for(NestedInteger ni : nestedList){
+            if(ni.isInteger()){
+                total+= ni.getInteger() * depth;
             }
-            level++;
+            else{
+                total+=dfs(ni.getList(), depth+1);
+            }
         }
         return total;
     }
