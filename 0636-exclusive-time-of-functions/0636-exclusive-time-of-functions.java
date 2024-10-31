@@ -1,24 +1,22 @@
 class Solution {
     public int[] exclusiveTime(int n, List<String> logs) {
-        int[] ans = new int[n];
+        int[] result = new int[n];
         Stack<Integer> st = new Stack<>();
         int prevTime = 0;
         for(String log : logs){
-            String[] parts = log.split(":");
-            
+            String[] components = log.split(":");
             if(!st.isEmpty()){
-                ans[st.peek()] += Integer.parseInt(parts[2]) - prevTime;
+                result[st.peek()]+= Integer.parseInt(components[2]) - prevTime;
             }
-            prevTime = Integer.parseInt(parts[2]);
-            //pushing process currently running
-            if(parts[1].equals("start")) st.push(Integer.parseInt(parts[0]));
+            prevTime = Integer.parseInt(components[2]);
+            if(components[1].equals("start")){
+                st.push(Integer.parseInt(components[0]));
+            }
             else{
-                ans[st.pop()]++;
+                result[st.pop()]++;
                 prevTime++;
             }
-            
         }
-        
-        return ans;
+        return result;
     }
 }
