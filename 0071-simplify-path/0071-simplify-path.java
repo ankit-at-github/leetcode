@@ -1,22 +1,21 @@
 class Solution {
     public String simplifyPath(String path) {
         String[] components = path.split("/");
-        Stack<String> st = new Stack();
+        Stack<String> st = new Stack<>();
         for(String component : components){
-            if(component.equals("") || component.equals(".")) continue;
+            if(component.equals(".") || component.equals("")) continue;
             
             if(component.equals("..")){
                 if(!st.isEmpty()) st.pop();
-            }
-            else{
+            }else{
                 st.push(component);
             }
         }
-        StringBuilder cPath = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         for(String dir : st){
-            cPath.append("/");
-            cPath.append(dir);
+            sb.append("/");
+            sb.append(dir);
         }
-        return cPath.length() == 0 ? "/" : cPath.toString();
+        return sb.length() == 0 ? "/" : sb.toString();
     }
 }
