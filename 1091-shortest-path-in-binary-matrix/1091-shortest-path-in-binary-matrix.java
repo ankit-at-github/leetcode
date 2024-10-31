@@ -1,39 +1,34 @@
 class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        
-        if(grid[0][0] == 1 || grid[m-1][n-1] == 1) return -1;
-        
+        int n = grid.length;
         Queue<int[]> q = new LinkedList<>();
         q.add(new int[]{0, 0});
         int level = 0;
         while(!q.isEmpty()){
             for(int i=q.size(); i>0; i--){
-                int[] arr = q.poll();
-                int x = arr[0];
-                int y = arr[1];
+                int[] axis = q.poll();
+                int x = axis[0];
+                int y = axis[1];
                 
-                if(x < 0 || y < 0 || x >= m || y >= n || grid[x][y] == 1) continue;
+                if(x < 0 || y < 0 || x >= n || y >= n || grid[x][y] == 1) continue;
                 
                 grid[x][y] = 1;
                 
-                if(x == m-1 && y == n-1){
+                if(x == n-1 && y == n-1){
                     return level+1;
                 }
                 
-                //8 directional
-                q.add(new int[] {x, y+1});
-                q.add(new int[] {x+1, y+1});
-                q.add(new int[] {x+1, y});
-                q.add(new int[] {x+1, y-1});
-                q.add(new int[] {x, y-1});
-                q.add(new int[] {x-1, y-1});
-                q.add(new int[] {x-1, y});
-                q.add(new int[] {x-1, y+1});
+                q.add(new int[]{x, y+1});
+                q.add(new int[]{x+1, y+1});
+                q.add(new int[]{x+1, y});
+                q.add(new int[]{x+1, y-1});
+                q.add(new int[]{x, y-1});
+                q.add(new int[]{x-1, y-1});
+                q.add(new int[]{x-1, y});
+                q.add(new int[]{x-1, y+1});
             }
             level++;
         }
-        return -1 ;
+        return -1;
     }
 }
