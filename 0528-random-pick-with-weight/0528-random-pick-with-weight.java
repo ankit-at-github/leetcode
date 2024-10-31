@@ -1,28 +1,29 @@
 class Solution {
 
-    int[] nums;
-    Random rand = new Random();
+    int[] prefixSum;
+    Random rand;
     int total = 0;
     public Solution(int[] w) {
-        this.nums = new int[w.length];
+        prefixSum = new int[w.length];
+        rand = new Random();
         int runningTotal = 0;
         for(int i=0; i<w.length; i++){
             runningTotal+=w[i];
-            nums[i] = runningTotal;
+            prefixSum[i] = runningTotal;
         }
         this.total = runningTotal;
     }
     
     public int pickIndex() {
         int n = rand.nextInt(total) + 1;
-        //this n will either exist in array or it wont, we need to return close index to n
-        int left = 0, right = nums.length-1;
-        while(left < right){
-            int mid = left + (right - left) / 2;
-            if(n > nums[mid]) left = mid+1;
-            else right = mid;
+        int low = 0, high = prefixSum.length-1;
+        while(low <= high){
+            int mid = low + (high-low) / 2;
+            
+            if(prefixSum[mid] < n) low = mid+1;
+            else high = mid - 1;
         }
-        return left;
+        return low;
     }
 }
 
