@@ -25,7 +25,9 @@ class Solution {
     public List<List<Integer>> verticalOrder(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<>();
         
-        TreeMap<Integer, List<Integer>> tmap = new TreeMap<>();
+        HashMap<Integer, List<Integer>> hmap = new HashMap<>();
+        int minAxis = Integer.MAX_VALUE;
+        int maxAxis = Integer.MIN_VALUE;
         if(root == null) return ans;
         
         Queue<Pair> q = new LinkedList<>();
@@ -37,17 +39,20 @@ class Solution {
                 TreeNode node = p.node;
                 int axis = p.axis;
                 
-                if(!tmap.containsKey(axis)) tmap.put(axis, new ArrayList());
+                minAxis = Math.min(minAxis, axis);
+                maxAxis = Math.max(maxAxis, axis);
                 
-                tmap.get(axis).add(node.val);
+                if(!hmap.containsKey(axis)) hmap.put(axis, new ArrayList());
+                
+                hmap.get(axis).add(node.val);
                 
                 if(node.left != null) q.add(new Pair(axis-1, node.left));
                 if(node.right != null) q.add(new Pair(axis+1, node.right));
             }
         }
         
-        for(List<Integer> l : tmap.values()){
-            ans.add(l);
+        for(int i=minAxis; i<=maxAxis; i++){
+            ans.add(hmap.get(i));
         }
         
        return ans;
