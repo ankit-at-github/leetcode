@@ -1,33 +1,31 @@
 class Solution {
     public int calculate(String s) {
-        int last = 0;
-        char op = '+';
-        int num = 0;
         int sum = 0;
+        int last = 0;
+        int num = 0;
+        char op = '+';
         for(int i=0; i<s.length(); i++){
             char c = s.charAt(i);
-            
             if(Character.isDigit(c)){
                 num = num*10 + c-'0';
             }
-            
-            if((!Character.isDigit(c) && ' '!= c) || i == s.length()-1){
+            if((!Character.isDigit(c) && ' '!=c) || i == s.length()-1){
                 if(op == '+'){
                     sum+=last;
                     last = num;
                 }
-                if(op == '-'){
+                else if(op == '-'){
                     sum+=last;
                     last = -num;
                 }
-                if(op == '*'){
-                    last*=num;
+                else if(op == '*'){
+                    last = last*num;
                 }
-                if(op == '/'){
-                    last/=num;
+                else{
+                    last = last/num;
                 }
-                op = c;
                 num = 0;
+                op = c;
             }
         }
         sum+=last;
