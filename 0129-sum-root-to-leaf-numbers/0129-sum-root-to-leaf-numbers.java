@@ -15,22 +15,25 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        int total = 0;
         Queue<Pair> q = new LinkedList<>();
         q.add(new Pair(root, 0));
+        int total = 0;
         while(!q.isEmpty()){
             for(int i=q.size(); i>0; i--){
                 Pair p = q.poll();
-                TreeNode currentNode = p.node;
-                int prevSum = p.sum;
-                int currentSum = prevSum * 10 + currentNode.val;
+                TreeNode node = p.node;
+                int prevVal = p.prevVal;
                 
-                if(currentNode.left == null && currentNode.right == null){
-                    total+=currentSum;
+                int currentVal = prevVal * 10 + node.val;
+                
+                if(node.left == null && node.right == null){
+                    total+=currentVal;
                 }
                 
-                if(currentNode.left != null) q.add(new Pair(currentNode.left, currentSum));
-                if(currentNode.right != null) q.add(new Pair(currentNode.right, currentSum));
+                
+                if(node.left != null) q.add(new Pair(node.left, currentVal));
+                if(node.right != null) q.add(new Pair(node.right, currentVal));
+                
             }
         }
         return total;
@@ -38,9 +41,9 @@ class Solution {
 }
 class Pair{
     TreeNode node;
-    int sum;
-    Pair(TreeNode _node, int _sum){
+    int prevVal;
+    Pair(TreeNode _node, int _prevVal){
         node = _node;
-        sum = _sum;
+        prevVal = _prevVal;
     }
 }
