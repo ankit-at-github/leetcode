@@ -12,11 +12,6 @@ class Solution {
             endTime = Math.max(endTime, intervals[i][1]);
         }
         result.add(new int[]{startTime, endTime});
-        int[][] ans = new int[result.size()][2];
-        int index = 0;
-        for(int[] interval : result){
-            ans[index++] = interval;
-        }
-        return ans;
+        return result.toArray(new int[result.size()][2]);
     }
 }
