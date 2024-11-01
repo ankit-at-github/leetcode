@@ -7,12 +7,11 @@ class Solution {
                 break;
             }
         }
-        
         if(pivotIndex == -1) reverse(nums, 0, nums.length-1);
         else{
             int swapIndex = nums.length-1;
             while(nums[swapIndex] <= nums[pivotIndex]) swapIndex--;
-            swap(nums, swapIndex, pivotIndex);
+            swap(nums, pivotIndex, swapIndex);
             reverse(nums, pivotIndex+1, nums.length-1);
         }
     }
