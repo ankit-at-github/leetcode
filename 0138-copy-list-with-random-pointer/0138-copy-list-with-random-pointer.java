@@ -17,18 +17,19 @@ class Solution {
     public Node copyRandomList(Node head) {
         if(head == null) return null;
         Map<Node, Node> map = new HashMap<>();
-        Node dummy = head;
-        while(dummy != null){
-            Node node = new Node(dummy.val);
-            map.put(dummy, node);
-            dummy = dummy.next;
+        Node oldNode = head;
+        //mapping oldNode with newNode in hashmap
+        while(oldNode != null){
+            Node newNode = new Node(oldNode.val);
+            map.put(oldNode, newNode);
+            oldNode = oldNode.next;
         }
         Node newHead = map.get(head);
-        dummy = newHead;
+        oldNode = newHead;
         while(head != null){
-            dummy.next = map.get(head.next);
-            dummy.random = map.get(head.random);
-            dummy = dummy.next;
+            oldNode.next = map.get(head.next);
+            oldNode.random = map.get(head.random);
+            oldNode = oldNode.next;
             head = head.next;
         }
         return newHead;
