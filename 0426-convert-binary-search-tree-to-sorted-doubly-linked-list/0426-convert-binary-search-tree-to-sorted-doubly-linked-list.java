@@ -24,26 +24,25 @@ class Solution {
     Node last = null;
     public Node treeToDoublyList(Node root) {
         if(root == null) return null;
-        
-        helper(root);
+        //In place, we need track of first and last element
+        convertBST(root);
         
         first.left = last;
         last.right = first;
         return first;
     }
-    public void helper(Node root){
+    public Node convertBST(Node root){
         if(root != null){
-            helper(root.left);
-            
+            convertBST(root.left);
             if(last != null){
                 last.right = root;
                 root.left = last;
-            }
-            else{
+            }else{
                 first = root;
             }
             last = root;
-            helper(root.right);
+            convertBST(root.right);
         }
+        return last;
     }
 }
