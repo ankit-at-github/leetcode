@@ -16,21 +16,24 @@
 class Solution {
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>> ans = new ArrayList<>();
-        getPathValues(root, targetSum, new ArrayList(), ans);
+        getPathSum(root, targetSum, new ArrayList(), ans);
         return ans;
     }
-    public void getPathValues(TreeNode root, int targetSum, List<Integer> current, List<List<Integer>> ans){
+    public void getPathSum(TreeNode root, int targetSum, List<Integer> current, List<List<Integer>> ans){
         if(root == null) return;
         
-        if(root.left == null && root.right == null && targetSum-root.val == 0){
-            current.add(root.val);
-            ans.add(new ArrayList(current));
-            current.remove(current.size()-1);
+        if(root.left == null && root.right == null){
+            if(targetSum - root.val == 0){
+                current.add(root.val);
+                ans.add(new ArrayList(current));
+                current.remove(current.size()-1);
+            }
+            return;
         }
         
         current.add(root.val);
-        getPathValues(root.left, targetSum-root.val, current, ans);
-        getPathValues(root.right, targetSum-root.val, current, ans);
+        getPathSum(root.left, targetSum-root.val, current, ans);
+        getPathSum(root.right, targetSum-root.val, current, ans);
         current.remove(current.size()-1);
     }
 }
