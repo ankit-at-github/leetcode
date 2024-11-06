@@ -19,7 +19,7 @@ class Solution {
         return ans;
     }
     public void solve(String digits, int index, StringBuilder sb, List<String> ans, Map<Character, String> keypad){
-        if(index >= digits.length()){
+        if(index == digits.length()){
             ans.add(new String(sb.toString()));
             return;
         }
