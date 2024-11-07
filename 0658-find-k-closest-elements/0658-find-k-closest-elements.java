@@ -1,39 +1,23 @@
 class Solution {
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        int index = getIndex(arr, x);
+        //if startIndex(left) is 0, then maximum endIndex(right) to accomodate all k elements will be arr.length-k 
+        int left = 0, right = arr.length - k;
         
-        int left = index-1, right = left+1;
-        
-        while(right - left - 1 < k){
-            //element found at 0th index
-            if(left == -1){
-                right++;
-                continue;
+        while(left < right){
+            //midpoint is on left side
+            int mid = left + (right - left) / 2;
+            
+            if(x - arr[mid] > arr[mid+k] - x){
+                left = mid+1;
             }
-            //element found at last index or somewhere in mid
-            if(right == arr.length || Math.abs(arr[left] - x) <= Math.abs(arr[right] - x)){
-                left--;
-            }
-            else{
-                right++;
-            }
+            else right = mid;
         }
         
         List<Integer> ans = new ArrayList<>();
         
-        for(int i = left+1; i < right; i++){
+        for(int i = left; i < left + k; i++){
             ans.add(arr[i]);
         }
         return ans;
-    }
-    public int getIndex(int[] arr, int x){
-        int low = 0, high = arr.length;
-        while(low < high){
-            int mid = low + (high - low) / 2;
-            
-            if(arr[mid] < x) low = mid+1;
-            else high = mid;
-        }
-        return low;
     }
 }
