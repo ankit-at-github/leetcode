@@ -18,23 +18,22 @@ class Node {
 */
 
 class Solution {
-    public Node insert(Node head, int val) {
-    Node node = new Node(val);
-    if (head == null) {
-        node.next = node;
-        return node;
+    public Node insert(Node head, int insertVal) {
+        Node newNode = new Node(insertVal);
+        if(head == null){
+            newNode.next = newNode;
+            return newNode;
+        }
+        Node current = head;
+        while(current.next != head){
+                //Value is in between currentNode and nextNode
+                if(current.val <= insertVal && insertVal <= current.next.val) break;
+                //Value is larger than all node or Value is smaller than all node
+                if(current.val > current.next.val && (current.val < insertVal || insertVal < current.next.val)) break;
+                current = current.next;
+            }
+        newNode.next = current.next;
+        current.next = newNode;
+        return head;
     }
-	
-    Node cur = head;
-    while (cur.next != head) {
-        if (cur.val <= val && val <= cur.next.val) break;
-        if (cur.val > cur.next.val && (cur.val < val || val < cur.next.val)) break;
-        cur = cur.next;
-    }
-
-    node.next = cur.next;
-    cur.next = node;
-    return head;
 }
-}
-
