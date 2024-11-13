@@ -15,15 +15,31 @@
  */
 class Solution {
     public int goodNodes(TreeNode root) {
-        return count(root, Integer.MIN_VALUE);
+        int count = 0;
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(root, root.val));
+        while(!q.isEmpty()){
+            for(int i=q.size(); i>0; i--){
+                Pair p = q.poll();
+                TreeNode currentNode = p.node;
+                int prevMax = p.prev;
+                
+                if(currentNode.val >= prevMax) count++;
+                
+                prevMax = Math.max(prevMax, currentNode.val);
+                
+                if(currentNode.left != null) q.add(new Pair(currentNode.left, prevMax));
+                if(currentNode.right != null) q.add(new Pair(currentNode.right, prevMax));
+            }
+        }
+        return count;
     }
-    public int count(TreeNode root, int maxi)
-    {
-        if(root == null) return 0;
-        
-        int res = root.val>=maxi?1:0;
-        res+=count(root.left, Math.max(maxi, root.val));
-        res+=count(root.right, Math.max(maxi, root.val));
-        return res;
+}
+class Pair{
+    TreeNode node;
+    int prev;
+    Pair(TreeNode _node, int _prev){
+        node = _node;
+        prev = _prev;
     }
 }
