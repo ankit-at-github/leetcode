@@ -7,13 +7,8 @@ class Solution {
             maxi = Math.max(maxi, area);
             if(height[left] < height[right]){
                 left++;
-            }else if(height[left] > height[right]){
+            }else
                 right--;
-            }
-            else{
-                left++;
-                right--;
-            }
         }
         return maxi;
     }
