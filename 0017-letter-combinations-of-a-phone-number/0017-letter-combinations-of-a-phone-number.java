@@ -1,5 +1,9 @@
 class Solution {
     public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>();
+        
+        if(digits.length() == 0) return ans;
+        
         Map<Character, String> keypad = new HashMap<>();
         keypad.put('2', "abc");
         keypad.put('3', "def");
@@ -10,28 +14,20 @@ class Solution {
         keypad.put('8', "tuv");
         keypad.put('9', "wxyz");
         
-        List<String> ans = new ArrayList<>();
-        
-        if(digits.length() == 0) return ans;
-        
-        solve(digits, 0, new StringBuilder(), ans, keypad);
+        getCombination(0, digits, new StringBuilder(), keypad, ans);
         
         return ans;
     }
-    public void solve(String digits, int index, StringBuilder sb, List<String> ans, Map<Character, String> keypad){
-        if(index == digits.length()){
-            ans.add(new String(sb.toString()));
+    public void getCombination(int index, String digits, StringBuilder sb, Map<Character, String> keypad, List<String> ans){
+        if(index >= digits.length()){
+            ans.add(sb.toString());
             return;
         }
-        
         String letters = keypad.get(digits.charAt(index));
-        
-        //System.out.println(letters);
-        
         for(int i=0; i<letters.length(); i++){
             sb.append(letters.charAt(i));
-            solve(digits, index+1, sb, ans, keypad);
-            sb.deleteCharAt((sb.length()-1));
+            getCombination(index+1, digits, sb, keypad, ans);
+            sb.deleteCharAt(sb.length() - 1);
         }
     }
 }
