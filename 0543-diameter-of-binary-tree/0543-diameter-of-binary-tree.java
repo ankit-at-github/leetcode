@@ -25,8 +25,8 @@ class Solution {
         int left = getD(root.left, d);
         int right = getD(root.right, d);
         
-        d[0] = Math.max(d[0], left+right);
+        d[0] = Math.max(d[0], left + right);
         
-        return 1 + Math.max(left, right);
+        return Math.max(left, right) + 1;
     }
 }
