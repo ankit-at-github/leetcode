@@ -6,7 +6,6 @@ class Solution {
         return ans;
     }
     public void solve(int index, int[] candidates, int target, List<Integer> intermediateResult, List<List<Integer>> ans){
-        if(target < 0) return;
         
         if(target == 0){
             ans.add(new ArrayList(intermediateResult));
@@ -14,6 +13,8 @@ class Solution {
         }
         //How to skip duplicates? don't look back : previous elements so i+1
         for(int i=index; i<candidates.length; i++){
+            
+            if(target - candidates[i] < 0) return;
             
             if(i > index && candidates[i] == candidates[i-1]) continue;
             
