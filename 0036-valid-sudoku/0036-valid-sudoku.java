@@ -12,6 +12,7 @@ class Solution {
                 int boxRow = 3*(i/3) + j/3;
                 int boxCol = 3*(i%3) + j%3;
                 if(board[boxRow][boxCol] != '.' && !box.add(board[boxRow][boxCol])) return false;
+                
             }
         }
         return true;
