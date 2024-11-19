@@ -18,13 +18,10 @@ class Solution {
     public void reverse(int[][] matrix){
         int n = matrix.length;
         for(int i=0; i<n; i++){
-            int left = 0, right = n-1;
-            while(left < right){
-                int temp = matrix[i][left];
-                matrix[i][left] = matrix[i][right];
-                matrix[i][right] = temp;
-                left++;
-                right--;
+            for(int j=0; j<n/2; j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][n-1-j];
+                matrix[i][n-1-j] = temp;
             }
         }
     }
