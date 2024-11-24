@@ -1,24 +1,26 @@
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int col = matrix[0].length-1;
-        for(int i=0; i<matrix.length; i++){
-            if(target <= matrix[i][col]) return binarySearch(matrix, target, i);
+        int m = matrix.length;
+        int n = matrix[0].length;
+        //1. Find Row
+        int i = 0;
+        while(i < m){
+            if(target <= matrix[i][n-1]) break;
+            i++;
         }
-        return false;
-    }
-    public boolean binarySearch(int[][] matrix, int target, int row){
-        int low = 0, high = matrix[0].length;
-        while(low < high){
-            int mid = low + (high-low) / 2;
-            if(matrix[row][mid] == target) return true;
+        int low = 0, high = n-1;
+        while(i < m && low <= high){
+            int mid = low + (high - low) / 2;
+            if(matrix[i][mid] == target) return true;
+            
+            if(matrix[i][mid] < target){
+                low = mid+1;
+            }
             else{
-                if(matrix[row][mid] > target){
-                    high = mid;
-                }
-                else
-                    low = mid+1;
+                high = mid-1;
             }
         }
         return false;
     }
+    
 }
