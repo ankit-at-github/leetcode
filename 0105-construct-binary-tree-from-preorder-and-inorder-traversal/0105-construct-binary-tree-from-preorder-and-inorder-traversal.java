@@ -15,24 +15,22 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> inMap = new HashMap<>();
         for(int i=0; i<inorder.length; i++){
-            map.put(inorder[i], i);
+            inMap.put(inorder[i], i);
         }
-        return buildTree(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1, map);
+        return constructTree(0, preorder.length-1, preorder, 0, inorder.length-1, inorder, inMap);
     }
-    public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> map){
+    public TreeNode constructTree(int preStart, int preEnd, int[] preorder, int inStart, int inEnd, int[] inorder, Map<Integer, Integer> inMap){
+        if(inStart > inEnd || preStart > preEnd) return null;
         
-        if(preStart > preEnd || inStart > inEnd) return null;
+        TreeNode current = new TreeNode(preorder[preStart]);
+        int index = inMap.get(current.val);
+        int leftElements = index - inStart;
         
-        TreeNode root = new TreeNode(preorder[preStart]);
+        current.left = constructTree(preStart+1, preStart+leftElements, preorder, inStart, index-1, inorder, inMap);
+        current.right = constructTree(preStart+leftElements+1, preEnd, preorder, index+1, inEnd, inorder, inMap);
         
-        int inRoot = map.get(root.val);
-        int leftElements = inRoot - inStart;
-        
-        root.left = buildTree(preorder, preStart+1, preStart+leftElements, inorder, inStart, inRoot-1, map);
-        root.right = buildTree(preorder, preStart+leftElements+1, preEnd, inorder, inRoot+1, inEnd, map);
-        
-        return root;
+        return current;
     }
 }
