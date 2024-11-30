@@ -1,19 +1,20 @@
 class Solution {
     public boolean isHappy(int n) {
-        Set<Integer> st = new HashSet<>();
-        while(n != 1){
-            n = getSSD(n);
-            if(st.contains(n)) return false;
-            st.add(n);
+        int slow = n;
+        int fast = getSSD(n);
+        while(fast != 1 && fast != slow){
+            slow = getSSD(slow);
+            fast = getSSD(getSSD(fast));
+            
         }
-        return true;
+        return fast==1;
     }
     public int getSSD(int n){
         int sum = 0;
         while(n > 0){
             int d = n % 10;
-            sum += d*d;
             n/=10;
+            sum += d*d;
         }
         return sum;
     }
