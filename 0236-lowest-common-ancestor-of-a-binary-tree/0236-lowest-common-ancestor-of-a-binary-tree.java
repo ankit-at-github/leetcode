@@ -12,7 +12,7 @@ class Solution {
         return LCA(root, p, q);
     }
     public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q){
-        if(root == null || root == p || root == q) return root;
+        if(root == p || root == q || root == null) return root;
         
         TreeNode left = LCA(root.left, p, q);
         TreeNode right = LCA(root.right, p, q);
