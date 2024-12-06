@@ -16,9 +16,22 @@ class Solution {
         
         if(head == null || head.next == null) return;
         
-        ListNode mid = middle(head);
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
         
-        ListNode prev = reverse(mid);
+        ListNode curr = slow;
+        ListNode prev = null;
+        ListNode nxt = curr;
+        while(nxt != null){
+            nxt = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nxt;
+        }
         
         ListNode first = head, second = prev;
         ListNode temp = first;
@@ -32,25 +45,5 @@ class Solution {
             second = temp;
         }
         
-    }
-    public ListNode middle(ListNode head){
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        return slow;
-    }
-    public ListNode reverse(ListNode curr){
-        ListNode prev = null;
-        ListNode nxt = curr;
-        while(nxt != null){
-            nxt = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nxt;
-        }
-        return prev;
     }
 }
