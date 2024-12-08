@@ -8,10 +8,7 @@ class Solution {
             
             mostFreqCharacter = Math.max(mostFreqCharacter, freq[s.charAt(right) - 'A']);
             
-            int windowSize = right - left + 1;
-            int replacemnetCharacterCount = windowSize - mostFreqCharacter;
-            
-            if(replacemnetCharacterCount > k){
+            while(right - left + 1 - mostFreqCharacter > k){
                 freq[s.charAt(left) - 'A']--;
                 left++;
             }
