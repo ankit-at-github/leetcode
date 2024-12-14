@@ -10,12 +10,9 @@
  */
 class Solution {
     public void reorderList(ListNode head) {
-        //1. Find Middle
-        //2. Reverse
-        //3. Merge Two Sorted List
+        //3 Concepts
         
-        if(head == null || head.next == null) return;
-        
+        //1. Finding mid
         ListNode slow = head;
         ListNode fast = head;
         while(fast != null && fast.next != null){
@@ -23,27 +20,30 @@ class Solution {
             fast = fast.next.next;
         }
         
-        ListNode curr = slow;
+        //2. Reverse right half(slow)
+        ListNode p = reverse(slow);
+        
+        //3. Merge two sorted list
+        ListNode dummy = new ListNode(-1);
+        ListNode temp = head;
+        while(p != null && temp != p){
+            dummy.next = temp;
+            temp = temp.next;
+            dummy = dummy.next;
+            dummy.next = p;
+            dummy = dummy.next;
+            p = p.next;
+        }
+    }
+    public ListNode reverse(ListNode head){
         ListNode prev = null;
-        ListNode nxt = curr;
-        while(nxt != null){
-            nxt = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nxt;
+        ListNode nxt = head;
+        while(head != null){
+            nxt = head.next;
+            head.next = prev;
+            prev = head;
+            head = nxt;
         }
-        
-        ListNode first = head, second = prev;
-        ListNode temp = first;
-        while(second.next != null){
-            temp = first.next;
-            first.next = second;
-            first = temp;
-            
-            temp = second.next;
-            second.next = first;
-            second = temp;
-        }
-        
+        return prev;
     }
 }
