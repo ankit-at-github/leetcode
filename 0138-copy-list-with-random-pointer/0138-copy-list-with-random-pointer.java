@@ -16,36 +16,24 @@ class Node {
 class Solution {
     public Node copyRandomList(Node head) {
         if(head == null) return null;
-        
-        Node dummy = head;
-        //1. Iterate the original list and duplicate each node.
-        while(dummy != null){
-            Node newNode = new Node(dummy.val);
-            newNode.next = dummy.next;
-            dummy.next = newNode;
-            dummy = newNode.next;
+        Map<Node, Node> map = new HashMap<>();
+        Node temp = head;
+        while(temp != null){
+            map.put(temp, new Node(temp.val));
+            temp = temp.next;
         }
-        
-        dummy = head;
-        
-        //2. Link random pointers of the new node created
-        while(dummy != null){
-            if(dummy.random != null){
-                dummy.next.random = dummy.random.next;
+        Node head2 = map.get(head);
+        temp = head2;
+        while(head != null){
+            if(map.containsKey(head.next)){
+                head2.next = map.get(head.next);
             }
-            dummy = dummy.next.next;
+            if(map.containsKey(head.random)){
+                head2.random = map.get(head.random);
+            }
+            head = head.next;
+            head2 = head2.next;
         }
-        
-        //3. Restore original list
-        Node newHead = head.next;
-        Node dummy2 = head.next;
-        dummy = head;
-        while(dummy != null){
-            dummy.next = dummy.next.next;
-            dummy2.next = dummy2.next != null ? dummy.next.next : null;
-            dummy = dummy.next;
-            dummy2 = dummy2.next;
-        }
-        return newHead;
+        return temp;
     }
 }
