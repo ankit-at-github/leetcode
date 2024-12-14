@@ -10,21 +10,25 @@
  */
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode l1 = list1;
+        ListNode l2 = list2;
         ListNode dummy = new ListNode(-1);
-        ListNode prev = dummy;
-        while(list1 != null && list2 != null){
-            if(list1.val < list2.val){
-                prev.next = list1;
-                list1 = list1.next;
-                prev = prev.next;
-            }
-            else{
-                prev.next = list2;
-                list2 = list2.next;
-                prev = prev.next;
+        ListNode head = dummy;
+        while(l1 != null && l2 != null){
+            if(l1.val < l2.val){
+                dummy.next = l1;
+                dummy = l1;
+                l1 = l1.next;
+            }else{
+                dummy.next = l2;
+                dummy = l2;
+                l2 = l2.next;
             }
         }
-        prev.next = list1 == null ? list2 : list1;
-        return dummy.next;
+        
+        if(l1 == null) dummy.next = l2;
+        else dummy.next = l1;
+        
+        return head.next;
     }
 }
