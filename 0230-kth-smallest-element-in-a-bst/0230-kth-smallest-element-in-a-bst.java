@@ -15,15 +15,17 @@
  */
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
+       //iterative in-order traversal
         Stack<TreeNode> st = new Stack<>();
-        while(root!=null || !st.isEmpty()){
-            while(root != null){
-                st.push(root);
-                root = root.left;
+        TreeNode current = root;
+        while(!st.isEmpty() || current != null){
+            while(current != null){
+                st.push(current);
+                current = current.left;
             }
-            root = st.pop();
-            if(k-- == 1) return root.val;
-            root = root.right;
+            current = st.pop();
+            if(k-- == 1) return current.val;
+            current = current.right;
         }
         return -1;
     }
